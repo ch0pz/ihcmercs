@@ -517,7 +517,8 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 Sub Event_WornOff
 	/varset groupbufftimer 0
 	/doevents flush WornOff
-/return 
+/return
+|
 |----------------------------------------------------------------------------
 |- SUB: CharmCheck
 |----------------------------------------------------------------------------
