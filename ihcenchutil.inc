@@ -7,7 +7,7 @@
 Sub EnchSetup
 |-Create Alias
 	|-- Toggles
-	/squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
+	|-/squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
 	/squelch /alias /charmstun		/setvarint Toggle CharmPreStun
 	/squelch /alias /charmtash		/setvarint Toggle CharmPreTash
 	/squelch /alias /tglblur		/setvarint Toggle DoBlurr
