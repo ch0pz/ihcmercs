@@ -7,7 +7,7 @@
 Sub EnchSetup
 |-Create Alias
 	|-- Toggles
-	/squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
+	|- /squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
 	/squelch /alias /charmstun		/setvarint Toggle CharmPreStun
 	/squelch /alias /charmtash		/setvarint Toggle CharmPreTash
 	/squelch /alias /tglblur		/setvarint Toggle DoBlurr
@@ -124,8 +124,8 @@ Sub EnchSetup
 	/declare BlurSpell				string	outer	"NULL"
 	/declare AEBlurSpell			string	outer	"NULL"
 	/declare CalmSpell				string	outer	"NULL"
-	/declare FearSpell				string	outer	"NULL"
-	/declare RootSpell				string	outer	"NULL" 
+	|- /declare FearSpell				string	outer	"NULL"
+	|- /declare RootSpell				string	outer	"NULL" 
 |-Config Options	
 	/call LoadCommonConfig
 	/call LoadIni Charm UseCharmPet		 		int 0
@@ -429,9 +429,9 @@ Sub LoadSpellBar
 			/if (${UseDicho} && ${Me.Level}>=101 && ${DichoSpell.NotEqual[null]}) {
 				/call LoadSpellGem "${DichoSpell}" 12
 				/varset miscspellremem ${DichoSpell}
-			} else {
-				/call LoadSpellGem "${RootSpell}" 12
-				/varset miscspellremem ${RootSpell}
+			|} else {
+				|/call LoadSpellGem "${RootSpell}" 12
+				|/varset miscspellremem ${RootSpell}
 			}
 			/varset spellmisc 12	
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==3) {
@@ -450,9 +450,9 @@ Sub LoadSpellBar
 			}
 			/call LoadSpellGem "${BlurSpell}" 9
 			/call LoadSpellGem "${ProcBuff}" 10
-			/call LoadSpellGem "${RootSpell}" 11
+			|/call LoadSpellGem "${RootSpell}" 11
 			/varset spellmisc 11
-			/varset miscspellremem ${RootSpell}
+			|/varset miscspellremem ${RootSpell}
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==2) {
 			/if (${UseCharmPet}) {
 				/call LoadSpellGem "${SingleStunSpell1}" 5
