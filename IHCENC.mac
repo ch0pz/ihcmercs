@@ -187,14 +187,17 @@ Sub Combatdps
 		/varset PetAssistTimer 5s
 		/delay 5
 	}
+
 	/if (${Me.AltAbilityReady[Crippling Aurora]} && ${Me.XTarget}>2 && !${Me.Moving} && !${Me.Casting.ID} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 		/call AANow ${Me.AltAbility[Crippling Aurora].ID} ${Target.ID}
 		/delay 2s
 	}
+
 	/if (${UseDicho} && ${Me.SpellReady[${DichoSpell}]} && ((${Me.XTarget}>=${BurnMobCount} && ${Me.PctMana}>30) || (${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow}) && !${Me.Moving} && !${Me.Casting.ID} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 			/call CastSpell "${DichoSpell}" ${Target.ID} dps
 			/if (${CastResult.Equal[CAST_SUCCESS]}) /delay 16
 	}
+
 	/if ((${Me.XTarget}>=${BurnMobCount} || (${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow}) && (${Me.AltAbilityReady[Calculated Insanity]} || ${Me.AltAbilityReady[Improved Twincast]}) && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 		/call BurnRoutine
 	}
@@ -209,21 +212,29 @@ Sub Combatdps
 				/varset FastNukePct 99
 			}
 		}
+
 		/if (!${UseDoTs} && (${Target.PctHPs}<=${FastNukePct} || ${Me.XTarget}>=${BurnMobCount} || (${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow}) && ${Me.Gem[${NukeSpell3}]} && ${Cast.Status.Equal[I]} && (${Me.SpellReady[${NukeSpell3}]}) && ${Me.CurrentMana}>${Spell[${NukeSpell3}].Mana}) {
 				/call CastSpell "${NukeSpell3}" ${autotargetid} dps
+
 		} else /if (!${UseDoTs} && (${Target.PctHPs}<=${FastNukePct} || ${Me.XTarget}>=${BurnMobCount} || (${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow}) && ${Me.Gem[${NukeSpell4}]} && ${Cast.Status.Equal[I]} && (${Me.SpellReady[${NukeSpell4}]}) && ${Me.CurrentMana}>${Spell[${NukeSpell4}].Mana}) {
 				/call CastSpell "${NukeSpell4}" ${autotargetid} dps
+
 		} else /if (${Me.Gem[${DoTSpell1}]} && ${Cast.Status.Equal[I]} && !${Me.Buff[Improved Twincast].ID} && (${Me.XTarget}>=${BurnMobCount} || (${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow} || ${UseDoTs}) && (${Me.SpellReady[${DoTSpell1}]}) && ${Me.CurrentMana}>${Spell[${DoTSpell1}].Mana} && (!${Target.Buff[${DoTSpell1}].ID}) && ${Target.PctHPs}>40) {
 				/call CastSpell "${DoTSpell1}" ${autotargetid} dps
+
 		} else /if (${Me.Gem[${DoTSpell2}]} && ${Cast.Status.Equal[I]} && !${Me.Buff[Improved Twincast].ID} && (${Me.XTarget}>=${BurnMobCount} || (${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow} || ${UseDoTs}) && (${Me.SpellReady[${DoTSpell2}]}) && ${Me.CurrentMana}>${Spell[${DoTSpell2}].Mana} && (!${Target.Buff[${DoTSpell2}].ID}) && ${Target.PctHPs}>40) {
 				/call CastSpell "${DoTSpell2}" ${autotargetid} dps
+
 		} else /if (${Me.Gem[${DoTSpell3}]} && ${Cast.Status.Equal[I]} && (${Me.XTarget}>=${BurnMobCount} || (${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow} || ${UseDoTs}) && (${Me.SpellReady[${DoTSpell3}]}) && ${Me.CurrentMana}>${Spell[${DoTSpell3}].Mana} && (!${Target.Buff[${DoTSpell3}].ID}) && ${Target.PctHPs}>40) {
 				/call CastSpell "${DoTSpell3}" ${autotargetid} dps
+
 		} else /if (${Cast.Status.Equal[I]} && (${Me.SpellReady[${NukeSpell1}]}) && ${Me.CurrentMana}>${Spell[${NukeSpell1}].Mana}) {
 				/call CastSpell "${NukeSpell1}" ${autotargetid} dps
+
 		} else /if (${Cast.Status.Equal[I]} && (${Me.SpellReady[${NukeSpell2}]}) && ${Me.CurrentMana}>${Spell[${NukeSpell2}].Mana}) {
 				/call CastSpell "${NukeSpell2}" ${autotargetid} dps
 		}
+
 		/if (${CastResult.Equal[CAST_SUCCESS]} || ${CastResult.Equal[CAST_RESIST]}) /varset DPSRecastTimer 16
 	}
 	/varset groupbufftimer 1m
@@ -232,51 +243,62 @@ Sub Combatdps
 |- SUB: BurnRoutine
 |---------------------------------------------------------------------------- 
 Sub BurnRoutine
+
 	/if (${Me.AltAbilityReady[Illusions of Grandeur]}) {
 		/alt act ${Me.AltAbility[Illusions of Grandeur].ID}
 		/delay 10
 	}
+
 	/if (${Me.AltAbilityReady[Fundament: Third Spire of Enchantment]}) {
 		/alt act ${Me.AltAbility[Fundament: Third Spire of Enchantment].ID}
 		/delay 10
 	} 
+
 	/if (${Me.AltAbilityReady[Improved Twincast]}) {
 		/alt act ${Me.AltAbility[Improved Twincast].ID}
 		/delay 10
 	}
+
 	/if (${Me.AltAbilityReady[Forceful Rejuvenation]} && ${Me.Buff[Improved Twincast].ID}) {
 		/if (${Me.SpellReady[${NukeSpell1}]} && ${Cast.Status.Equal[I]} && ${Me.CurrentMana}>${Spell[${NukeSpell1}].Mana} && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 			/call CastSpell "${NukeSpell1}" ${Target.ID} brn
 			/delay 16
 		}
+
 		/if (${Me.AltAbilityReady[Calculated Insanity]} && (!${Me.Casting.ID}) && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 			/alt act ${Me.AltAbility[Calculated Insanity].ID}
 			/delay 10 ${Window[CastingWindow].Open}
 			/delay 20 !${Window[CastingWindow].Open}
 		}
+
 		/if (${Me.SpellReady[${NukeSpell2}]} && ${Cast.Status.Equal[I]} && ${Me.CurrentMana}>${Spell[${NukeSpell2}].Mana} && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 			/call CastSpell "${NukeSpell2}" ${Target.ID} brn
 			/delay 16
 		}
+
 		/alt act ${Me.AltAbility[Forceful Rejuvenation].ID}
 		/delay 10 !${Me.Casting.ID}
 		/if (${Me.SpellReady[${NukeSpell1}]} && ${Cast.Status.Equal[I]} && ${Me.CurrentMana}>${Spell[${NukeSpell1}].Mana} && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 			/call CastSpell "${NukeSpell1}" ${Target.ID} brn
 			/delay 16
 		}
-		/if (${Me.AltAbilityReady[Banestrike]} && (!${Me.Casting.ID}) && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
-			/alt act ${Me.AltAbility[Banestrike].ID}
-			/delay 10 ${Window[CastingWindow].Open}
-			/delay 20 !${Window[CastingWindow].Open}
-		}
+
+		| /if (${Me.AltAbilityReady[Banestrike]} && (!${Me.Casting.ID}) && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
+			| /alt act ${Me.AltAbility[Banestrike].ID}
+			| /delay 10 ${Window[CastingWindow].Open}
+			| /delay 20 !${Window[CastingWindow].Open}
+		| }
+
 		/if (${Me.SpellReady[${NukeSpell2}]} && ${Cast.Status.Equal[I]} && ${Me.CurrentMana}>${Spell[${NukeSpell2}].Mana} && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 			/call CastSpell "${NukeSpell2}" ${Target.ID} brn
 			/delay 16
-		}	
+		}
+
 	} else /if (${Me.AltAbilityReady[Calculated Insanity]}) {
 		/alt act ${Me.AltAbility[Calculated Insanity].ID}
 		/delay 10
 	}
+	
 /return
 |----------------------------------------------------------------------------
 |- SUB: BuffCheck
