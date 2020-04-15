@@ -120,8 +120,7 @@ Sub VarSetup
 		/echo Extended Target 1 HAS TO BE SET TO Auto Hater
 		/xtarget set 1 Autohater
 		/echo Set Extended Target 1 to Auto
-	  }
-
+	}
 |-Check for loaded plugins
 	/call CheckPlugin MQ2Cast
     /call CheckPlugin MQ2Exchange
@@ -325,6 +324,7 @@ Sub ChangeVarInt(string ISection, string IName, int IVar)
 		}
 	}
 /return
+
 |-------------------------------------------------------------------------------------
 |- DEPRECATED USE THE TOGGLE VARIABLE SUB
 |- SUB: Bind_ToggleVariable  Check whenever the player is changing any variable via /echo
@@ -410,6 +410,7 @@ Sub Bind_ToggleVariable(string Command, string Command2, string Command3)
 		}
     }
 /return
+
 |-------------------------------------------------------------------------------------
 |- SUB: ToggleVariable  Check whenever the player is changing any variable via /echo
 |-------------------------------------------------------------------------------------
@@ -492,6 +493,7 @@ Sub ToggleVariable(string Command, string Command2, string Command3)
 		}
     }
 /return
+
 |----------------------------------------------------------------------------  
 |- SUB: SetControlToon
 |----------------------------------------------------------------------------
@@ -549,6 +551,7 @@ Sub SetControlToon
 	}
 	|- /if (${Group.Member[${assistname}].ID} && ${Group.Leader.ID}==${Me.ID} && ${Group.MainAssist.ID}!=${assistid}) /grouproles set ${Group.Member[${assistname}].ID} 2 
 /return 
+
 |----------------------------------------------------------------------------  
 |- SUB: Back Off and stop melee  New Version
 |----------------------------------------------------------------------------      
