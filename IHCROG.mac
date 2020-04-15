@@ -1,0 +1,305 @@
+|- IHCROG.mac - By vsab
+|- Automatic Rogue bot - 
+|- Version 0.1
+|- Updated: 13/1/2020
+|- Credit: IHC365, Toots, Noobhax0r, Maskoi, Ctaylor, Treehuggindruid. A lot of ideas were borrowed and modified from their macros
+| TODO: Test Burn
+| TODO: Test poison summoning & application
+| TODO: Drag PC corpses
+| TODO: Verify 2.0 /1.5 epics click works (I don't have either)
+| TODO: Test on a non- 110 FTP Rogue :)
+
+#define DEBUGROG "/echo [ROG_DEBUG] "
+#Chat group
+#Chat tell
+#Chat raid
+#turbo 120
+#include IHCMercs\ihcsubs.inc
+#include IHCMercs\ihcrogutil.inc
+#include IHCMercs\ihcevents.inc
+#warning
+#bind SetVarInt	/setvarint
+#bind CmdList        /ihchelp
+#Event NotOnTarget	"#*#You cannot see your target#*#"
+#Event NotOnTarget	"#*#Your target is too far away#*#"
+#Event GotHit       "#*# bashes YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# crushes YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# hits YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# kicks YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# mauls YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# pierces YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# punches YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# slashes YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# bites YOU for #*# points of damage.#*#"
+#Event GotHit       "#*# tries to #*# YOU, but #*#"
+#event GotHit		"#*#smashes YOU for#*#"
+#event GotHit		"#*#gores YOU for#*#"
+#event GotHit		"#*#rampages YOU for#*#" 
+
+Sub Main
+	/delay ${Math.Rand[10]}
+	/doevents flush
+	/declare MacroName       	string outer IHCROG**ALPHA**
+	/declare MacroPath       	string outer IHCMercs\IHCROG
+	/declare IHCVersion       	string outer 0.1 
+	/declare IniFileName     	string outer ${MacroPath}_${EverQuest.Server}_${Me.CleanName}.ini
+	
+	| Debug calls
+	/declare DebugAll			int outer 1
+	/declare DebugDps			int outer 1
+
+	/call RogSetup
+	/call VarSetup
+	/if (${IHCVersion.NotEqual[${IHCMacVersion}]}) {
+		/call ClassAliasSetup
+	}
+	/call SetControlToon
+	|/varset BeforeCombat OpeningMove
+	|-Cursor ID
+	/if (${Cursor.ID}) {
+		/echo Sending Item on Cursor to Bag
+		/autoinventory
+	}
+	/call WelcomeMsg
+	/echo ************************************************************************************
+	/echo vsab: THIS IS ALPHA SOFTWARE SO EXPECT MALARKEY, MISCHIEF AND GENERAL SHENANIGANNERY
+	/echo (and also embarrassing debug statements)
+	/echo ************************************************************************************
+
+	/if (${assistid}==${Me.ID}) {
+		/echo \aw I am Main Assist
+	} else {
+		/echo \aw Assisting \ay >> \ag ${assistname} \ay << \aw at \ag ${AutoAssistAt}%
+	}
+	
+	/if (${UseZoneLogic}) {
+		/call ZoneEventChk
+	}
+	/call WinTitle
+ :mainloop
+	/if (${changetoini}==1) /call INIChanges
+	/if (${Me.Zoning}) {
+		/call Zoning
+	}
+	/if (${Me.Hovering}) /call DeathSub
+	/if (${Cursor.ID}) /call BagModRods
+	/call IDUpdateCheck
+	/if ((${Me.XTarget[1].ID} || (${Group.MainAssist.ID} && ${Group.MainAssist.ID}!=${Me.ID} && ${Target.ID}!=${Me.GroupAssistTarget.ID}) || ${SpawnCount[npc radius ${AssistRange} zradius 15 targetable playerstate 4]} || ${FollowMarkTarget}) && !${BackOffFlag} && ${DoAutoTarget}) /call FindTarget
+	/if ((${Me.XTarget[1].ID} || ${KillTargetID}) && ${Target.PctHPs}<=${AutoAssistAt} && ${Target.ID}==${autotargetid} && ${Target.Distance}<${AssistRange} && (!${Target.Mezzed.ID} || ${AllowMezBreak}) && !${BackOffFlag} && ${DoAutoEngage}) /call EngageTarget
+	/if ((${Me.XTarget[1].ID} || ${KillTargetID}) && ${Target.ID}==${autotargetid} && ${Target.Distance}<${AssistRange} && (!${Target.Mezzed.ID} || ${AllowMezBreak}) && !${BackOffFlag}) /call AANDisc
+	/if ((${Me.XTarget[1].ID} || ${KillTargetID}) && ${Target.PctHPs}<=${AutoAssistAt} && ${Target.ID}==${autotargetid} && ${Target.Distance}<${AssistRange} && ${Ok2Assist} && (!${Target.Mezzed.ID} || ${AllowMezBreak}) && !${BackOffFlag}) /call Combatdps
+	/if (!${Me.Combat} && !${Me.XTarget[1].ID} && !${KillTargetID}) /call DowntimeDiscs
+	/if (${Spawn[=${FollowToonName}].ID} && !${MoveTo.Moving} && ${Stick.Status.Equal[OFF]} && (!${Me.Casting.ID}) && (!${Me.XTarget[1].ID} || ${Spawn[id ${assistid}].Distance}>${AssistRange} || (!${Spawn[id ${assistid}].LineOfSight}))) /call FollowToon
+	/if (${Spawn[=${FollowToonName}].ID} && (${Me.Casting.ID} || ${Me.XTarget[1].ID}) && ${AdvPath.Following}) /squelch /afollow off
+	/if (!${Me.XTarget[1].ID}&& !${KillTargetID}) /call AutoCampCheck
+	/if (${DoMed}) /call AutoMed
+	/if (${UseZoneLogic} && ${EventSetupFlag}) {
+		/call EventLogic${EventSetupFlag}
+	}
+	/if (((!${Spawn[targetable id ${KillTargetID}].ID}) || ${Spawn[corpse id ${KillTargetID}].ID}) && ${KillTargetID}!=0) {
+		/varset KillTargetID 0
+		/varset SpawnSearchType npc
+		/varset autotargetid 0
+	}
+	/doevents
+	/goto :mainloop
+/return
+
+|----------------------------------------------------------------------------
+|- SUB: AANDisc
+|---------------------------------------------------------------------------- 
+Sub AANDisc
+	/if (${Ambush.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Ambush}]} && ${Me.PctEndurance}>=5 && ${Target.PctHPs}>=90 && ${UseOpener} && ${Target.Distance}<50) {
+		/call DiscNow "${Ambush}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${Ambush}
+	}
+	/if ((${Me.XTarget}>=${BurnMobCount} || (${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow})) {
+		/call Burn
+	}
+	/if (!${Me.ActiveDisc.ID} && ${AimDisc.NotEqual[NULL]} && ${Me.CombatAbilityReady[${AimDisc}]}) {
+		/call DiscNow "${AimDisc}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${AimDisc}
+	}
+	/if (${Vision.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Vision}]} && !${VisionTimer}) {
+		/call DiscNow "${Vision}"
+		/varset VisionTimer 60s
+		/if (${DebugDps}) DEBUGROG Disc used: ${Vision}
+	}
+	/if (${SecretBlade.NotEqual[NULL]} && ${Me.CombatAbilityReady[${SecretBlade}]}) {
+		/call DiscNow "${SecretBlade}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${SecretBlade}
+	}
+	/if (${Pinpoint.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Pinpoint}]}) {
+		/call DiscNow "${Pinpoint}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${Pinpoint}
+	}
+	/if (${MarkDisc.NotEqual[NULL]} && ${Me.CombatAbilityReady[${MarkDisc}]}) {
+		/call DiscNow "${MarkDisc}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${MarkDisc}
+	}
+	/if (${Jugular.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Jugular}]}) {
+		/call DiscNow "${Jugular}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${Jugular}
+	}
+	/if (${Puncture.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Puncture}]}) {
+		/call DiscNow "${Puncture}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${Puncture}
+	}
+	/if (${FellStrike.NotEqual[NULL]} && ${Me.CombatAbilityReady[${FellStrike}]}) {
+		/call DiscNow "${FellStrike}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${FellStrike}
+	}
+	/if (${DrachnidBlade.NotEqual[NULL]} && ${Me.CombatAbilityReady[${DrachnidBlade}]}) {
+		/call DiscNow "${DrachnidBlade}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${DrachnidBlade}
+	}
+	/if (${Slice.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Slice}]}) {
+		/call DiscNow "${Slice}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${Slice}
+	}
+	/if (${Shadowhunter.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Shadowhunter}]}) {
+		/call DiscNow "${Shadowhunter}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${Shadowhunter}
+	}
+	/if (${Me.AltAbilityReady[Twisted Shank]} ) {
+		/call AANow ${Me.AltAbility[Twisted Shank].ID}
+		/if (${DebugDps}) DEBUGROG Ability used: Twisted Shank
+	}
+	/if (${DichoSpell.NotEqual[NULL]} && ${Me.CombatAbilityReady[${DichoSpell}]}) {
+		/call DiscNow "${DichoSpell}"
+		/if (${DebugDps}) DEBUGROG Disc used: ${DichoSpell}
+	}
+	/if (${Me.AltAbilityReady[Ligament Slice]} ) {
+		/call AANow ${Me.AltAbility[Ligament Slice].ID}
+		/if (${DebugDps}) DEBUGROG Ability used: Ligament Slice
+	}
+	/doevents
+/return
+
+|----------------------------------------------------------------------------
+|- SUB: Burn DPS
+|---------------------------------------------------------------------------- 
+Sub Burn
+	/doevents
+	| AA's first
+	|Focused Rake's Rampage
+	/if ( ${Me.AltAbilityReady[Focused Rake's Rampage]} ) {
+		/call AANow ${Me.AltAbility[Focused Rake's Rampage].ID}
+		/if (${DebugDps}) DEBUGROG Ability used: Focused Rake's Rampage
+	}
+  	| Rogue's Fury
+	/if ( ${Me.AltAbilityReady[Rogue's Fury]} ) {
+		/call AANow ${Me.AltAbility[Rogue's Fury].ID}
+		/if (${DebugDps}) DEBUGROG Ability used: Rogue's Fury
+	}
+
+	/if ( ${Me.AltAbilityReady[Spire of the Rake]} ) {
+		/call AANow ${Me.AltAbility[Spire of the Rake].ID}
+		/if (${DebugDps}) DEBUGROG Ability used: Spire of the Rake
+	}
+	| Mash those discs
+	
+	/if (${Frenzied.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Frenzied}]} ) {
+		/call DiscQueue "${Frenzied}"
+	} else /if (${Twisted.NotEqual[NULL]} && ${Me.ActiveDisc.Name.NotEqual[${Frenzied}]} && ${Me.CombatAbilityReady[${Twisted}]}) {
+		/call DiscQueue "${Twisted}"
+	} else /if (${AimDisc.NotEqual[NULL]} &&  ${Me.ActiveDisc.Name.NotEqual[${Frenzied}]}  &&  ${Me.ActiveDisc.Name.NotEqual[${Twisted}]}  && ${Me.CombatAbilityReady[${AimDisc}]}) {
+		/call DiscQueue "${AimDisc}"
+	}  else /if (${Executioner.NotEqual[NULL]} && ${Me.ActiveDisc.Name.NotEqual[${Frenzied}]} && ${Me.ActiveDisc.Name.NotEqual[${Twisted}]} && ${Me.ActiveDisc.Name.NotEqual[${AimDisc}]} && ${Me.CombatAbilityReady[${Executioner}]}) {
+		/call DiscQueue "${Executioner}"
+	} else /if (${EdgeDisc.NotEqual[NULL]} && ${Me.ActiveDisc.Name.NotEqual[${Frenzied}]} && ${Me.ActiveDisc.Name.NotEqual[${Twisted}]} && ${Me.ActiveDisc.Name.NotEqual[${AimDisc}]} && ${Me.ActiveDisc.Name.NotEqual[${Executioner}]} && ${Me.CombatAbilityReady[${EdgeDisc}]} ) {
+		/call DiscQueue "${EdgeDisc}"
+	} else /if (${AspDisc.NotEqual[NULL]} && ${Me.ActiveDisc.Name.NotEqual[${Frenzied}]} && ${Me.ActiveDisc.Name.NotEqual[${Twisted}]} && ${Me.ActiveDisc.Name.NotEqual[${AimDisc}]} && ${Me.ActiveDisc.Name.NotEqual[${Executioner}]} && ${Me.ActiveDisc.Name.NotEqual[${EdgeDisc}]} && ${Me.CombatAbilityReady[${AspDisc}]} ) {
+		/call DiscQueue "${AspDisc}"
+	}
+	| Chest Item
+	/if (${ChestCombatCast} && ${FindItem[${ChestItemName}].ID} && ${Cast.Ready[${ChestItemName}]} ) {
+		/call ItemNow "${ChestItemName}"
+	}
+	| Epic
+	/if (${UseEpic} && ${FindItem[${EpicWeapon}].ID} && ${Cast.Ready[${EpicWeapon}]}) {
+		/call ItemNow "${EpicWeapon}"	
+	}
+/return
+
+|----------------------------------------------------------------------------
+|- SUB: Combatdps
+|---------------------------------------------------------------------------- 
+Sub Combatdps
+	/doevents
+	/if ((${Target.Named} && ${BurnNamed}) || ${BurnAlways} || ${burnnow}) {
+		/call Burn
+	}
+	/if (${Me.AbilityReady[Backstab]} && ${Target.Distance}<=${Target.MaxRangeTo} && ${Me.Combat}) {
+		/call AbilityNow "Backstab"
+	} 
+/return
+
+|----------------------------------------------------------------------------
+|- SUB: DowntimeDiscs
+|---------------------------------------------------------------------------- 
+Sub DowntimeDiscs
+	
+	/if (${Me.PctEndurance}<21 && ${Me.Endurance}>313 && ${Me.CombatAbilityReady[${endregen}]} && !${Me.CombatState.Equal[combat]} && !${Me.Invis}) {
+		/disc ${endregen}
+		/delay 5
+	}
+
+	/if (${UseHideSneak}) {
+    	/if (${Me.AbilityReady[hide]} && ${Me.AbilityReady[sneak]}) {
+            /doability hide
+            /doability sneak
+        }
+	}
+
+	/if (!${UsePoisons}) /return	
+
+	| Check if we have any poisons to click, if not we summon using our sunmmon item
+	/if (${FindItemCount[=${PoisonName}]} < 5 && ${FindItem[${PoisonClicky}].Timer}==0) {
+		/echo Poisons: We have ${FindItemCount[=${PoisonName}]} of ${PoisonName} so clicking ${PoisonClicky}
+		/if (${Cursor.ID}) /autoinventory
+		/call ItemNow "${PoisonClicky}"
+		/delay 5s ${Cursor.ID}
+		/autoinventory
+	} 
+	| We have enough of the item, but we don't have the buff. And I want it. 
+	/if (${FindItemCount[=${PoisonName}]} >= 1 && ${FindItem[${PoisonName}].Timer}==0 && !${Me.Buff[${PoisonBuffName}].ID}) {
+		/echo Poisons: We have ${FindItemCount[=${PoisonName}]} of ${PoisonName} but no ${PoisonBuffName} so applying ${PoisonName}
+		/call ItemNow "${PoisonName}"
+	} 
+	/doevents
+/return
+
+|----------------------------------------------------------------------------
+|- SUB: Event_Chat
+|----------------------------------------------------------------------------
+Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
+
+/return
+
+|----------------------------------------------------------------------------
+|- SUB: Event NotOnTarget - For dealing with too far away and cannot see messages
+|----------------------------------------------------------------------------
+Sub Event_NotOnTarget
+	/if (${DoAutoEngage}) {
+		/squelch /attack off
+		/if (${DoAutoTarget}) /call FindTarget
+		/delay 5
+		/if (${Target.Distance}<${AssistRange}) /call EngageTarget
+	}
+	/doevents flush NotOnTarget
+/return 
+
+|----------------------------------------------------------------------------
+|- SUB: Event GroupChange
+|----------------------------------------------------------------------------
+Sub Event_GotHit
+	/if ( ${Me.AltAbilityReady[Tumble]} ) {
+		/call AANow ${Me.AltAbility[Tumble].ID}
+		/if (${DebugDps}) DEBUGROG Ability used: Tumble
+	}
+	/if (${Phantom.NotEqual[NULL]} && ${Me.CombatAbilityReady[${Phantom}]}) {
+		/call DiscNow "${Phantom}"
+	}
+	/doevents flush GotHit
+/return
