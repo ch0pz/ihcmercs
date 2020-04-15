@@ -92,7 +92,7 @@ Sub Main
 	/if ((${Me.Poisoned.ID} || ${Me.Diseased.ID} || ${Me.Cursed.ID} || ${Me.Corrupted.ID} || ${Me.Snared.ID} || ${Me.Mezzed.ID} || ${Me.Charmed.ID}) && ${BegTimer}==0 && ${DoGroupBeg}) /call BegForCure
 
 	/doevents
-	
+
  /goto :mainloop   
 
 /return
@@ -113,12 +113,8 @@ Sub DebuffMobs
 		}
 	}
 	/if (${DoBlurr} && ${Me.PctAggro}>=${BlurrAggroPct}) /call ManageAggro "BlrFlg"
-	| /if (${DoTash} && ${Me.SpellReady[${TashSpell}]} && (!${Target.Tashed.ID}) && ${Cast.Status.Equal[I]} && ${Me.CurrentMana}>${Spell[${TashSpell}].Mana} && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
-		| /call CastSpell "${TashSpell}" ${Target.ID} dbf
-		| /delay 16
-	| }
 		
-|ALT TASH AA CODE
+ |- TASH AA CODE
 	/if (${DoTash} && (!${Target.Tashed.ID}) && (!${Me.Casting.ID}) && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 		/if (${Me.AltAbilityReady[Bite of Tashani]} && !${DoCripple}) {
 			/alt act ${Me.AltAbility[Bite of Tashani].ID}
