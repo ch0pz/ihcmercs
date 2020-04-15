@@ -17,9 +17,7 @@
 #Event NotOnTarget	"#*#Your target is too far away#*#"
 #Event WornOff      "Your #1# spell has worn off of #*#."
 #Event GroupChange	"#*#has joined the group#*#"
-
 Sub Main
-
 	/delay ${Math.Rand[10]}
 	/doevents flush
 	/declare MacroName       	string outer IHCMAG
@@ -78,14 +76,11 @@ Sub Main
 	/if ((${Me.Poisoned.ID} || ${Me.Diseased.ID} || ${Me.Cursed.ID} || ${Me.Corrupted.ID} || ${Me.Snared.ID} || ${Me.Mezzed.ID} || ${Me.Charmed.ID}) && ${BegTimer}==0 && ${DoGroupBeg}) /call BegForCure
 	/doevents
 	/goto :mainloop
-
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Pet Mode
 |---------------------------------------------------------------------------- 
 Sub SetPetMode
-
 	/if (${DoPetTank}) {
 		/if (${PetTank}==0) /varset PetTank 1
 		/pet taunt on
@@ -95,13 +90,11 @@ Sub SetPetMode
 		/if (${PetTank}==1) /varset PetTank 0
 		/echo \aw Pet Tanking is :\ar OFF
 	}
-
 /return
 |----------------------------------------------------------------------------
 |- SUB: BuffGroup
 |---------------------------------------------------------------------------- 
 Sub BuffGroup
-
 	/declare bmember			int local 0
 	/if (${groupbufftimer}==0) /varset groupbufftimer 10s
 	/for bmember 0 to ${Group}
@@ -122,7 +115,6 @@ Sub BuffGroup
 		/if (${ReTargetDelay}==0) /varset ReTargetDelay 1m
 		/if (${autotargetid}) /varset autotargetid 0
 	}
-
 /return
 |----------------------------------------------------------------------------
 |- SUB: CombatDiscs
@@ -164,17 +156,13 @@ Sub CombatDiscs
 			} else /if (${Cast.Status.Equal[I]} && ${Target.Named} && ${Me.SpellReady[${Spell[${TwinSpell}].RankName}]} && ${Me.PctAggro}<${StopNukeAggro} && ${Target.CurrentHPs}<85 && ${Me.CurrentMana}>${Spell[${TwinSpell}].Mana} && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 				/call SpellQueue "${Spell[${TwinSpell}].RankName}" ${autotargetid}
 			}
-			
 			/if (${CastResult.Equal[CAST_SUCCESS]} || ${CastResult.Equal[CAST_RESIST]}) /varset DPSRecastTimer 0
-		}
-		
+		}	
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: BuffCheck
 |----------------------------------------------------------------------------
 Sub BuffCheck	
-
 	/if (${UsePet} && !${Me.Pet.ID} && ${Cast.Status.Equal[I]} && ${Me.Book[${PetSpell}]} && ${Me.CurrentMana}>${Spell[${PetSpell}].Mana}) {
 		/call SpellQueue "${PetSpell}" ${Me.ID}
 		/varset spellrememtimer 5s
@@ -199,28 +187,22 @@ Sub BuffCheck
 	} else /if (!${Me.Gem[${spellmisc}].Name.Equal[${miscspellremem}]} && ${spellrememtimer}==0 && ${miscspellremem.NotEqual[NULL]}) {
 		/call LoadSpellGem "${miscspellremem}" ${spellmisc}
 	}
-		
 	/if (${Group.MainAssist.ID} && ${ReTargetDelay}==0 && ${Target.ID}!=${Group.MainAssist.ID}) {
 		/target id ${Group.MainAssist.ID}
 		/varset ReTargetDelay 1m
 		/varset autotargetid 0
 	}
 /return	
-
 |----------------------------------------------------------------------------
 |- SUB: Event_WornOff
 |----------------------------------------------------------------------------
-
 Sub Event_WornOff
-
 	/varset groupbufftimer 0
 	/doevents flush WornOff
 /return 
-
 |----------------------------------------------------------------------------
 |- SUB: Event GroupChange
 |----------------------------------------------------------------------------
-
 Sub Event_GroupChange
 	/varset fparatimer2 10s
 /return 
