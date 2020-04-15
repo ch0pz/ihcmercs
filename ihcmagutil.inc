@@ -5,10 +5,8 @@
 |-Setup Variable Environment
 |--------------------------------------------------------------------------------------
 Sub MagSetup
-
 |-Create Alias
 |-- Toggles
-
 	/squelch /alias /tglaoe			/setvarint Toggle UseAoE
 	/squelch /alias /tglbp			/setvarint Toggle ChestCombatCast
 	/squelch /alias /tglpet			/setvarint Toggle UsePet
@@ -19,12 +17,10 @@ Sub MagSetup
 |-	/squelch /alias /tglweave		/setvarint Toggle WeaveAANukes
 |-	/squelch /alias /autodebuffat	/setvarint Set AutoDebuffAt
 | -	/squelch /alias /harvestat 		/setvarint Set HarvestManaPct
-
 |-------------------------------------------------------------------------------------
 |-Declare spells and INI settings
 |-------------------------------------------------------------------------------------
 |-General Spell timers & Misc
-
 	/declare spellmisc 			int outer 13
 	/declare GroupBuffRecast 	int outer 0
 	/declare miscspellremem		string outer NULL
@@ -32,7 +28,6 @@ Sub MagSetup
 	/declare spellrememtimer	timer outer 0
 	/declare groupbufftimer		timer outer 0
 	/declare DPSRecastTimer		timer outer 0
-	
 |-BUFFS
 	/declare MeleeShield		string outer NULL
 	/declare ManaRegenBuff		string outer NULL
@@ -40,7 +35,6 @@ Sub MagSetup
 	/declare DamageShield		string outer NULL
 	/declare ShieldSpell		string outer NULL
 	| /declare SelfHPBuff			string outer NULL	- "to replace ShieldSpell"
-
 |-DPS
 	/declare NukeSpell1			string outer NULL
 	/declare NukeSpell2			string outer NULL
@@ -49,7 +43,6 @@ Sub MagSetup
 	/declare NukeSpell5			string outer NULL
 	/declare DichoSpell			string outer NULL
 	/declare TwinSpell			string outer NULL	
-
 |-PET
 	/declare SwarmPet			string outer NULL
 	/declare PetHealSpell		string outer NULL
@@ -62,11 +55,9 @@ Sub MagSetup
 	| /declare PetAir			string outer NULL
 	| /declare WaterPet			string outer NULL
 	| /declare EarthPet			string outer NULL
-	
 |----------------------------------------------------------------------------
 |-Config IHCMag.INI settings
 |----------------------------------------------------------------------------
-
 	/call LoadCommonConfig
 	/call LoadIni Buffs UseShield				int 1
 	/call LoadIni Buffs UseDmgShield			int 1
@@ -85,15 +76,11 @@ Sub MagSetup
 	/call LoadIni Pet UseSwarmpet		 		int 0
 	| /call LoadIni Options HarvestManaPct		int 75
 	| /call LoadIni Pet PetType					string NULL	
-
 /return 
-
 |----------------------------------------------------------------------------
 |- SUB: INIChanges
 |---------------------------------------------------------------------------- 
-
 Sub INIChanges
-
 	/varset changetoini 0
 	/call SaveCommonConfig
 	/call SetIni Combat AllowMezBreak		 	int ${AllowMezBreak}
@@ -110,13 +97,10 @@ Sub INIChanges
 	| /call SetIni Pet HarvestManaPct		 		int ${HarvestManaPct}
  	| /call SetIni Pet PetType		 			int ${PetType}
 /return
-
 |* ------------------------------------------------------------------------------------------
 | SUB: LoadSpellBar
 |------------------------------------------------------------------------------------------ *|
-
 Sub LoadSpellBar
-
 	/if (${Me.Standing}) {
 		/sit
 		/delay 10 ${Me.Sitting}
@@ -138,38 +122,36 @@ Sub LoadSpellBar
 	/delay 10 ${Me.Standing}
 	}
 /return 
-
 |----------------------------------------------------------------------------
 |- SUB: SetSpells
 |---------------------------------------------------------------------------- 
-
 Sub SetSpells
-
-	/varset SwarmPet ${Spell[Reckless Servant].RankName}
-	/varset PetSpell ${Spell[Embodiment of Air].RankName}
-	/varset PetHealSpell ${Spell[Renewal of Ioulin].RankName}
-	/varset PetHaste ${Spell[Burnout XIII].RankName}
-	/varset PetOffenseBuff ${Spell[Iceflame Keep].RankName}
-	/varset PetDefenseBuff ${Spell[Aegis of Zeklor].RankName}
-	/varset DichoSpell ${Spell[Dissident Companion].RankName}	
-	/varset NukeSpell1 ${Spell[Chaotic Inferno].RankName}
-	/varset NukeSpell2 ${Spell[Spear of Molten Arcronite].RankName}
-	/varset NukeSpell3 ${Spell[Spear of Molten Shieldstone].RankName}
-	/varset NukeSpell4 ${Spell[Shock of Arcronite Steel].RankName}
-	/varset NukeSpell5 ${Spell[Volley of Many].RankName}
-	/varset ShieldSpell ${Spell[Shield of Scales].RankName}	
-	/varset MeleeShield ${Spell[Shield of Order].RankName}
-	/varset ManaRegenBuff ${Spell[Burning Guardian].RankName}
-	/varset DamageShield ${Spell[Circle of the Inferno].RankName}
-	/varset TwinSpell ${Spell[Twincast].RankName}
+	/varset SwarmPet 		${Spell[Reckless Servant].RankName}
+	/varset PetSpell 		${Spell[Embodiment of Air].RankName}
+	/varset PetHealSpell 	${Spell[Renewal of Ioulin].RankName}
+	/varset PetHaste 		${Spell[Burnout XIII].RankName}
+	/varset PetOffenseBuff 	${Spell[Iceflame Keep].RankName}
+	/varset PetDefenseBuff 	${Spell[Aegis of Zeklor].RankName}
+	/varset DichoSpell 		${Spell[Dissident Companion].RankName}	
+	/varset NukeSpell1 		${Spell[Chaotic Inferno].RankName}
+	/varset NukeSpell2 		${Spell[Spear of Molten Arcronite].RankName}
+	/varset NukeSpell3 		${Spell[Spear of Molten Shieldstone].RankName}
+	/varset NukeSpell4 		${Spell[Shock of Arcronite Steel].RankName}
+	/varset NukeSpell5 		${Spell[Volley of Many].RankName}
+	/varset ShieldSpell 	${Spell[Shield of Scales].RankName}	
+	/varset MeleeShield 	${Spell[Shield of Order].RankName}
+	/varset ManaRegenBuff 	${Spell[Burning Guardian].RankName}
+	/varset DamageShield 	${Spell[Circle of the Inferno].RankName}
+	/varset TwinSpell 		${Spell[Twincast].RankName}
+	| /varset FirePet			${Spell[].RankName}
+	| /varset PetAir			${Spell[].RankName}
+	| /varset WaterPet		${Spell[].RankName}
+	| /varset EarthPet		${Spell[].RankName}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Bind Change Var Int resets various interger settings from ini file
 |----------------------------------------------------------------------------
-
 Sub Bind_SetVarInt(string ISection, string IName, int IVar)
-
     	/docommand /varset changetoini 1
 |-Toggles
 	/if (${ISection.Equal[Toggle]}) {
@@ -218,11 +200,9 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 		} 
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: BIND CmdList - 
 |----------------------------------------------------------------------------
-
 Sub Bind_CmdList
 	/call CommonHelp
 	/echo \ag===${MacroName} Commands=== 
@@ -230,5 +210,4 @@ Sub Bind_CmdList
 	/echo \ag/tglbp\aw - Turn on/off the use of a Chest piece defined in the ini
 	/echo \ag/tglpet\aw - Pet toggle...cause sometimes they arent allowed
 	/echo \ag/tglmezbreak\aw - Allow attacking mez'd mobs if below assistat % - Ignores waiting for MA
-
 /return
