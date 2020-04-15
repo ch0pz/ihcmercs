@@ -207,7 +207,7 @@ Sub Event_GroupChange
 	/varset fparatimer2 10s
 /return
 
-|**
+
 | ----------------------------------------------------------------------------
 | SUB: Check PetToys - Based on code from el_nene's autobot. Used with permission.
 | Autobot is available at www.Macroquest2.com VIP macro section.
