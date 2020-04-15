@@ -171,26 +171,27 @@ Sub EnchSetup
 	/call LoadIni Rune SpellRuneHeal			int 0
 	/call LoadIni Rune DoTRuneHeal				int 0
 	/varcalc MezWatchRadius ${MezRadius}*2
+
  |-Set AA DurationMod for mez timer from Spell Casting Reinforcement AA
     /if (${Me.AltAbility[Mesmerization Mastery].Rank}==1) /varset MezMod 6
     /if (${Me.AltAbility[Mesmerization Mastery].Rank}==2) /varset MezMod 12
     /if (${Me.AltAbility[Mesmerization Mastery].Rank}==3) /varset MezMod 18
     /if (${Me.AltAbility[Mesmerization Mastery].Rank}==4) /varset MezMod 24
-	/declare spellmisc 				int outer 8
-	/declare spellgem				int outer 1	
-	/declare CastResult             string outer
-	/declare miscspellremem			string outer NULL
-	/declare spellrememtimer		timer outer 0
-	/declare groupbufftimer		timer outer 0
+	/declare spellmisc 							int		outer 8
+	/declare spellgem							int		outer 1	
+	/declare CastResult             			string 	outer
+	/declare miscspellremem						string 	outer NULL
+	/declare spellrememtimer					timer 	outer 0
+	/declare groupbufftimer						timer 	outer 0
 	/if (${Me.AltAbility[25].Name.Find[disabled]} && ${Me.AltAbilityReady[25]}) {
 		/alt act 25
 		/delay 5
 	}
  |- Below Code is only needed for using ihcxtenchmez.inc
-	|/declare MezCount[13]           			int         outer 	0
-	|/declare MezArray[50,3]			            string      outer       NULL
-	|/declare DebugMez							int			outer	0
-	|/declare DEBUGALL							int 		outer	0
+	|/declare MezCount[13]           			int     outer 	0
+	|/declare MezArray[50,3]			        string  outer   NULL
+	|/declare DebugMez							int		outer	0
+	|/declare DEBUGALL							int 	outer	0
 	|/if (${MezOn}) /call CreateTimersMez
 /return
 |----------------------------------------------------------------------------
@@ -286,8 +287,9 @@ Sub CheckOptions
 | SUB: LoadSpellBar
 |------------------------------------------------------------------------------------------ *|
 Sub LoadSpellBar
-	/if (!${BringYourOwnSpells}) {
-		/if (${Me.Standing}) /sit
+	| /if (!${BringYourOwnSpells}) {
+		/if (${Me.Standing}) {
+		 /sit
 		/delay 10 ${Me.Sitting}
 		/echo \aw Loading Spell Bar
 		/call LoadSpellGem "${MezSpell}" 1
@@ -1615,19 +1617,19 @@ Sub SetEncSpells
 		/varset FearSpell ${Spell[Fear].RankName}
 	}
 |-Root Spell * Var Name: RootSpell string outer
-	/if (${Me.Level}>=61 && ${Me.Book[${Spell[Greater Fetter].RankName}]}) {
-		/varset RootSpell ${Spell[Greater Fetter].RankName}
-	} else /if (${Me.Level}>=58 && ${Me.Book[${Spell[Fetter].RankName}]}) {
-		/varset RootSpell ${Spell[Fetter].RankName}
-	} else /if (${Me.Level}>=45 && ${Me.Book[${Spell[Paralyzing Earth].RankName}]}) {
-		/varset RootSpell ${Spell[Paralyzing Earth].RankName}
-	} else /if (${Me.Level}>=39 && ${Me.Book[${Spell[Immobilize].RankName}]}) {
-		/varset RootSpell ${Spell[Immobilize].RankName}
-	} else /if (${Me.Level}>=25 && ${Me.Book[${Spell[Instill].RankName}]}) {
-		/varset RootSpell ${Spell[Instill].RankName}
-	} else /if (${Me.Level}>=6 && ${Me.Book[${Spell[Root].RankName}]}) {
-		/varset RootSpell ${Spell[Root].RankName}
-	}
+	| /if (${Me.Level}>=61 && ${Me.Book[${Spell[Greater Fetter].RankName}]}) {
+		| /varset RootSpell ${Spell[Greater Fetter].RankName}
+	| } else /if (${Me.Level}>=58 && ${Me.Book[${Spell[Fetter].RankName}]}) {
+		| /varset RootSpell ${Spell[Fetter].RankName}
+	| } else /if (${Me.Level}>=45 && ${Me.Book[${Spell[Paralyzing Earth].RankName}]}) {
+		| /varset RootSpell ${Spell[Paralyzing Earth].RankName}
+	| } else /if (${Me.Level}>=39 && ${Me.Book[${Spell[Immobilize].RankName}]}) {
+		| /varset RootSpell ${Spell[Immobilize].RankName}
+	| } else /if (${Me.Level}>=25 && ${Me.Book[${Spell[Instill].RankName}]}) {
+		| /varset RootSpell ${Spell[Instill].RankName}
+	| } else /if (${Me.Level}>=6 && ${Me.Book[${Spell[Root].RankName}]}) {
+		| /varset RootSpell ${Spell[Root].RankName}
+	| }
 /return 
 |----------------------------------------------------------------------------
 |- SUB: Bind Set Var Int resets various interger settings from ini file
@@ -1774,16 +1776,16 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 				/echo \aw Resetting UseDicho to \ar OFF
 				/varset UseDicho 0
 				/call LoadSpellBar
-			}
-		} else /if (${IName.Equal[BringYourOwnSpells]}) {
-			/if (!${BringYourOwnSpells}) {
-				/echo \aw Setting BringYourOwnSpells to \ag ON
-				/varset BringYourOwnSpells 1
-			} else {
-				/echo \aw Resetting BringYourOwnSpells to \ar OFF
-				/varset BringYourOwnSpells 0
-				/call LoadSpellBar
-			}
+			| }
+		| } else /if (${IName.Equal[BringYourOwnSpells]}) {
+			| /if (!${BringYourOwnSpells}) {
+				| /echo \aw Setting BringYourOwnSpells to \ag ON
+				| /varset BringYourOwnSpells 1
+			| } else {
+				| /echo \aw Resetting BringYourOwnSpells to \ar OFF
+				| /varset B/ringYourOwnSpells 0
+				| /call LoadSpellBar
+			| }
 		} else /if (${IName.Equal[DoNDTBuff]}) {
 			/if (!${DoNDTBuff}) {
 				/echo \aw Setting DoNDTBuff to \ag ON
