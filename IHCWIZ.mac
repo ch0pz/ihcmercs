@@ -4,20 +4,25 @@
 |- Updated: 4/25/2019
 |- Credit: Noobhax0r, Maskoi, Ctaylor, Treehuggindruid, Devstator. A lot of ideas were borrowed and modified from their macros
 |- Thanks to Saar for additions and bug fixes
+
 #turbo 80
+
 #include IHCMercs\ihcsubs.inc
 #include IHCMercs\ihcwizutil.inc
 #include IHCMercs\ihcevents.inc
+
 #warning
 #Chat group
 #Chat tell
 #Chat raid
 #Event MezBroke          "#1# has been awakened by #2#."
+
 #bind SetVarInt	/setvarint
 #bind CmdList	/ihchelp
 
 Sub Main
 	/delay ${Math.Rand[10]}
+
 	/doevents flush
 	/declare MacroName       		string outer IHCWIZ
 	/declare MacroPath       		string outer IHCMercs\IHCWIZ
@@ -82,6 +87,7 @@ Sub Main
 	/doevents
  /goto :mainloop   
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: DebuffMobs
 |---------------------------------------------------------------------------- 
@@ -99,6 +105,7 @@ Sub DebuffMobs
 		}
 	}
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: AANDisc
 |---------------------------------------------------------------------------- 
@@ -174,6 +181,7 @@ Sub AANDisc
 		/delay 5
 	}
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: Combatdps
 |---------------------------------------------------------------------------- 
