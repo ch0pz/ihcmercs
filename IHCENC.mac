@@ -103,6 +103,7 @@ Sub DebuffMobs
 	/if (${Me.GroupAssistTarget.ID} && ${Me.GroupAssistTarget.ID}!=${Target.ID}) {
 		/call FindTarget
 	}
+
 	/if (${StripBuffs} && (!${Me.Casting.ID}) && ${Target.Beneficial.ID} && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 		/if (${Me.AltAbilityReady[${StripBuffSpell}]}) {
 			/alt act ${Me.AltAbility[${StripBuffSpell}].ID}
@@ -112,6 +113,7 @@ Sub DebuffMobs
 			/call CastSpell "${StripBuffSpell}" ${autotargetid} dbf
 		}
 	}
+
 	/if (${DoBlurr} && ${Me.PctAggro}>=${BlurrAggroPct}) /call ManageAggro "BlrFlg"
 		
  |- TASH AA CODE
@@ -127,6 +129,7 @@ Sub DebuffMobs
 	}				 
 		
 	/if (${DoBlurr} && ${Me.PctAggro}>=${BlurrAggroPct}) /call ManageAggro "BlrFlg"
+
 	/if (${DoSlow} && (!${Target.Slowed.ID}) && (!${Me.Casting.ID}) && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 		/if (${Me.AltAbilityReady[Slowing Helix]} && !${DoCripple}) {
 			/alt act ${Me.AltAbility[Slowing Helix].ID}
@@ -136,12 +139,17 @@ Sub DebuffMobs
 			/call CastSpell "${SlowSpell}" ${autotargetid} dbf
 		}
 	}
+
 	/if (${DoBlurr} && ${Me.PctAggro}>=${BlurrAggroPct}) /call ManageAggro "BlrFlg"
+
 	/if (${DoCripple} && ${Me.SpellReady[${CrippleSpell1}]} && (!${Target.Crippled.ID}) && (!${Me.Casting.ID}) && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 		/call CastSpell "${CrippleSpell1}" ${autotargetid} dbf
 	}
+
 	/if (${DoBlurr} && ${Me.PctAggro}>=${BlurrAggroPct}) /call ManageAggro "BlrFlg"
+
 	/varset groupbufftimer 1m
+	
 /return
 
 |----------------------------------------------------------------------------
