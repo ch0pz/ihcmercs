@@ -149,23 +149,24 @@ Sub DebuffMobs
 	/if (${DoBlurr} && ${Me.PctAggro}>=${BlurrAggroPct}) /call ManageAggro "BlrFlg"
 
 	/varset groupbufftimer 1m
-	
 /return
 
 |----------------------------------------------------------------------------
 |- SUB: AANDisc
 |---------------------------------------------------------------------------- 
 Sub AANDisc
-|-Defensive AA's for Name Mobs or Low HP on MA
+ |-Defensive AA's for Name Mobs or Low HP on MA
 	/if (${Me.AltAbilityReady[Glyphy Spray]} && ((${Target.Named} && ${Target.Level}>${Me.Level}) || (${Group.Member[${assistname}]${TnKCond}PctHPs}<45 && ${Group.Member[${assistname}]${TnKCond}PctHPs}>5))) {
 		/alt act ${Me.AltAbility[Glyphy Spray].ID}
 		/delay 10
 	}
+
 	/if (${Me.AltAbilityReady[Reactive Rune]} && ((${Target.Named} && ${Target.Level}>${Me.Level}) || (${Group.Member[${assistname}]${TnKCond}PctHPs}<45 && ${Group.Member[${assistname}]${TnKCond}PctHPs}>5))) {
 		/alt act ${Me.AltAbility[Reactive Rune].ID}
 		/delay 10
 	}
-|-Constant Use AA's
+
+ |-Constant Use AA's
 	/if (${Me.AltAbilityReady[Focus of Arcanum]}) {
 		/alt act ${Me.AltAbility[Focus of Arcanum].ID}
 		/delay 10
@@ -173,8 +174,10 @@ Sub AANDisc
 		/alt act ${Me.AltAbility[Chromatic Haze].ID}
 		/delay 10
 	}
+
 	/varset groupbufftimer 1m
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: Combatdps
 |---------------------------------------------------------------------------- 
