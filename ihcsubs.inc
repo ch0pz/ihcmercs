@@ -6,6 +6,7 @@
 |- Updated: 4/25/2019
 |- Modified version of the above file to maintain compatability with the automac's / kissassist
 |- Modified to fit the IHC mac's and mod's better
+|- Testing 3
 #Event Camping          "#*#seconds to prepare your camp."
 #Event GainSomething	"#*#You have gained|#1#|"
 #Event TaskUpdate		"#*#Your task |#1#| has been updated#*#" 
