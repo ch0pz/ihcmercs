@@ -228,7 +228,7 @@ Sub INIChanges
     /call SetIni Mez MezMaxLevel           	int ${MezMaxLevel}
     /call SetIni Mez MezStopHPs            	int ${MezStopHPs}
 	/call SetIni Mez UseTwinCastMez         int ${UseTwinCastMez}
-	/call SetIni Options BringYourOwnSpells	int ${BringYourOwnSpells}
+	| /call SetIni Options BringYourOwnSpells	int ${BringYourOwnSpells}
 	/call SetIni Options DoNDTBuff			int ${DoNDTBuff}
 	/call SetIni Rune UseMeleeRune			int ${UseMeleeRune}
 	/call SetIni Rune UseAggroRune			int ${UseAggroRune}												 
