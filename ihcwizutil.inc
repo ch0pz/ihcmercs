@@ -6,8 +6,8 @@
 |-Setup Variable Environment
 |--------------------------------------------------------------------------------------
 Sub WizSetup
-|-Create Alias
-	|-- Toggles
+ |-Create Alias
+ |-- Toggles
 	| /squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
 	/squelch /alias /tglalliance	/setvarint Toggle UseAlliance
 	/squelch /alias /tglaoe			/setvarint Toggle UseAoE
@@ -23,15 +23,15 @@ Sub WizSetup
 	|-- Sets
 	/squelch /alias /autodebuffat	/setvarint Set AutoDebuffAt
 	/squelch /alias /harvestat 		/setvarint Set HarvestManaPct
-|-Declare AA and Spell variables
-  |-Buffs
+ |-Declare AA and Spell variables
+ |-Buffs
 	/declare SelfHPBuff				string	outer	"NULL"
 	/declare ACPyromancy			string	outer	"NULL"
 	/declare FamiliarBuff			string	outer	"NULL"
 	/declare SelfRune1				string	outer	"NULL"
-  |-Debuff
+ |-Debuff
 	/declare StripBuffSpell			string	outer	"NULL"
-  |-DPS
+ |-DPS
 	/declare DPSRecastTimer			timer 	outer	0
 	/declare AllianceSpell			string	outer	"NULL"
 	/declare DichoSpell				string 	outer	"NULL"
@@ -48,17 +48,17 @@ Sub WizSetup
 	/declare WildNuke				string 	outer	"NULL"
 	/declare FastNuke1				string 	outer	"NULL"
 	/declare GeneralNuke1			string 	outer	"NULL"
-  |-Pet
+ |-Pet
 	/declare PetSpell				string	outer	"NULL"
 	/declare PetAssistTimer			timer 	outer	0
-  |-Utility
+ |-Utility
 	/declare RootSpell				string	outer	"NULL" 
 	/declare SnareSpell				string	outer	"NULL"
 	/declare EvacSpell				string	outer	"NULL"
 	/declare HarvestSpell			string 	outer	"NULL"
 	/declare StunSpell				string 	outer	"NULL"
 	/declare JoltSpell				string 	outer	"NULL"
-|-Config Options	
+ |-Config Options	
 	/call LoadCommonConfig
 	/call LoadIni Combat AllowMezBreak		 	int 0
 	/call LoadIni Combat DoDPS					int 1
@@ -76,7 +76,6 @@ Sub WizSetup
 	/call LoadIni Options EmergencyEvac			int 0
 	/call LoadIni Options HarvestManaPct		int 75
 	/call LoadIni Options StickHow				string NULL
-	
 	/declare AANukeRecasttimer		timer outer 0
 	/declare SpellSet				string outer auto
 	/declare spellmisc 				int outer 8
@@ -126,7 +125,6 @@ Sub CheckOptions
 | SUB: LoadSpellBar
 |------------------------------------------------------------------------------------------ *|
 Sub LoadSpellBar
-
 	/if (${Me.Standing}) {
 		/sit
 		/delay 10 ${Me.Sitting}
