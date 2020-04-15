@@ -386,6 +386,7 @@ Sub BuffCheck
 
 		/next l
 	}
+
 |==============================
 |	ADDED TANK AGRO RUNE CHECK
 |==============================
@@ -413,11 +414,7 @@ Sub BuffCheck
 		/varset ReTargetDelay 1m
 	}
 /return												 
-	/if (${Group.MainAssist.ID} && ${ReTargetDelay}==0 && ${Target.ID}!=${Group.MainAssist.ID}) {
-		/target id ${Group.MainAssist.ID}
-		/varset ReTargetDelay 1m
-	}
-/return
+
 |----------------------------------------------------------------------------
 |- SUB: BuffGroup
 |---------------------------------------------------------------------------- 
