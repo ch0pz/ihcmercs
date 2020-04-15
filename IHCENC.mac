@@ -391,25 +391,27 @@ Sub BuffCheck
 |	ADDED TANK AGRO RUNE CHECK
 |==============================
 	/if (${AggroRuneCount}>=1 && ${Me.SpellReady[${AggroRune}]} && ${Cast.Status.Equal[I]} && ${Me.Book[${AggroRune}]} && ${Me.CurrentMana}>${Spell[${AggroRune}].Mana} && (${AggroRuneRecastTimer}==0) && ${DoNDTBuff}) {
-		/declare j int local 
-		/for j 1 to ${AggroRuneCount}
-			/if ((${AggroRuneTimer${j}}==0) && ${Me.SpellReady[${AggroRune}]} && (${AggroRuneRecastTimer}==0)) {
-				/target id ${AggroRuneID${j}}
-				/delay 10
-				/delay 5
+			/declare j int local 
+			/for j 1 to ${AggroRuneCount}
+
+		/if ((${AggroRuneTimer${j}}==0) && ${Me.SpellReady[${AggroRune}]} && (${AggroRuneRecastTimer}==0)) {
+					/target id ${AggroRuneID${j}}
+					/delay 10
+					/delay 5
 				/if (${Target.ID}==${AggroRuneID${j}} && ${Target.Buff[${AggroRune}].ID}) {
 					/varset AggroRuneTimer${j} ${Target.BuffDuration[${AggroRune}].TotalSeconds}s
+
 				} else /if (${Target.ID}==${AggroRuneID${j}} && !${Target.Buff[${AggroRune}].ID} && (${Spell[${AggroRune}].Stacks})) {
-					/call SpellQueue "${AggroRune}" ${AggroRuneID${j}}
-					/varset AggroRuneRecastTimer 60s
-					/varset AggroRuneTimer${j} 152s
-				} else {
-					/varset AggroRuneTimer${j} 90s
-				}
-			}
+							/call SpellQueue "${AggroRune}" ${AggroRuneID${j}}
+							/varset AggroRuneRecastTimer 60s
+							/varset AggroRuneTimer${j} 152s
+						} else {
+							/varset AggroRuneTimer${j} 90s
+						}
+		}
 		/next j
 	}
-	
+
 	/if (${Group.MainAssist.ID} && ${ReTargetDelay}==0 && ${Target.ID}!=${Group.MainAssist.ID}) {
 		/target id ${Group.MainAssist.ID}
 		/varset ReTargetDelay 1m
