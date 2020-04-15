@@ -331,7 +331,7 @@ Sub ChangeVarInt(string ISection, string IName, int IVar)
 |- DEPRECATED USE THE TOGGLE VARIABLE SUB
 |-------------------------------------------------------------------------------------
 Sub Bind_ToggleVariable(string Command, string Command2, string Command3)
-    /echo \ar TOGGLE VARIABLE BIND IS DEPRECATED - REPLACE ALIAS WITH BIND AND USE ToggleVariable Subroutine \aw
+    | /echo \ar TOGGLE VARIABLE BIND IS DEPRECATED - REPLACE ALIAS WITH BIND AND USE ToggleVariable Subroutine \aw
     /declare i int local
 	/declare OnOff local
     |- Toggle Variables & Set Variables
