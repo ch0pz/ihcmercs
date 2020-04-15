@@ -26,39 +26,39 @@ Sub EnchSetup
 	/squelch /alias /tglslow		/setvarint Toggle DoSlow
 	/squelch /alias /tglstrip		/setvarint Toggle StripBuffs
 |-- Sets
-	/squelch /alias /autodebuffat		/setvarint Set AutoDebuffAt
+	/squelch /alias /autodebuffat	/setvarint Set AutoDebuffAt
 	/squelch /alias /blurpct		/setvarint Set BlurrAggroPct
-	/squelch /alias /maxmezcount		/setvarint Set MaxMezCount
+	/squelch /alias /maxmezcount	/setvarint Set MaxMezCount
 	/squelch /alias /mezaecount		/setvarint Set MezAECount
-	/squelch /alias /mezmaxlevel		/setvarint Set MezMaxLevel
-	/squelch /alias /mezminlevel		/setvarint Set MezMinLevel
+	/squelch /alias /mezmaxlevel	/setvarint Set MezMaxLevel
+	/squelch /alias /mezminlevel	/setvarint Set MezMinLevel
 	/squelch /alias /mezradius		/setvarint Set MezRadius
-	/squelch /alias /mezstartcount		/setvarint Set MezStartCount
+	/squelch /alias /mezstartcount	/setvarint Set MezStartCount
 	/squelch /alias /mezstophp		/setvarint Set MezStopHPs	
 |-Declare AA and Spell variables
 |-Buffs
-	/declare AuraBuff1			string	outer	"NULL"
+	/declare AuraBuff1				string	outer	"NULL"
 	/declare AuraBuff1Name			string 	outer 	"NULL"
 	/declare AuraRecastDelay		timer 	outer	0
-	/declare AuraBuff2			string 	outer	"NULL"
+	/declare AuraBuff2				string 	outer	"NULL"
 	/declare AuraBuff2Name			string 	outer	"NULL"
-	/declare GroupHaste			string 	outer	"NULL"
-	/declare GroupMana			string 	outer	"NULL"
-	/declare MezBuff			string 	outer	"NULL"
-	/declare ProcBuff			string 	outer	"NULL"
+	/declare GroupHaste				string 	outer	"NULL"
+	/declare GroupMana				string 	outer	"NULL"
+	/declare MezBuff				string 	outer	"NULL"
+	/declare ProcBuff				string 	outer	"NULL"
 	/declare ProcBuffCount			int		outer	0
-	/declare ProcBuffRecastTimer		timer	outer	0
+	/declare ProcBuffRecastTimer	timer	outer	0
 	/declare AggroRuneCount			int		outer	0
-	/declare AggroRuneRecastTimer		timer	outer	0								   										
-	/declare SelfHPBuff			string	outer	"NULL"
-	/declare SelfRune1			string	outer	"NULL"
-	/declare SelfRune2			string	outer	"NULL"
+	/declare AggroRuneRecastTimer	timer	outer	0								   										
+	/declare SelfHPBuff				string	outer	"NULL"
+	/declare SelfRune1				string	outer	"NULL"
+	/declare SelfRune2				string	outer	"NULL"
 	/declare SingleHaste			string	outer	"NULL"
-	/declare SingleMana			string	outer	"NULL"
-	/declare SingleRune			string	outer	"NULL"
-	/declare GroupRune			string	outer	"NULL"
-	/declare AggroRune			string	outer	"NULL"
-	/declare AggroBuff			string	outer	"NULL"
+	/declare SingleMana				string	outer	"NULL"
+	/declare SingleRune				string	outer	"NULL"
+	/declare GroupRune				string	outer	"NULL"
+	/declare AggroRune				string	outer	"NULL"
+	/declare AggroBuff				string	outer	"NULL"
 	/declare SingleSpellShield		string	outer	"NULL"
 	/declare GroupSpellShield		string	outer	"NULL"
 	/declare SingleDoTShield		string	outer	"NULL"
@@ -67,7 +67,7 @@ Sub EnchSetup
 	/declare SelfGuardShield		string	outer	"NULL"
 	/declare GroupAuspiceBuff		string	outer	"NULL"
   |-CC
-	/declare AEMezReset			int	outer	0
+	/declare AEMezReset				int	outer	0
 	/declare PBAEStunSpell			string	outer	"NULL"
 	/declare TargetAEStun			string	outer	"NULL"
 	/declare SingleStunSpell1		string	outer	"NULL"
@@ -96,15 +96,15 @@ Sub EnchSetup
 	/declare NukeSpell3				string 	outer	"NULL"
 	/declare NukeSpell4				string 	outer	"NULL"
   |-Pet
-	/declare PetSpell		string	outer	"NULL"
-	/declare PetBuffSpell		string	outer	"NULL"
-	/declare PetAssistTimer		timer 	outer	0
+	/declare PetSpell				string	outer	"NULL"
+	/declare PetBuffSpell			string	outer	"NULL"
+	/declare PetAssistTimer			timer 	outer	0
   |- Mez
 	/declare LastMobCount           int	outer	0
 	/declare MezAEClosest           int	outer	0
-	/declare MezAEAA		string	outer	"NULL"
-	/declare MezAESpell		string	outer	"NULL"
-	/declare MezAESpellFast		string	outer	"NULL"
+	/declare MezAEAA				string	outer	"NULL"
+	/declare MezAESpell				string	outer	"NULL"
+	/declare MezAESpellFast			string	outer	"NULL"
 	/declare MezAETimer             timer	outer	0
 	/declare MezBroke               int	outer	0
 	/declare MezCheckElements       int	outer	0
@@ -114,9 +114,9 @@ Sub EnchSetup
 	/declare MezMobCount            int	outer	0
 	/declare MezMobFlag             int	outer	0
 	/declare MezMod                 int	outer	0
-	/declare MezPBAESpell		string	outer	"NULL"
-	/declare MezSpell		string	outer	"NULL"
-	/declare MezSpellFast		string	outer	"NULL"
+	/declare MezPBAESpell			string	outer	"NULL"
+	/declare MezSpell				string	outer	"NULL"
+	/declare MezSpellFast			string	outer	"NULL"
 	/declare MezWait                int		outer	0
 	/declare MezWatchRadius	        int		outer	0
 	/declare MobCount               int		outer	0
