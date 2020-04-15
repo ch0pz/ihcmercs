@@ -298,87 +298,92 @@ Sub BurnRoutine
 		/alt act ${Me.AltAbility[Calculated Insanity].ID}
 		/delay 10
 	}
-	
+
 /return
 |----------------------------------------------------------------------------
 |- SUB: BuffCheck
 |---------------------------------------------------------------------------- 
 Sub BuffCheck
+
 	/if (!${Me.Buff[${SelfHPBuff}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${SelfHPBuff}].Stacks}) && ${Me.Book[${SelfHPBuff}]} && ${Me.CurrentMana}>${Spell[${SelfHPBuff}].Mana}) {
-				/call SpellQueue "${SelfHPBuff}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[${GroupMana}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupMana}].Stacks}) && ${Me.Book[${GroupMana}]} && ${Me.CurrentMana}>${Spell[${GroupMana}].Mana}) {
-				/call SpellQueue "${GroupMana}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[${GroupHaste}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupHaste}].Stacks}) && ${Me.Book[${GroupHaste}]} && ${Me.CurrentMana}>${Spell[${GroupHaste}].Mana}) {
-				/call SpellQueue "${GroupHaste}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[${MezBuff}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${MezBuff}].Stacks}) && ${Me.Book[${MezBuff}]} && ${Me.CurrentMana}>${Spell[${MezBuff}].Mana}) {
-				/call SpellQueue "${MezBuff}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[Eldritch Rune].ID} && !${Me.Buff[${SelfRune1}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${SelfRune1}].Stacks}) && ${Me.Book[${SelfRune1}]} && ${Me.CurrentMana}>${Spell[${SelfRune1}].Mana}) {
-				/call SpellQueue "${SelfRune1}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[${SelfRune2}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${SelfRune2}].Stacks}) && ${Me.Book[${SelfRune2}]} && ${Me.CurrentMana}>${Spell[${SelfRune2}].Mana}) {
-				/call SpellQueue "${SelfRune2}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[${GroupSpellShield}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupSpellShield}].Stacks}) && ${Me.Book[${GroupSpellShield}]} && ${Me.CurrentMana}>${Spell[${GroupSpellShield}].Mana} && ${UseSpellRune}) {
-				/call SpellQueue "${GroupSpellShield}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[${GroupDoTShield}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupDoTShield}].Stacks}) && ${Me.Book[${GroupDoTShield}]} && ${Me.CurrentMana}>${Spell[${GroupDoTShield}].Mana} && ${UseDoTRune}) {
-				/call SpellQueue "${GroupDoTShield}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[${GroupAuspiceBuff}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupAuspiceBuff}].Stacks}) && ${Me.Book[${GroupAuspiceBuff}]} && ${Me.CurrentMana}>${Spell[${GroupAuspiceBuff}].Mana} && ${UseAuspice}) {
-				/call SpellQueue "${GroupAuspiceBuff}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Buff[Veil of Mindshadow].ID} && ${Cast.Status.Equal[I]} && (${Spell[Veil of Mindshadow].Stacks}) && ${Me.AltAbilityReady[Veil of Mindshadow]}) {
-				/alt act 791
-				/delay 5
-				/varset spellrememtimer 5s 
-	} else /if (${Bool[${AuraBuff1}]} && ${Cast.Status.Equal[I]} && (${AuraRecastDelay}==0) && !${Me.Aura[1].Name.Find[${AuraBuff1Name}]} && !${Me.Aura[2].Name.Find[${AuraBuff1Name}]} && ${Me.Book[${AuraBuff1}]} && ${Me.CurrentMana}>${Spell[${AuraBuff1}].Mana}) {
-				/varset AuraRecastDelay 10s
-				/call SpellQueue "${AuraBuff1}" ${Me.ID}
-				/varset spellrememtimer 5s 
-				/delay 5
-	} else /if (${Bool[${AuraBuff2}]} && ${Cast.Status.Equal[I]} && (${AuraRecastDelay}==0) && !${Me.Aura[1].Name.Find[${AuraBuff2Name}]} && !${Me.Aura[2].Name.Find[${AuraBuff2Name}]} && ${Me.Book[${AuraBuff2}]} && ${Me.CurrentMana}>${Spell[${AuraBuff2}].Mana}) {
-				/varset AuraRecastDelay 10s
-				/call SpellQueue "${AuraBuff2}" ${Me.ID}
-				/varset spellrememtimer 5s 
-				/delay 5
-	} else /if (${UsePet} && !${UseCharmPet} && !${Me.Pet.ID} && ${Cast.Status.Equal[I]} && ${Me.Book[${PetSpell}]} && ${Me.CurrentMana}>${Spell[${PetSpell}].Mana}) {
-				/call SpellQueue "${PetSpell}" ${Me.ID}
-				/varset spellrememtimer 5s 
-	} else /if (${UsePet} && !${UseCharmPet} && ${Me.Pet.ID} && ${Cast.Status.Equal[I]} && ${Me.Book[${PetBuffSpell}]} && ${Me.CurrentMana}>${Spell[${PetBuffSpell}].Mana} && !${Me.Pet.Buff[${PetBuffSpell}]}) {
-				/call SpellQueue "${PetBuffSpell}" ${Me.Pet.ID}
-				/varset spellrememtimer 5s 
-	} else /if (${Me.PctMana}>90 && !${FindItem[Azure Mind Crystal].ID} && !${Cursor.Name.Equal[Azure Mind Crystal]} && ${Me.AltAbilityReady[Azure Mind Crystal]}) {
-				/alt act ${Me.AltAbility[Azure Mind Crystal].ID}
-				/delay 20s !${Me.Casting.ID}
-				/delay 2s ${Cursor.Name.Equal[Azure Mind Crystal]}
-				/autoinventory
-				/delay 2s
-				/varset spellrememtimer 5s 
-	} else /if (!${Me.Gem[${spellmisc}].Name.Equal[${miscspellremem}]} && ${spellrememtimer}==0 && ${miscspellremem.NotEqual[NULL]}) {
-				/call LoadSpellGem "${miscspellremem}" ${spellmisc}
-				/varset spellrememtimer 5s 
-	}
+					/call SpellQueue "${SelfHPBuff}" ${Me.ID}
+					/varset spellrememtimer 5s
+			} else /if (!${Me.Buff[${GroupMana}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupMana}].Stacks}) && ${Me.Book[${GroupMana}]} && ${Me.CurrentMana}>${Spell[${GroupMana}].Mana}) {
+					/call SpellQueue "${GroupMana}" ${Me.ID}
+					/varset spellrememtimer 5s 
+			} else /if (!${Me.Buff[${GroupHaste}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupHaste}].Stacks}) && ${Me.Book[${GroupHaste}]} && ${Me.CurrentMana}>${Spell[${GroupHaste}].Mana}) {
+					/call SpellQueue "${GroupHaste}" ${Me.ID}
+					/varset spellrememtimer 5s 
+			} else /if (!${Me.Buff[${MezBuff}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${MezBuff}].Stacks}) && ${Me.Book[${MezBuff}]} && ${Me.CurrentMana}>${Spell[${MezBuff}].Mana}) {
+					/call SpellQueue "${MezBuff}" ${Me.ID}
+					/varset spellrememtimer 5s 
+			} else /if (!${Me.Buff[Eldritch Rune].ID} && !${Me.Buff[${SelfRune1}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${SelfRune1}].Stacks}) && ${Me.Book[${SelfRune1}]} && ${Me.CurrentMana}>${Spell[${SelfRune1}].Mana}) {
+					/call SpellQueue "${SelfRune1}" ${Me.ID}
+					/varset spellrememtimer 5s 
+			} else /if (!${Me.Buff[${SelfRune2}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${SelfRune2}].Stacks}) && ${Me.Book[${SelfRune2}]} && ${Me.CurrentMana}>${Spell[${SelfRune2}].Mana}) {
+					/call SpellQueue "${SelfRune2}" ${Me.ID}
+					/varset spellrememtimer 5s 
+			} else /if (!${Me.Buff[${GroupSpellShield}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupSpellShield}].Stacks}) && ${Me.Book[${GroupSpellShield}]} && ${Me.CurrentMana}>${Spell[${GroupSpellShield}].Mana} && ${UseSpellRune}) {
+					/call SpellQueue "${GroupSpellShield}" ${Me.ID}
+					/varset spellrememtimer 5s 
+			} else /if (!${Me.Buff[${GroupDoTShield}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupDoTShield}].Stacks}) && ${Me.Book[${GroupDoTShield}]} && ${Me.CurrentMana}>${Spell[${GroupDoTShield}].Mana} && ${UseDoTRune}) {
+					/call SpellQueue "${GroupDoTShield}" ${Me.ID}
+					/varset spellrememtimer 5s
+			} else /if (!${Me.Buff[${GroupAuspiceBuff}].ID} && ${Cast.Status.Equal[I]} && (${Spell[${GroupAuspiceBuff}].Stacks}) && ${Me.Book[${GroupAuspiceBuff}]} && ${Me.CurrentMana}>${Spell[${GroupAuspiceBuff}].Mana} && ${UseAuspice}) {
+					/call SpellQueue "${GroupAuspiceBuff}" ${Me.ID}
+					/varset spellrememtimer 5s 
+			} else /if (!${Me.Buff[Veil of Mindshadow].ID} && ${Cast.Status.Equal[I]} && (${Spell[Veil of Mindshadow].Stacks}) && ${Me.AltAbilityReady[Veil of Mindshadow]}) {
+					/alt act 791
+					/delay 5
+					/varset spellrememtimer 5s 
+			} else /if (${Bool[${AuraBuff1}]} && ${Cast.Status.Equal[I]} && (${AuraRecastDelay}==0) && !${Me.Aura[1].Name.Find[${AuraBuff1Name}]} && !${Me.Aura[2].Name.Find[${AuraBuff1Name}]} && ${Me.Book[${AuraBuff1}]} && ${Me.CurrentMana}>${Spell[${AuraBuff1}].Mana}) {
+					/varset AuraRecastDelay 10s
+					/call SpellQueue "${AuraBuff1}" ${Me.ID}
+					/varset spellrememtimer 5s 
+					/delay 5
+			} else /if (${Bool[${AuraBuff2}]} && ${Cast.Status.Equal[I]} && (${AuraRecastDelay}==0) && !${Me.Aura[1].Name.Find[${AuraBuff2Name}]} && !${Me.Aura[2].Name.Find[${AuraBuff2Name}]} && ${Me.Book[${AuraBuff2}]} && ${Me.CurrentMana}>${Spell[${AuraBuff2}].Mana}) {
+					/varset AuraRecastDelay 10s
+					/call SpellQueue "${AuraBuff2}" ${Me.ID}
+					/varset spellrememtimer 5s 
+					/delay 5
+			} else /if (${UsePet} && !${UseCharmPet} && !${Me.Pet.ID} && ${Cast.Status.Equal[I]} && ${Me.Book[${PetSpell}]} && ${Me.CurrentMana}>${Spell[${PetSpell}].Mana}) {
+					/call SpellQueue "${PetSpell}" ${Me.ID}
+					/varset spellrememtimer 5s 
+			} else /if (${UsePet} && !${UseCharmPet} && ${Me.Pet.ID} && ${Cast.Status.Equal[I]} && ${Me.Book[${PetBuffSpell}]} && ${Me.CurrentMana}>${Spell[${PetBuffSpell}].Mana} && !${Me.Pet.Buff[${PetBuffSpell}]}) {
+					/call SpellQueue "${PetBuffSpell}" ${Me.Pet.ID}
+					/varset spellrememtimer 5s 
+			} else /if (${Me.PctMana}>90 && !${FindItem[Azure Mind Crystal].ID} && !${Cursor.Name.Equal[Azure Mind Crystal]} && ${Me.AltAbilityReady[Azure Mind Crystal]}) {
+					/alt act ${Me.AltAbility[Azure Mind Crystal].ID}
+					/delay 20s !${Me.Casting.ID}
+					/delay 2s ${Cursor.Name.Equal[Azure Mind Crystal]}
+					/autoinventory
+					/delay 2s
+					/varset spellrememtimer 5s 
+			} else /if (!${Me.Gem[${spellmisc}].Name.Equal[${miscspellremem}]} && ${spellrememtimer}==0 && ${miscspellremem.NotEqual[NULL]}) {
+					/call LoadSpellGem "${miscspellremem}" ${spellmisc}
+					/varset spellrememtimer 5s 
+			}
+
 	/if (${ProcBuffCount}>=1 && ${Me.SpellReady[${ProcBuff}]} && ${Cast.Status.Equal[I]} && ${Me.Book[${ProcBuff}]} && ${Me.CurrentMana}>${Spell[${ProcBuff}].Mana} && (${ProcBuffRecastTimer}==0) && ${DoNDTBuff}) {
-		/declare l int local
-		/for l 1 to ${ProcBuffCount}
+				/declare l int local
+				/for l 1 to ${ProcBuffCount}
+
 			/if ((${ProcBuffTimer${l}}==0) && ${Me.SpellReady[${ProcBuff}]} && (${ProcBuffRecastTimer}==0)) {
 				/target id ${ProcBuffID${l}}
 				/delay 10
 				/delay 5
+
 				/if (${Target.ID}==${ProcBuffID${l}} && ${Target.Buff[${ProcBuff}].ID}) {
-					/varset ProcBuffTimer${l} ${Target.BuffDuration[${ProcBuff}].TotalSeconds}s
-				} else /if (${Target.ID}==${ProcBuffID${l}} && !${Target.Buff[${ProcBuff}].ID} && (${Spell[${ProcBuff}].Stacks})) {
-					/call SpellQueue "${ProcBuff}" ${ProcBuffID${l}}
-					/varset ProcBuffRecastTimer 60s
-					/varset ProcBuffTimer${l} 1080s
-				} else {
-					/varset ProcBuffTimer${l} 190s
-				}
+						/varset ProcBuffTimer${l} ${Target.BuffDuration[${ProcBuff}].TotalSeconds}s
+					} else /if (${Target.ID}==${ProcBuffID${l}} && !${Target.Buff[${ProcBuff}].ID} && (${Spell[${ProcBuff}].Stacks})) {
+						/call SpellQueue "${ProcBuff}" ${ProcBuffID${l}}
+						/varset ProcBuffRecastTimer 60s
+						/varset ProcBuffTimer${l} 1080s
+					} else {
+						/varset ProcBuffTimer${l} 190s
+					}
 			}
+
 		/next l
 	}
 |==============================
