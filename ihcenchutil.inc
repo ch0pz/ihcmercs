@@ -1,15 +1,15 @@
 |- ihcenchutil.inc
 |- Version 2.0
 |- Updated: 4/25/2019
-|- Testing if this works
-|- This is the second test
+
+
 |--------------------------------------------------------------------------------------
 |-Setup Variable Environment
 |--------------------------------------------------------------------------------------
 Sub EnchSetup
-|-Create Alias
-|-- Toggles
-|- /squelch /alias /byos				/setvarint Toggle BringYourOwnSpells
+ |-Create Alias
+ |-- Toggles
+ |- /squelch /alias /byos				/setvarint Toggle BringYourOwnSpells
 	/squelch /alias /charmstun			/setvarint Toggle CharmPreStun
 	/squelch /alias /charmtash			/setvarint Toggle CharmPreTash
 	/squelch /alias /tglblur			/setvarint Toggle DoBlurr
@@ -25,7 +25,7 @@ Sub EnchSetup
 	/squelch /alias /tgltash			/setvarint Toggle DoTash
 	/squelch /alias /tglslow			/setvarint Toggle DoSlow
 	/squelch /alias /tglstrip			/setvarint Toggle StripBuffs
-|-- Sets
+ |-- Sets
 	/squelch /alias /autodebuffat		/setvarint Set AutoDebuffAt
 	/squelch /alias /blurpct			/setvarint Set BlurrAggroPct
 	/squelch /alias /maxmezcount		/setvarint Set MaxMezCount
@@ -35,8 +35,8 @@ Sub EnchSetup
 	/squelch /alias /mezradius			/setvarint Set MezRadius
 	/squelch /alias /mezstartcount		/setvarint Set MezStartCount
 	/squelch /alias /mezstophp			/setvarint Set MezStopHPs	
-|-Declare AA and Spell variables
-|-Buffs
+ |-Declare AA and Spell variables
+ |-Buffs
 	/declare AuraBuff1					string	outer	"NULL"
 	/declare AuraBuff1Name				string 	outer 	"NULL"
 	/declare AuraRecastDelay			timer 	outer	0
@@ -66,25 +66,25 @@ Sub EnchSetup
 	/declare SingleMeleeShield			string	outer	"NULL"
 	/declare SelfGuardShield			string	outer	"NULL"
 	/declare GroupAuspiceBuff			string	outer	"NULL"
-  |-CC
+ |-CC
 	/declare AEMezReset					int		outer	0
 	/declare PBAEStunSpell				string	outer	"NULL"
 	/declare TargetAEStun				string	outer	"NULL"
 	/declare SingleStunSpell1			string	outer	"NULL"
-  |-Charm
+ |-Charm
 	/declare CharmSpell1				string 	outer	"NULL"
 	/declare CharmMaxLvl				int		outer	0
 	/declare CharmMinMobs				int		outer	2
 	/declare CharmDelay					timer	outer 	0
 	/declare CharmedID					int		outer	0
 	/declare OldCharmedID				int		outer	0
-  |-Debuff
+ |-Debuff
 	/declare CrippleSpell1				string	outer	"NULL"
 	/declare SlowSpell					string	outer	"NULL"
 	/declare StripBuffSpell				string	outer	"NULL"
 	/declare TashSpell					string 	outer 	"NULL"
 	/declare ManaDrainSpell1			string 	outer 	"NULL"
-  |-DPS
+ |-DPS
 	/declare DichoSpell					string 	outer	"NULL"
 	/declare DoTSpell1					string 	outer	"NULL"
 	/declare DoTSpell2					string 	outer	"NULL"
@@ -95,11 +95,11 @@ Sub EnchSetup
 	/declare NukeSpell2					string 	outer	"NULL"
 	/declare NukeSpell3					string 	outer	"NULL"
 	/declare NukeSpell4					string 	outer	"NULL"
-  |-Pet
+ |-Pet
 	/declare PetSpell					string	outer	"NULL"
 	/declare PetBuffSpell				string	outer	"NULL"
 	/declare PetAssistTimer				timer 	outer	0
-  |- Mez
+ |- Mez
 	/declare LastMobCount           	int		outer	0
 	/declare MezAEClosest           	int		outer	0
 	/declare MezAEAA					string	outer	"NULL"
@@ -122,14 +122,13 @@ Sub EnchSetup
 	/declare MobCount               	int		outer	0
 	/declare MobFlag                	int		outer	1
 	/declare NewTargetAdd				int		outer	0
-  |-Utility
-	/declare BlurSpell		string	outer	"NULL"
-	/declare AEBlurSpell		string	outer	"NULL"
-	/declare CalmSpell		string	outer	"NULL"
-	|- /declare FearSpell		string	outer	"NULL"
-	|- /declare RootSpell		string	outer	"NULL" 
-
-|-Config Options	
+ |-Utility
+	/declare BlurSpell					string	outer	"NULL"
+	/declare AEBlurSpell				string	outer	"NULL"
+	/declare CalmSpell					string	outer	"NULL"
+	|- /declare FearSpell				string	outer	"NULL"
+	|- /declare RootSpell				string	outer	"NULL" 
+ |-Config Options	
 	/call LoadCommonConfig
 	/call LoadIni Charm UseCharmPet		 		int 0
 	/call LoadIni Charm CharmMinLvl				int 0
@@ -172,7 +171,7 @@ Sub EnchSetup
 	/call LoadIni Rune SpellRuneHeal			int 0
 	/call LoadIni Rune DoTRuneHeal				int 0
 	/varcalc MezWatchRadius ${MezRadius}*2
-	|-Set AA DurationMod for mez timer from Spell Casting Reinforcement AA
+ |-Set AA DurationMod for mez timer from Spell Casting Reinforcement AA
     /if (${Me.AltAbility[Mesmerization Mastery].Rank}==1) /varset MezMod 6
     /if (${Me.AltAbility[Mesmerization Mastery].Rank}==2) /varset MezMod 12
     /if (${Me.AltAbility[Mesmerization Mastery].Rank}==3) /varset MezMod 18
@@ -187,13 +186,12 @@ Sub EnchSetup
 		/alt act 25
 		/delay 5
 	}
-|- Below Code is only needed for using ihcxtenchmez.inc
-|-	/declare MezCount[13]           			int         outer 	0
-|-	/declare MezArray[50,3]			            string      outer       NULL
-|-	/declare DebugMez							int			outer	0
-|-	/declare DEBUGALL							int 		outer	0
-
-|-	/if (${MezOn}) /call CreateTimersMez
+ |- Below Code is only needed for using ihcxtenchmez.inc
+	|/declare MezCount[13]           			int         outer 	0
+	|/declare MezArray[50,3]			            string      outer       NULL
+	|/declare DebugMez							int			outer	0
+	|/declare DEBUGALL							int 		outer	0
+	|/if (${MezOn}) /call CreateTimersMez
 /return
 |----------------------------------------------------------------------------
 |- SUB: INIChanges
