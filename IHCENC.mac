@@ -429,32 +429,33 @@ Sub BuffGroup
 		/for bmember 0 to ${Group}
 
 	/if (${Group.Member[${bmember}].Distance}<100 && !${Group.Member[${bmember}].OtherZone} && (!${Me.Casting.ID}) && ${DanNet.Peers[${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower}]}) {
-			/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Me.Buff[${GroupHaste}].ID" "tmpbuffid" "int"
-			/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Spell[${GroupHaste}].Stacks" "tmpstackcheck" "bool"
+		/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Me.Buff[${GroupHaste}].ID" "tmpbuffid" "int"
+		/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Spell[${GroupHaste}].Stacks" "tmpstackcheck" "bool"
 
-		/if (!${tmpbuffid} && ${tmpstackcheck} && ${Me.Book[${GroupHaste}]}  && ${Me.CurrentMana}>${Spell[${GroupHaste}].Mana} && !${Select[${Group.Member[${bmember}].Class.ShortName},CLR,SHM,NEC,ENC,WIZ,MAG]}) {
-			/call SpellQueue "${GroupHaste}" ${Group.Member[${bmember}].ID}
-			/varset spellrememtimer 5s
-			/delay 10
-		}
+		 	/if (!${tmpbuffid} && ${tmpstackcheck} && ${Me.Book[${GroupHaste}]}  && ${Me.CurrentMana}>${Spell[${GroupHaste}].Mana} && !${Select[${Group.Member[${bmember}].Class.ShortName},CLR,SHM,NEC,ENC,WIZ,MAG]}) {
+				/call SpellQueue "${GroupHaste}" ${Group.Member[${bmember}].ID}
+				/varset spellrememtimer 5s
+				/delay 10
+		 	}
 
-			/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Me.Buff[${GroupMana}].ID" "tmpbuffid" "int"
-			/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Spell[${GroupMana}].Stacks" "tmpstackcheck" "bool"
+		/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Me.Buff[${GroupMana}].ID" "tmpbuffid" "int"
+		/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Spell[${GroupMana}].Stacks" "tmpstackcheck" "bool"
 
-		/if (!${tmpbuffid} && ${tmpstackcheck} && ${Me.Book[${GroupMana}]} && ${Me.CurrentMana}>${Spell[${GroupMana}].Mana} && !${Select[${Group.Member[${bmember}].Class.ShortName},WAR,ROG,BER,MNK]}) {
-			/call SpellQueue "${GroupMana}" ${Group.Member[${bmember}].ID}
-			/varset spellrememtimer 5s
-			/delay 10
+			/if (!${tmpbuffid} && ${tmpstackcheck} && ${Me.Book[${GroupMana}]} && ${Me.CurrentMana}>${Spell[${GroupMana}].Mana} && !${Select[${Group.Member[${bmember}].Class.ShortName},WAR,ROG,BER,MNK]}) {
+				/call SpellQueue "${GroupMana}" ${Group.Member[${bmember}].ID}
+				/varset spellrememtimer 5s
+				/delay 10
 			}
 
-			/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Me.Buff[${ProcBuff}].ID" "tmpbuffid" "int"
-			/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Spell[${ProcBuff}].Stacks" "tmpstackcheck" "bool"
-			/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Me.Buff[Illusion Benefit Greater Jann].ID" "jaanbuffid" "int"
-		/if (!${tmpbuffid} && !${jaanbuffid} && ${tmpstackcheck} && ${Me.Book[${ProcBuff}]} && ${Me.CurrentMana}>${Spell[${ProcBuff}].Mana} && ${Select[${Group.Member[${bmember}].Class.ShortName},BRD,BST,BER,MNK,PAL,RNG,ROG,SHD,WAR]} && ${DoNDTBuff}) {
+		/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Me.Buff[${ProcBuff}].ID" "tmpbuffid" "int"
+		/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Spell[${ProcBuff}].Stacks" "tmpstackcheck" "bool"
+		/call Gquery ${EverQuest.Server.Lower}_${Group.Member[${bmember}].Name.Lower} "Me.Buff[Illusion Benefit Greater Jann].ID" "jaanbuffid" "int"
+
+			/if (!${tmpbuffid} && !${jaanbuffid} && ${tmpstackcheck} && ${Me.Book[${ProcBuff}]} && ${Me.CurrentMana}>${Spell[${ProcBuff}].Mana} && ${Select[${Group.Member[${bmember}].Class.ShortName},BRD,BST,BER,MNK,PAL,RNG,ROG,SHD,WAR]} && ${DoNDTBuff}) {
 				/call SpellQueue "${ProcBuff}" ${Group.Member[${bmember}].ID}
 				/varset spellrememtimer 5s
 				/delay 10
-		}
+			}
 	}
 	/next bmember
 
@@ -468,7 +469,7 @@ Sub BuffGroup
 		/if (${ReTargetDelay}==0) /varset ReTargetDelay 1m
 		/if (${autotargetid}) /varset autotargetid 0
 	}
-	/varset acverbose 0
+		/varset acverbose 0
 /return
 
 |----------------------------------------------------------------------------
@@ -479,12 +480,15 @@ Sub ManageAggro(string OptFlag)
 		/alt act 173
 		/delay 5 
 	}
+
 	/if (${OptFlag.Equal[BlrFlg]} && ${Me.PctAggro}>=${BlurrAggroPct}) {
 		/if (${DoBlurr} && ${Me.SpellReady[${BlurSpell}]} && (!${Me.Casting.ID}) && !${Me.Moving} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight}) {
 			/call CastSpell "${BlurSpell}" ${autotargetid} dbf
 		}
 	}
+
 	/if (${Me.TargetOfTarget.ID}==${Me.ID} && ${Target.ID} && ${Target.ID}!=${Me.ID} && ${Target.ID}==${Me.GroupAssistTarget.ID}) {
+
 		/if (${Me.PctHPs}<=30 && ${Me.AltAbilityReady[Self Stasis]}) {
 			/call AANow ${Me.AltAbility[Self Stasis].ID} ${Target.ID}
 		} else /if (${Me.PctHPs}<=30 && ${Me.AltAbilityReady[Dimensional Instability]}) {
@@ -500,7 +504,9 @@ Sub ManageAggro(string OptFlag)
 		} else /if (${Me.PctHPs}<=80 && ${Me.AltAbilityReady[Dimensional Shield]}) {
 			/call AANow ${Me.AltAbility[Dimensional Shield].ID} ${Target.ID}
 		}
+
 	}
+
 	/if (${Target.ID}==${Me.GroupAssistTarget.ID} && (${Me.PctAggro}>=90 || ${Me.TargetOfTarget.ID}==${Me.ID})) {
 		/if (${Me.AltAbilityReady[Arcane Whisper]}) {
 			/call AANow ${Me.AltAbility[Arcane Whisper].ID} ${Target.ID}
@@ -509,6 +515,7 @@ Sub ManageAggro(string OptFlag)
 		}
 	}
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: CheckMana
 |---------------------------------------------------------------------------- 
@@ -519,6 +526,7 @@ Sub CheckMana
 		/call ItemNow "Azure Mind Crystal"
 	}
 /return
+
 |----------------------------------------------------------------------------
 |----------------------------------------------------------------------------
 |- SUB: ProcBuffTimers - Create Night's Endless Terror Timers
@@ -543,6 +551,7 @@ Sub CreateProcBuffTimers
 		}
 	/next ii
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: AggroRuneTimers - Dreadful Rune
 |----------------------------------------------------------------------------    
@@ -558,6 +567,7 @@ Sub CreateAggroRuneTimers
 		}
 	/next i
 /return
+
 |---------------------------------------------------------------------------- 											   
 |- SUB: Handle Buff Requests
 |----------------------------------------------------------------------------
@@ -568,6 +578,7 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 		/if (${Select[${ChatText},haste,speed,zing]} && (${Spawn[${ChatSender.Right[-2].Left[-1]}].Distance}<100)) /call SpellQueue "${SingleHaste}" ${Spawn[${ChatSender.Right[-2].Left[-1]}].ID}
 	}
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: Event_WornOff
 |----------------------------------------------------------------------------
@@ -575,7 +586,7 @@ Sub Event_WornOff
 	/varset groupbufftimer 0
 	/doevents flush WornOff
 /return
-|
+
 |----------------------------------------------------------------------------
 |- SUB: CharmCheck
 |----------------------------------------------------------------------------
