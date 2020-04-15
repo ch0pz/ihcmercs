@@ -9,32 +9,32 @@
 Sub EnchSetup
 |-Create Alias
 |-- Toggles
-|- /squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
-	/squelch /alias /charmstun		/setvarint Toggle CharmPreStun
-	/squelch /alias /charmtash		/setvarint Toggle CharmPreTash
-	/squelch /alias /tglblur		/setvarint Toggle DoBlurr
-	/squelch /alias /tglcharm		/setvarint Toggle UseCharmPet
-	/squelch /alias /tglcrip		/setvarint Toggle DoCripple
-	/squelch /alias /tgldicho		/setvarint Toggle UseDicho
-	/squelch /alias /tgldots		/setvarint Toggle UseDoTs
-	/squelch /alias /tgldps			/setvarint Toggle DoDPS
-	/squelch /alias /tglpet			/setvarint Toggle UsePet
-	/squelch /alias /tglmez			/setvarint Toggle MezOn
-	/squelch /alias /tglmezmsg		/setvarint Toggle MezAnnounce
-	/squelch /alias /tglndt			/setvarint Toggle DoNDTBuff
-	/squelch /alias /tgltash		/setvarint Toggle DoTash
-	/squelch /alias /tglslow		/setvarint Toggle DoSlow
-	/squelch /alias /tglstrip		/setvarint Toggle StripBuffs
+|- /squelch /alias /byos				/setvarint Toggle BringYourOwnSpells
+	/squelch /alias /charmstun			/setvarint Toggle CharmPreStun
+	/squelch /alias /charmtash			/setvarint Toggle CharmPreTash
+	/squelch /alias /tglblur			/setvarint Toggle DoBlurr
+	/squelch /alias /tglcharm			/setvarint Toggle UseCharmPet
+	/squelch /alias /tglcrip			/setvarint Toggle DoCripple
+	/squelch /alias /tgldicho			/setvarint Toggle UseDicho
+	/squelch /alias /tgldots			/setvarint Toggle UseDoTs
+	/squelch /alias /tgldps				/setvarint Toggle DoDPS
+	/squelch /alias /tglpet				/setvarint Toggle UsePet
+	/squelch /alias /tglmez				/setvarint Toggle MezOn
+	/squelch /alias /tglmezmsg			/setvarint Toggle MezAnnounce
+	/squelch /alias /tglndt				/setvarint Toggle DoNDTBuff
+	/squelch /alias /tgltash			/setvarint Toggle DoTash
+	/squelch /alias /tglslow			/setvarint Toggle DoSlow
+	/squelch /alias /tglstrip			/setvarint Toggle StripBuffs
 |-- Sets
-	/squelch /alias /autodebuffat	/setvarint Set AutoDebuffAt
-	/squelch /alias /blurpct		/setvarint Set BlurrAggroPct
-	/squelch /alias /maxmezcount	/setvarint Set MaxMezCount
-	/squelch /alias /mezaecount		/setvarint Set MezAECount
-	/squelch /alias /mezmaxlevel	/setvarint Set MezMaxLevel
-	/squelch /alias /mezminlevel	/setvarint Set MezMinLevel
-	/squelch /alias /mezradius		/setvarint Set MezRadius
-	/squelch /alias /mezstartcount	/setvarint Set MezStartCount
-	/squelch /alias /mezstophp		/setvarint Set MezStopHPs	
+	/squelch /alias /autodebuffat		/setvarint Set AutoDebuffAt
+	/squelch /alias /blurpct			/setvarint Set BlurrAggroPct
+	/squelch /alias /maxmezcount		/setvarint Set MaxMezCount
+	/squelch /alias /mezaecount			/setvarint Set MezAECount
+	/squelch /alias /mezmaxlevel		/setvarint Set MezMaxLevel
+	/squelch /alias /mezminlevel		/setvarint Set MezMinLevel
+	/squelch /alias /mezradius			/setvarint Set MezRadius
+	/squelch /alias /mezstartcount		/setvarint Set MezStartCount
+	/squelch /alias /mezstophp			/setvarint Set MezStopHPs	
 |-Declare AA and Spell variables
 |-Buffs
 	/declare AuraBuff1				string	outer	"NULL"
