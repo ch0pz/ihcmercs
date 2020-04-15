@@ -26,7 +26,9 @@
 
 Sub Main
 	/delay ${Math.Rand[10]}
+
 	/doevents flush
+
 	/declare MacroName       		string outer IHCENC
 	/declare MacroPath       		string outer IHCMercs\IHCENC
 	/declare IHCVersion       		string outer 2.0
@@ -42,6 +44,7 @@ Sub Main
 	/call CreateAggroRuneTimers						
 	/call CheckOptions
 	/call WelcomeMsg
+
 	/if (${assistid}==${Me.ID}) {
 		/echo \aw I am Main Assist
 	} else {
@@ -50,12 +53,15 @@ Sub Main
 	/if (${UseZoneLogic}) {
 		/call ZoneEventChk
 	}
+
  :mainloop
   	/if (${changetoini}==1) /call INIChanges
 	/if (${Me.Zoning}) /call Zoning
 	/if (${Me.Hovering}) /call DeathSub
 	/if (${Cursor.ID}) /call BagModRods
+
 	/call IDUpdateCheck
+
 	/if (((${MezOn} && (${Me.XTarget}>=${MezStartCount} || ${MezMobCount})) || ${MezWait}) && (${Me.SpellReady[${MezSpell}]} || (${MezAETimer}==0 && ${Me.SpellReady[${MezAESpell}]}) || ${Me.Casting.ID}!=${Spell[${MezSpell}].ID})) /call DoMezStuff
 	/if (${UseCharmPet} && !${BackOffFlag} && ${Me.XTarget}>=${CharmMinMobs}) /call CharmCheck 
 	/if (((${Me.XTarget[1].ID} || ${KillTargetID}) || (${MezMobCount} && ${Me.GroupAssistTarget.ID}) || ${FollowMarkTarget}) && (!${MezWait}) && !${BackOffFlag} && (${Target.ID}!=${Me.GroupAssistTarget.ID}) && ${DoAutoTarget}) /call FindTarget
@@ -84,8 +90,11 @@ Sub Main
 		/pet back off
 	}
 	/if ((${Me.Poisoned.ID} || ${Me.Diseased.ID} || ${Me.Cursed.ID} || ${Me.Corrupted.ID} || ${Me.Snared.ID} || ${Me.Mezzed.ID} || ${Me.Charmed.ID}) && ${BegTimer}==0 && ${DoGroupBeg}) /call BegForCure
+
 	/doevents
+	
  /goto :mainloop   
+
 /return
 |----------------------------------------------------------------------------
 |- SUB: DebuffMobs
