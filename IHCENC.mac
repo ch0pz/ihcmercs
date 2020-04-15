@@ -3,22 +3,27 @@
 |- Version 2.0
 |- Updated: 4/25/2019
 |- Credit: Noobhax0r, Maskoi, Ctaylor, Treehuggindruid, Devstator. A lot of ideas were borrowed and modified from their macros
+
 #turbo 80
+
 #include IHCMercs\ihcsubs.inc
 #include IHCMercs\ihcenchmez.inc
-|-#include IHCMercs\ihcxtenchmez.inc
 #include IHCMercs\ihcenchutil.inc
 #include IHCMercs\ihcevents.inc
+|-#include IHCMercs\ihcxtenchmez.inc
+
 #warning
 #Chat group
 #Chat tell
 #Chat raid
 #Event MezBroke          "#1# has been awakened by #2#."
 #Event WornOff      	 "Your #1# spell has worn off of #*#."
+
 #bind SetVarInt			/setvarint
 #bind CmdList			/ihchelp
 #bind SingleBanish		/banish
 #bind AEBanish			/aebanish
+
 Sub Main
 	/delay ${Math.Rand[10]}
 	/doevents flush
