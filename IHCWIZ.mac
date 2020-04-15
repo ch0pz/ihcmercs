@@ -224,18 +224,15 @@ Sub Combatdps
 		/if (${WeaveAANukes} && !${AANukeRecasttimer}) /call AANukes
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: BurnRoutine
 |---------------------------------------------------------------------------- 
 Sub BurnRoutine
-
 /return
 |----------------------------------------------------------------------------
 |- SUB: BuffCheck
 |---------------------------------------------------------------------------- 
 Sub BuffCheck
-
 	/if (!${Me.Buff[${ACPyromancy}].ID} && ${Cast.Status.Equal[I]} && ${Me.AltAbilityReady[${ACPyromancy}]}) {
 		/alt act ${Me.AltAbility[${ACPyromancy}].ID}
 		/delay 5
@@ -260,14 +257,11 @@ Sub BuffCheck
 		/varset spellrememtimer 5s 
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: ManageAggro
 |---------------------------------------------------------------------------- 
 Sub ManageAggro
-
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: CheckMana
 |---------------------------------------------------------------------------- 
@@ -278,7 +272,6 @@ Sub CheckMana
 		/delay 5
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: AANukes - Cast between spell casts (Weave)
 |---------------------------------------------------------------------------- 
@@ -294,7 +287,6 @@ Sub AANukes
 		/varset AANukeRecasttimer 1s
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Handle Buff Requests
 |----------------------------------------------------------------------------
@@ -305,7 +297,6 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 		|-/if (${Select[${ChatText},haste,speed,zing]} && (${Spawn[${ChatSender.Right[-2].Left[-1]}].Distance}<100)) /call SpellQueue ${SingleHaste} ${Spawn[${ChatSender.Right[-2].Left[-1]}].ID}
 	}
 /return 
-
 |--------------------------------------------------------------------------
 |- SUB: AllianceCheck - check for other wizards in group
 |---------------------------------------------------------------------------- 
