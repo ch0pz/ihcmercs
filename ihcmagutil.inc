@@ -51,6 +51,8 @@ Sub MagSetup
 	/declare PetOffenseBuff		string outer NULL
 	/declare PetDefenseBuff		string outer NULL
 	/declare PetHaste			string outer NULL
+	/declare PetToysGave		string outer NULL
+	/declare PetToysOn			int	0
 	| /declare FirePet			string outer NULL
 	| /declare PetAir			string outer NULL
 	| /declare WaterPet			string outer NULL
@@ -74,6 +76,7 @@ Sub MagSetup
 	/call LoadIni Pet UsePet		 			int 1
 	/call LoadIni Pet DoPetTank		 			int 0
 	/call LoadIni Pet UseSwarmpet		 		int 0
+	/call LoadIni Pet PetToysOn					int 0
 	| /call LoadIni Options HarvestManaPct		int 75
 	| /call LoadIni Pet PetType					string NULL	
 /return 
@@ -94,6 +97,7 @@ Sub INIChanges
 	/call SetIni Pet UsePet		 				int ${UsePet}
 	/call SetIni Pet DoPetTank		 			int ${DoPetTank}
 	/call SetIni Pet UseSwarmpet		 		int ${UseSwarmpet}
+	/call SetIni Pet PetToysOn					int ${PetToysOn}
 	| /call SetIni Pet HarvestManaPct		 		int ${HarvestManaPct}
  	| /call SetIni Pet PetType		 			int ${PetType}
 /return
@@ -143,6 +147,7 @@ Sub SetSpells
 	/varset ManaRegenBuff 	${Spell[Burning Guardian].RankName}
 	/varset DamageShield 	${Spell[Circle of the Inferno].RankName}
 	/varset TwinSpell 		${Spell[Twincast].RankName}
+	/varset	PetToysGave		${Spell[].RankName}
 	| /varset FirePet			${Spell[].RankName}
 	| /varset PetAir			${Spell[].RankName}
 	| /varset WaterPet		${Spell[].RankName}

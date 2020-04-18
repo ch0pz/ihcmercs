@@ -223,7 +223,7 @@ Sub Event_GroupChange
         /declare FullText     string local
         /declare 2ndPart      string local
         /declare 3rdPart      string local
-        /declare PetToysTemp  string local ${Ini[${IniFileName},Pet,PetToysGave]}
+        | /declare PetToysTemp  string local ${Ini[${IniFileName},Pet,PetToysGave]}
         /declare GaveItem     int    local 1
         /declare CondNo       int    local 0
         /call OpenInvSlot
