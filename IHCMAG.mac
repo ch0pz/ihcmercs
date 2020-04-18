@@ -215,7 +215,7 @@ Sub Event_GroupChange
 | ----------------------------------------------------------------------------
     Sub PetToys(string petName)
         /if (!${Me.Pet.ID}) /return w
-        DEBUGPET PetToys Enter
+        | DEBUGPET PetToys Enter
         /declare i            int    local
         /declare j            int    local
         /declare GrabItem     int    local 0
@@ -248,24 +248,24 @@ Sub Event_GroupChange
         }
         /for i 1 to ${PetToys.Size}
             |/if (!${PetToysOn}) /return 0
-            DEBUGPET CHECKING: ${PetToys[${i}]}
+            | DEBUGPET CHECKING: ${PetToys[${i}]}
             /if (${ConOn} && ${PetToys[${i}].Find[|cond]}) {
                 /varset CondNo ${PetToys[${i}].Mid[${Math.Calc[${PetToys[${i}].Find[|cond]}+5]},3]}
             } else {
                 /varset CondNo 0
             }
             
-            /if (${DebugPet}) {
-                /echo \atDEBUGPET PetToys 1: ${PetToys[${i}]}
-                /echo \atDEBUGPET PetToys 2: ${PetToysTemp}
-                /echo \atDEBUGPET PetToys 3: ${PetToys[${i}].Equal[Null]} || ${PetToysTemp.Find[${petName}]} && ${PetToysTemp.Find[${PetToys[${i}]}]}
-                /echo \atDEBUGPET PetToys 4: ${If[CondNo,${cond[${CondNo}]},0]}
-            }
+            | /if (${DebugPet}) {
+                | /echo \atDEBUGPET PetToys 1: ${PetToys[${i}]}
+                | /echo \atDEBUGPET PetToys 2: ${PetToysTemp}
+                | /echo \atDEBUGPET PetToys 3: ${PetToys[${i}].Equal[Null]} || ${PetToysTemp.Find[${petName}]} && ${PetToysTemp.Find[${PetToys[${i}]}]}
+                | /echo \atDEBUGPET PetToys 4: ${If[CondNo,${cond[${CondNo}]},0]}
+            | }
             /if (${CondNo}) {
                 /if (${If[${Cond[${CondNo}]},0,1]}) /continue
             }
             | Had to add pet name check else it will always skip giving weapons to OTHER pets.
-            DEBUGPET PetToys ${PetToys[${i}].Equal[Null]} || (${Me.Pet.CleanName.Equal[${petName}]} && ${PetToysTemp.Find[${petName}]} && ${PetToysTemp.Find[${PetToys[${i}]}]}) SkipPetToy 1
+            | DEBUGPET PetToys ${PetToys[${i}].Equal[Null]} || (${Me.Pet.CleanName.Equal[${petName}]} && ${PetToysTemp.Find[${petName}]} && ${PetToysTemp.Find[${PetToys[${i}]}]}) SkipPetToy 1
             /if (${PetToys[${i}].Equal[Null]} || (${Me.Pet.CleanName.Equal[${petName}]} && ${PetToysTemp.Find[${petName}]} && ${PetToysTemp.Find[${PetToys[${i}]}]})) /continue
             | Are we handing weapons to the pet
             /if (${PetToys[${i}].Arg[2,|].Length} && ${PetToys[${i}].Arg[2,|].NotEqual[null]}) {
@@ -279,7 +279,7 @@ Sub Event_GroupChange
                 /varset 2ndPart
                 /varset 3rdPart
             }
-            DEBUGPET PetToys ${Me.Pet.CleanName.Equal[${petName}]} && ${2ndPart.Length} && ${PetToysTemp.Find[1]} && ${PetToysTemp.Find[2]} SkipPetToy 2
+            | DEBUGPET PetToys ${Me.Pet.CleanName.Equal[${petName}]} && ${2ndPart.Length} && ${PetToysTemp.Find[1]} && ${PetToysTemp.Find[2]} SkipPetToy 2
             /if (${Me.Pet.CleanName.Equal[${petName}]} && ${2ndPart.Length} && ${PetToysTemp.Find[1]} && ${PetToysTemp.Find[2]}) /continue
             | Check if spell level less than 76 because mage pets auto equipped after that.
             /if (${Me.Pet.CleanName.Equal[${petName}]} && ${Spell[${PetToySpell}].Level}>=76 && (${PetToySpell.Find[muzzle]} || ${PetToySpell.Find[visor]} || ${PetToySpell.Find[belt]})) /continue
@@ -321,7 +321,7 @@ Sub Event_GroupChange
                     | Open the bag
                     /nomodkey /itemnotify pack${BagNum} rightmouseup
                     /delay 10
-                    DEBUGPET PetToys ${i} ${PetToySpell} ${2ndPart} ${3rdPart}
+                    | DEBUGPET PetToys ${i} ${PetToySpell} ${2ndPart} ${3rdPart}
                     | Condition revised to allow for pet weapons to be given to other people's pets.
                     /if (((${Me.Pet.CleanName.Equal[${petName}]} && !${PetToysTemp.Find[${2ndPart}1]}) && ${2ndPart.Length} && ${FindItemCount[=${2ndPart}]}) || (!${Me.Pet.CleanName.Equal[${petName}]} && ${2ndPart.Length} && ${FindItemCount[=${2ndPart}]})) {
                         /call GiveTo "${2ndPart}" ${petID}
@@ -366,7 +366,7 @@ Sub Event_GroupChange
         /varset PetToysGave ${PetToysTemp}
         /if (${Window[InventoryWindow].Open} && !${GaveItem}) /keypress inventory
         /varset PetToysDone 1
-        DEBUGPET PetToys Leave
+        | DEBUGPET PetToys Leave
     /return
 | ----------------------------------------------------------------------------
 | SUB: Check OpenInvSlot - Based on code from el_nene's autobot. Used with permission.
@@ -374,7 +374,7 @@ Sub Event_GroupChange
 | Updated and Revised for KissAssist
 | ----------------------------------------------------------------------------
     Sub OpenInvSlot
-        DEBUGBUFF OpenInvSlot Enter
+        | DEBUGBUFF OpenInvSlot Enter
         /if (${BagNum}) /return
         /declare i int local
         /varset BagNum 0
@@ -390,7 +390,7 @@ Sub Event_GroupChange
                 /return
             }
         /next i
-        DEBUGBUFF OpenInvSlot Leave
+        | DEBUGBUFF OpenInvSlot Leave
     /return
 | ----------------------------------------------------------------------------
 | SUB: Check DestroyBag - Based on code from el_nene's autobot. Used with permission.
@@ -398,7 +398,7 @@ Sub Event_GroupChange
 | Updated and Revised for KissAssist
 | ----------------------------------------------------------------------------
     Sub DestroyBag
-        DEBUGBUFF DestroyBag Enter
+        | DEBUGBUFF DestroyBag Enter
         /declare j int local
         | Make sure bag has no items other than summoned in it before deleting.
         /if (${InvSlot[pack${BagNum}].Item.Items}) {
@@ -416,7 +416,7 @@ Sub Event_GroupChange
             /if (${Cursor.Name.Find[Phantom Satchel]} || ${Cursor.Name.Find[Pouch of Quellious]}) /destroy
             /delay 20 !${Cursor.ID}
         }
-        DEBUGBUFF Leave
+        | DEBUGBUFF Leave
     /return
 | ----------------------------------------------------------------------------
 | SUB: Check GiveTo - Based on code from el_nene's autobot. Used with permission.
@@ -424,7 +424,7 @@ Sub Event_GroupChange
 | Updated and Revised for KissAssist
 | ----------------------------------------------------------------------------
     Sub GiveTo(string GItem, int GTarget)
-        DEBUGBUFF GiveTo Enter
+        | DEBUGBUFF GiveTo Enter
         /declare ItemSummoned int local 0
         /if (${Target.ID}!=${GTarget}) {
             /target id ${GTarget}
@@ -464,5 +464,5 @@ Sub Event_GroupChange
             }
         }
         /delay 200 !${Window[GiveWnd].Open}
-        DEBUGBUFF GiveTo Leave
+        | DEBUGBUFF GiveTo Leave
     /return **| 
