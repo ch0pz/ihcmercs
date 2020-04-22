@@ -141,7 +141,7 @@ Sub CheckOptions
 
 Sub LoadSpellBar
 
-	/if (${Me.Standing}) {
+ 	/if (${Me.Standing}) {
 		/sit
 		/delay 10 ${Me.Sitting}
 		/echo \aw Loading Spell Bar
@@ -152,116 +152,94 @@ Sub LoadSpellBar
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==3) /varset spellmisc 11
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==2) /varset spellmisc 10
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==1) /varset spellmisc 9
+
 		/if (${Me.AltAbility[25].Name.Find[disabled]} && ${Me.AltAbilityReady[25]}) {
 			/alt act 25
 			/delay 5
 		}
-
-		/call LoadSpellGem "${ClawNuke}" 1
-		/call LoadSpellGem "${CloudburstNuke}" 2
-		/call LoadSpellGem "${FireEtherealNuke}" 3
-		/call LoadSpellGem "${ColdEtherealNuke}" 4
-
+			/call LoadSpellGem "${ClawNuke}" 1
+			/call LoadSpellGem "${CloudburstNuke}" 2
+			/call LoadSpellGem "${FireEtherealNuke}" 3
+			/call LoadSpellGem "${ColdEtherealNuke}" 4
 		/if (${WizzyCount}>=3) {
 			/call LoadSpellGem "${AllianceSpell}" 5
 		} else {
 			/call LoadSpellGem "${StunSpell}" 5
-			}
-
+		}
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) {
 			/call LoadSpellGem "${FuseNuke}" 6
 			/call LoadSpellGem "${VortexNuke}" 7
 			/call LoadSpellGem "${ChaosNuke}" 8
-
-			/if (${DichoSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${DichoSpell}].RankName}]}) {
-				/call LoadSpellGem "${DichoSpell}" 9
-			} else {
-				/call LoadSpellGem "${StunSpell}" 9
-			}
-
+			/call LoadSpellGem "${DichoSpell}" 9
+		| /if (${DichoSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${DichoSpell}].RankName}]}) {
+			| } else {
+				| /call LoadSpellGem "${StunSpell}" 9
+		}
+	 
+ | Spell Slot #10
 			/call LoadSpellGem "${TwincastSpell}" 10
-
-			/if (${GambitSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${GambitSpell}].RankName}]}) {
-				/call LoadSpellGem "${GambitSpell}" 11
-			} else {
-				/call LoadSpellGem "${HarvestSpell}" 11
-			}
-
+ | Spell Slot #11 with Cond
+		/if (${GambitSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${GambitSpell}].RankName}]}) {
+			/call LoadSpellGem "${GambitSpell}" 11
+		} else {
+			/call LoadSpellGem "${HarvestSpell}" 11
+		}
 			/call LoadSpellGem "${WildNuke}" 12
 			/call LoadSpellGem "${JoltSpell}" 13
 			/varset miscspellremem ${JoltSpell}
-
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==4) {
-
-			/if (${FuseNuke.NotEqual[NULL]} && ${Me.Book[${Spell[${FuseNuke}].RankName}]}) {
-				/call LoadSpellGem "${FuseNuke}" 6
-			} else {
-				/if (${UsePet}) {
-					/call LoadSpellGem "${PetSpell}" 6
-				} else {
-					/call LoadSpellGem "${GeneralNuke1}" 6
-				}
-			}
-
-			/if (${VortexNuke.NotEqual[NULL]} && ${Me.Book[${Spell[${VortexNuke}].RankName}]}) {
+		/if (${FuseNuke.NotEqual[NULL]} && ${Me.Book[${Spell[${FuseNuke}].RankName}]}) {
+			/call LoadSpellGem "${FuseNuke}" 6
+		} else {
+		/if (${UsePet}) {
+			/call LoadSpellGem "${PetSpell}" 6
+		} else {
+			/call LoadSpellGem "${GeneralNuke1}" 6
+		}
+	  }
+		/if (${VortexNuke.NotEqual[NULL]} && ${Me.Book[${Spell[${VortexNuke}].RankName}]}) {
 				/call LoadSpellGem "${VortexNuke}" 7
-			} else {
-				/call LoadSpellGem "${FastNuke1}" 7
-			}
-
+		} else {
+			/call LoadSpellGem "${FastNuke1}" 7
 			/call LoadSpellGem "${ChaosNuke}" 8
-
-			/if (${DichoSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${DichoSpell}].RankName}]}) {
-				/call LoadSpellGem "${DichoSpell}" 9
-			} else {
-				/call LoadSpellGem "${JoltSpell}" 9
-			}
-
+		}
+		/if (${DichoSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${DichoSpell}].RankName}]}) {
+			/call LoadSpellGem "${DichoSpell}" 9
+		} else {
+			/call LoadSpellGem "${JoltSpell}" 9
+		}
 			/call LoadSpellGem "${TwincastSpell}" 10
-
-			/if (${GambitSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${GambitSpell}].RankName}]}) {
-				/call LoadSpellGem "${GambitSpell}" 11
-			} else {
-				/call LoadSpellGem "${HarvestSpell}" 11
-			}
-
+		/if (${GambitSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${GambitSpell}].RankName}]}) {
+			/call LoadSpellGem "${GambitSpell}" 11
+		} else {
+			/call LoadSpellGem "${HarvestSpell}" 11
 			/call LoadSpellGem "${WildNuke}" 12
 			/varset miscspellremem ${WildNuke}
-
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==3) {
-
 			/call LoadSpellGem "${ChaosNuke}" 5
 			/call LoadSpellGem "${WildNuke}" 6
 			/call LoadSpellGem "${FastNuke1}" 7
 			/call LoadSpellGem "${StunSpell}" 8
 			/call LoadSpellGem "${JoltSpell}" 9
 			/call LoadSpellGem "${HarvestSpell}" 10
-
 			/varset miscspellremem ${GeneralNuke1}
-
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==2) {
-
 			/call LoadSpellGem "${ChaosNuke}" 5
 			/call LoadSpellGem "${WildNuke}" 6
 			/call LoadSpellGem "${FastNuke1}" 7
 			/call LoadSpellGem "${StunSpell}" 8
 			/call LoadSpellGem "${HarvestSpell}" 9
-
 			/varset miscspellremem ${GeneralNuke1}
-
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==1) {
-
 			/call LoadSpellGem "${ChaosNuke}" 5
 			|-6
 			|-7
-
 			/call LoadSpellGem "${HarvestSpell}" 8
-
 		} else {
 			|-6
 			/call LoadSpellGem "${HarvestSpell}" 7
 		}
-	}
+	 }
 	
 	/if (${Me.Sitting}) /stand
 	/delay 10 ${Me.Standing}
