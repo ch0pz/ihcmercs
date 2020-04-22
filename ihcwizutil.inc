@@ -98,15 +98,7 @@ Sub WizSetup
 	/call LoadIni Options HarvestManaPct		int 75
 	/call LoadIni Options StickHow				string NULL
 
-	/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) /varset spellmisc 13
-	/if (${Me.AltAbility[Mnemonic Retention].Rank}==4) /varset spellmisc 12
-	/if (${Me.AltAbility[Mnemonic Retention].Rank}==3) /varset spellmisc 11
-	/if (${Me.AltAbility[Mnemonic Retention].Rank}==2) /varset spellmisc 10
-	/if (${Me.AltAbility[Mnemonic Retention].Rank}==1) /varset spellmisc 9
-	/if (${Me.AltAbility[25].Name.Find[disabled]} && ${Me.AltAbilityReady[25]}) {
-		/alt act 25
-		/delay 5
-	}
+	
 /return
 
 |----------------------------------------------------------------------------
@@ -152,6 +144,16 @@ Sub LoadSpellBar
 		/sit
 		/delay 10 ${Me.Sitting}
 		/echo \aw Loading Spell Bar
+
+		/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) /varset spellmisc 13
+		/if (${Me.AltAbility[Mnemonic Retention].Rank}==4) /varset spellmisc 12
+		/if (${Me.AltAbility[Mnemonic Retention].Rank}==3) /varset spellmisc 11
+		/if (${Me.AltAbility[Mnemonic Retention].Rank}==2) /varset spellmisc 10
+		/if (${Me.AltAbility[Mnemonic Retention].Rank}==1) /varset spellmisc 9
+		/if (${Me.AltAbility[25].Name.Find[disabled]} && ${Me.AltAbilityReady[25]}) {
+			/alt act 25
+			/delay 5
+		}
 
 		/call LoadSpellGem "${ClawNuke}" 1
 		/call LoadSpellGem "${CloudburstNuke}" 2
