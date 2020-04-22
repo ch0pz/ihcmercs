@@ -3,12 +3,14 @@
 |- Updated: 4/25/2019
 |- Thanks to Saar for additions and bug fixes
 |--------------------------------------------------------------------------------------
-|-Setup Variable Environment
+|-Setup Variable Environment & Declares, Aliases
 |--------------------------------------------------------------------------------------
+
 Sub WizSetup
- |-Create Alias
- |-- Toggles
-	| /squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
+
+ |--------------------------------------------------------------------------------------
+ |-Toggle switches toggling on/off modes from INI files
+ |--------------------------------------------------------------------------------------
 	/squelch /alias /tglalliance	/setvarint Toggle UseAlliance
 	/squelch /alias /tglaoe			/setvarint Toggle UseAoE
 	/squelch /alias /tglbp			/setvarint Toggle ChestCombatCast
@@ -20,18 +22,34 @@ Sub WizSetup
 	/squelch /alias /tglpet			/setvarint Toggle UsePet
 	/squelch /alias /tglstrip		/setvarint Toggle StripBuffs
 	/squelch /alias /tglweave		/setvarint Toggle WeaveAANukes
-	|-- Sets
+	| /squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
+
+ |--------------------------------------------------------------------------------------
+ |-SET - values from INI for ability / spell requirements
+ |--------------------------------------------------------------------------------------
 	/squelch /alias /autodebuffat	/setvarint Set AutoDebuffAt
 	/squelch /alias /harvestat 		/setvarint Set HarvestManaPct
- |-Declare AA and Spell variables
- |-Buffs
+
+ |--------------------------------------------------------------------------------------
+ |-DECLARES AA and Spell variables
+ |--------------------------------------------------------------------------------------
 	/declare SelfHPBuff				string	outer	"NULL"
 	/declare ACPyromancy			string	outer	"NULL"
 	/declare FamiliarBuff			string	outer	"NULL"
 	/declare SelfRune1				string	outer	"NULL"
- |-Debuff
+	/declare SpellSet				string 	outer 	"auto"
+	/declare spellmisc 				int 	outer 	8
+	/declare spellgem				int 	outer 	1	
+	/declare CastResult             string 	outer	"NULL"
+	/declare miscspellremem			string 	outer 	"NULL"
+	/declare spellrememtimer		timer 	outer 	0
+	/declare WizzyCount				int 	outer 	1
+
+ |-DebuffS-----------------------------------------------------------------------------
 	/declare StripBuffSpell			string	outer	"NULL"
- |-DPS
+
+ |-DPS---------------------------------------------------------------------------------
+	/declare AANukeRecasttimer		timer outer 	0
 	/declare DPSRecastTimer			timer 	outer	0
 	/declare AllianceSpell			string	outer	"NULL"
 	/declare DichoSpell				string 	outer	"NULL"
@@ -48,9 +66,11 @@ Sub WizSetup
 	/declare WildNuke				string 	outer	"NULL"
 	/declare FastNuke1				string 	outer	"NULL"
 	/declare GeneralNuke1			string 	outer	"NULL"
- |-Pet
+
+ |-Pet---------------------------------------------------------------------------------
 	/declare PetSpell				string	outer	"NULL"
 	/declare PetAssistTimer			timer 	outer	0
+
  |-Utility
 	/declare RootSpell				string	outer	"NULL" 
 	/declare SnareSpell				string	outer	"NULL"
@@ -58,6 +78,9 @@ Sub WizSetup
 	/declare HarvestSpell			string 	outer	"NULL"
 	/declare StunSpell				string 	outer	"NULL"
 	/declare JoltSpell				string 	outer	"NULL"
+
+	
+	
 
  |-Config Options	
 	/call LoadCommonConfig
@@ -77,19 +100,15 @@ Sub WizSetup
 	/call LoadIni Options EmergencyEvac			int 0
 	/call LoadIni Options HarvestManaPct		int 75
 	/call LoadIni Options StickHow				string NULL
-	/declare AANukeRecasttimer		timer outer 0
-	/declare SpellSet				string outer auto
-	/declare spellmisc 				int outer 8
-	/declare spellgem				int outer 1	
-	/declare CastResult             string outer
-	/declare miscspellremem			string outer NULL
-	/declare spellrememtimer		timer outer 0
-	/declare WizzyCount				int outer 1
+
+	
+
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) /varset spellmisc 13
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==4) /varset spellmisc 12
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==3) /varset spellmisc 11
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==2) /varset spellmisc 10
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==1) /varset spellmisc 9
+
 	/if (${Me.AltAbility[25].Name.Find[disabled]} && ${Me.AltAbilityReady[25]}) {
 		/alt act 25
 		/delay 5
@@ -139,30 +158,38 @@ Sub LoadSpellBar
 		/sit
 		/delay 10 ${Me.Sitting}
 		/echo \aw Loading Spell Bar
+
 		/call LoadSpellGem "${ClawNuke}" 1
 		/call LoadSpellGem "${CloudburstNuke}" 2
 		/call LoadSpellGem "${FireEtherealNuke}" 3
 		/call LoadSpellGem "${ColdEtherealNuke}" 4
 		/call LoadSpellGem "${AllianceSpell}" 5
+
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) {
 			/call LoadSpellGem "${FuseNuke}" 6
 			/call LoadSpellGem "${VortexNuke}" 7
 			/call LoadSpellGem "${ChaosNuke}" 8
+
 			/if (${DichoSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${DichoSpell}].RankName}]}) {
 				/call LoadSpellGem "${DichoSpell}" 9
 			} else {
 				/call LoadSpellGem "${StunSpell}" 9
 			}
+
 			/call LoadSpellGem "${TwincastSpell}" 10
+
 			/if (${GambitSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${GambitSpell}].RankName}]}) {
 				/call LoadSpellGem "${GambitSpell}" 11
 			} else {
 				/call LoadSpellGem "${HarvestSpell}" 11
 			}
+
 			/call LoadSpellGem "${WildNuke}" 12
 			/call LoadSpellGem "${JoltSpell}" 13
 			/varset miscspellremem ${JoltSpell}
+
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==4) {
+
 			/if (${FuseNuke.NotEqual[NULL]} && ${Me.Book[${Spell[${FuseNuke}].RankName}]}) {
 				/call LoadSpellGem "${FuseNuke}" 6
 			} else {
@@ -172,52 +199,70 @@ Sub LoadSpellBar
 					/call LoadSpellGem "${GeneralNuke1}" 6
 				}
 			}
+
 			/if (${VortexNuke.NotEqual[NULL]} && ${Me.Book[${Spell[${VortexNuke}].RankName}]}) {
 				/call LoadSpellGem "${VortexNuke}" 7
 			} else {
 				/call LoadSpellGem "${FastNuke1}" 7
 			}
+
 			/call LoadSpellGem "${ChaosNuke}" 8
+
 			/if (${DichoSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${DichoSpell}].RankName}]}) {
 				/call LoadSpellGem "${DichoSpell}" 9
 			} else {
 				/call LoadSpellGem "${JoltSpell}" 9
 			}
+
 			/call LoadSpellGem "${TwincastSpell}" 10
+
 			/if (${GambitSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${GambitSpell}].RankName}]}) {
 				/call LoadSpellGem "${GambitSpell}" 11
 			} else {
 				/call LoadSpellGem "${HarvestSpell}" 11
 			}
+
 			/call LoadSpellGem "${WildNuke}" 12
 			/varset miscspellremem ${WildNuke}
+
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==3) {
+
 			/call LoadSpellGem "${ChaosNuke}" 5
 			/call LoadSpellGem "${WildNuke}" 6
 			/call LoadSpellGem "${FastNuke1}" 7
 			/call LoadSpellGem "${StunSpell}" 8
 			/call LoadSpellGem "${JoltSpell}" 9
 			/call LoadSpellGem "${HarvestSpell}" 10
+
 			/varset miscspellremem ${GeneralNuke1}
+
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==2) {
+
 			/call LoadSpellGem "${ChaosNuke}" 5
 			/call LoadSpellGem "${WildNuke}" 6
 			/call LoadSpellGem "${FastNuke1}" 7
 			/call LoadSpellGem "${StunSpell}" 8
 			/call LoadSpellGem "${HarvestSpell}" 9
+
 			/varset miscspellremem ${GeneralNuke1}
+
 		} else /if (${Me.AltAbility[Mnemonic Retention].Rank}==1) {
+
 			/call LoadSpellGem "${ChaosNuke}" 5
 			|-6
 			|-7
+
 			/call LoadSpellGem "${HarvestSpell}" 8
+
 		} else {
 			|-6
 			/call LoadSpellGem "${HarvestSpell}" 7
 		}
 	}
+
 	/if (${Me.Sitting}) /stand
 	/delay 10 ${Me.Standing}
+	
 /return 
 
 |* ------------------------------------------------------------------------------------------
