@@ -124,7 +124,9 @@ Sub INIChanges
 |---------------------------------------------------------------------------- 
 
 Sub CheckOptions
+
 	/if (${AutoCampHold}) /moveto dist 2
+
 /return
 
 |* ------------------------------------------------------------------------------------------
@@ -132,6 +134,7 @@ Sub CheckOptions
 |------------------------------------------------------------------------------------------ *|
 
 Sub LoadSpellBar
+
 	/if (${Me.Standing}) {
 		/sit
 		/delay 10 ${Me.Sitting}
@@ -224,7 +227,7 @@ Sub LoadSpellBar
 Sub SetWizSpells
 
 	/if (!${SpellSet.Equal[auto]} && !${SpellSet.Equal[fire]} && !${SpellSet.Equal[cold]} && !${SpellSet.Equal[magic]}) /varset SpellSet auto
-	
+
  |-Arco/Cryo/Pyromancy
 	/if (${SpellSet.Equal[auto]} || ${SpellSet.Equal[fire]}) {
 		/varset ACPyromancy Pyromancy
