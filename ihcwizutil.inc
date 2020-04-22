@@ -161,10 +161,12 @@ Sub LoadSpellBar
 		/call LoadSpellGem "${CloudburstNuke}" 2
 		/call LoadSpellGem "${FireEtherealNuke}" 3
 		/call LoadSpellGem "${ColdEtherealNuke}" 4
-		
+
 		/if (${WizzyCount}>=3) {
 			/call LoadSpellGem "${AllianceSpell}" 5
-		}
+		} else {
+			/call LoadSpellGem "${StunSpell}" 5
+			}
 
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) {
 			/call LoadSpellGem "${FuseNuke}" 6
