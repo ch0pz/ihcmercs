@@ -49,7 +49,7 @@ Sub WizSetup
 	/declare StripBuffSpell			string	outer	"NULL"
 
  |-DPS---------------------------------------------------------------------------------
-	/declare AANukeRecasttimer		timer outer 	0
+	/declare AANukeRecasttimer		timer 	outer 	0
 	/declare DPSRecastTimer			timer 	outer	0
 	/declare AllianceSpell			string	outer	"NULL"
 	/declare DichoSpell				string 	outer	"NULL"
@@ -98,7 +98,6 @@ Sub WizSetup
 	/call LoadIni Options HarvestManaPct		int 75
 	/call LoadIni Options StickHow				string NULL
 
-	
 /return
 
 |----------------------------------------------------------------------------
@@ -106,6 +105,7 @@ Sub WizSetup
 |---------------------------------------------------------------------------- 
 
 Sub INIChanges
+
 	/varset changetoini 0
 	/call SaveCommonConfig
 	/call SetIni Combat AllowMezBreak		int ${AllowMezBreak}
@@ -122,6 +122,7 @@ Sub INIChanges
 	| /call SetIni Options BringYourOwnSpells	int ${BringYourOwnSpells}
 	/call SetIni Options EmergencyEvac		int ${EmergencyEvac}
 	/call SetIni Options HarvestManaPct		int ${HarvestManaPct}
+
 /return
 
 |----------------------------------------------------------------------------
@@ -144,6 +145,7 @@ Sub LoadSpellBar
 		/sit
 		/delay 10 ${Me.Sitting}
 		/echo \aw Loading Spell Bar
+		/delay 5
 
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) /varset spellmisc 13
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==4) /varset spellmisc 12
@@ -160,8 +162,9 @@ Sub LoadSpellBar
 		/call LoadSpellGem "${FireEtherealNuke}" 3
 		/call LoadSpellGem "${ColdEtherealNuke}" 4
 		
-		/if (${WizzyCount}>=3)
-		/call LoadSpellGem "${AllianceSpell}" 5
+		/if (${WizzyCount}>=3) {
+			/call LoadSpellGem "${AllianceSpell}" 5
+		}
 
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) {
 			/call LoadSpellGem "${FuseNuke}" 6
