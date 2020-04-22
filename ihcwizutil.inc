@@ -58,6 +58,7 @@ Sub WizSetup
 	/declare HarvestSpell			string 	outer	"NULL"
 	/declare StunSpell				string 	outer	"NULL"
 	/declare JoltSpell				string 	outer	"NULL"
+
  |-Config Options	
 	/call LoadCommonConfig
 	/call LoadIni Combat AllowMezBreak		 	int 0
@@ -94,9 +95,11 @@ Sub WizSetup
 		/delay 5
 	}
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: INIChanges
 |---------------------------------------------------------------------------- 
+
 Sub INIChanges
 	/varset changetoini 0
 	/call SaveCommonConfig
@@ -115,15 +118,19 @@ Sub INIChanges
 	/call SetIni Options EmergencyEvac		int ${EmergencyEvac}
 	/call SetIni Options HarvestManaPct		int ${HarvestManaPct}
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: CheckOptions - Used to sort conflicting options at startup and set basic values if needed
 |---------------------------------------------------------------------------- 
+
 Sub CheckOptions
 	/if (${AutoCampHold}) /moveto dist 2
 /return
+
 |* ------------------------------------------------------------------------------------------
 | SUB: LoadSpellBar
 |------------------------------------------------------------------------------------------ *|
+
 Sub LoadSpellBar
 	/if (${Me.Standing}) {
 		/sit
@@ -209,12 +216,14 @@ Sub LoadSpellBar
 	/if (${Me.Sitting}) /stand
 	/delay 10 ${Me.Standing}
 /return 
+
 |* ------------------------------------------------------------------------------------------
 | SUB: SetWizSpells
 |------------------------------------------------------------------------------------------ *|
+
 Sub SetWizSpells
 	/if (!${SpellSet.Equal[auto]} && !${SpellSet.Equal[fire]} && !${SpellSet.Equal[cold]} && !${SpellSet.Equal[magic]}) /varset SpellSet auto
-|-Arco/Cryo/Pyromancy
+ |-Arco/Cryo/Pyromancy
 	/if (${SpellSet.Equal[auto]} || ${SpellSet.Equal[fire]}) {
 		/varset ACPyromancy Pyromancy
 	} else /if (${SpellSet.Equal[cold]}) {
@@ -222,7 +231,7 @@ Sub SetWizSpells
 	} else /if (${SpellSet.Equal[magic]}) {
 		/varset ACPyromancy Arcomancy
 	}
-|-Familiar Buff
+ |-Familiar Buff
 	/if (${Me.AltAbility[Improved Familiar].Rank}>=1) {
 		/varset FamiliarBuff "Improved Familiar"
 	} else /if (${Me.Level}>=60 && ${Me.Book[${Spell[Greater Familiar].RankName}]}) {
@@ -234,7 +243,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=25 && ${Me.Book[${Spell[Minor Familiar].RankName}]}) {
 		/varset FamiliarBuff ${Spell[Minor Familiar].RankName}
 	}
-|-Self HP Buff * Var Name: SelfHPBuff string outer
+ |-Self HP Buff * Var Name: SelfHPBuff string outer
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Shield of Scales].RankName}]}) {
 		/varset SelfHPBuff ${Spell[Shield of Scales].RankName}
 	} else /if (${Me.Level}>=101 && ${Me.Book[${Spell[Shield of the Pellarus].RankName}]}) {
@@ -272,7 +281,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=1 && ${Me.Book[${Spell[Minor Shielding].RankName}]}) {
 		/varset SelfHPBuff ${Spell[Minor Shielding].RankName}
 	}
-|-Self Rune 1 * Var Name: SelfRune1 string outer
+ |-Self Rune 1 * Var Name: SelfRune1 string outer
 	/if (${Me.Level}>=108 && ${Me.Book[${Spell[Armor of Wirn].RankName}]}) {
 		/varset SelfRune1 ${Spell[Armor of Wirn].RankName}
 	} else /if (${Me.Level}>=103 && ${Me.Book[${Spell[Armor of the Codex].RankName}]}) {
@@ -294,7 +303,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=63 && ${Me.Book[${Spell[Force Shield].RankName}]}) {
 		/varset SelfRune1 ${Spell[Force Shield].RankName}
 	}
-|-StripBuffSpell
+ |-StripBuffSpell
 	/if (${Me.Level}>=100 && ${Me.AltAbilityReady[Eradicate Magic]}) {
 		/varset StripBuffSpell Eradicate Magic
 	} else /if (${Me.Level}>=53 && ${Me.Book[${Spell[Annul Magic].RankName}]}) {
@@ -304,19 +313,19 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=11 && ${Me.Book[${Spell[Cancel Magic].RankName}]}) {
 		/varset StripBuffSpell ${Spell[Cancel Magic].RankName}
 	}
-|-AllianceSpell
+ |-AllianceSpell
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Frostbound Covenant].RankName}]}) {
 		/varset AllianceSpell ${Spell[Frostbound Covenant].RankName}
 	} else /if (${Me.Level}>=102 && ${Me.Book[${Spell[Frostbound Alliance].RankName}]}) {
 		/varset AllianceSpell ${Spell[Frostbound Alliance].RankName}
 	}
-|-DichoSpell
+ |-DichoSpell
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Dissident Fire].RankName}]}) {
 		/varset DichoSpell ${Spell[Dissident Fire].RankName}
 	} else /if (${Me.Level}>=101 && ${Me.Book[${Spell[Dichotomic Fire].RankName}]}) {
 		/varset DichoSpell ${Spell[Dichotomic Fire].RankName}
 	}
-|-Root Spell * Var Name: RootSpell string outer
+ |-Root Spell * Var Name: RootSpell string outer
 	/if (${Me.Level}>=61 && ${Me.Book[${Spell[Greater Fetter].RankName}]}) {
 		/varset RootSpell ${Spell[Greater Fetter].RankName}
 	} else /if (${Me.Level}>=58 && ${Me.Book[${Spell[Fetter].RankName}]}) {
@@ -330,11 +339,11 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=3 && ${Me.Book[${Spell[Root].RankName}]}) {
 		/varset RootSpell ${Spell[Root].RankName}
 	}
-|-TwincastSpell
+ |-TwincastSpell
 	/if (${Me.Level}>=85 && ${Me.Book[${Spell[Twincast].RankName}]}) {
 		/varset TwincastSpell ${Spell[Twincast].RankName}
 	}
-|-SnareSpell
+ |-SnareSpell
 	/if (${Me.Level}>=93 && ${Me.Book[${Spell[Atol's Concussive Shackles].RankName}]}) {
 		/varset SnareSpell ${Spell[Atol's Concussive Shackles].RankName}
 	} else /if (${Me.Level}>=51 && ${Me.Book[${Spell[Atol's Spectral Shackles].RankName}]}) {
@@ -342,7 +351,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=27 && ${Me.Book[${Spell[Bonds of Force].RankName}]}) {
 		/varset SnareSpell ${Spell[Bonds of Force].RankName}
 	}	
-|-JoltSpell
+ |-JoltSpell
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Concussive Volley].RankName}]}) {
 		/varset JoltSpell ${Spell[Concussive Volley].RankName}
 	} else /if (${Me.Level}>=101 && ${Me.Book[${Spell[Concussive Storm].RankName}]}) {
@@ -364,7 +373,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=37 && ${Me.Book[${Spell[Concussion].RankName}]}) {
 		/varset JoltSpell ${Spell[Concussion].RankName}
 	}
-|-HarvestSpell
+ |-HarvestSpell
 	/if (${Me.Level}>=107 && ${Me.Book[${Spell[Musing Harvest].RankName}]}) {
 		/varset HarvestSpell ${Spell[Musing Harvest].RankName}
 	} else /if (${Me.Level}>=102 && ${Me.Book[${Spell[Quiescent Harvest].RankName}]}) {
