@@ -79,9 +79,6 @@ Sub WizSetup
 	/declare StunSpell				string 	outer	"NULL"
 	/declare JoltSpell				string 	outer	"NULL"
 
-	
-	
-
  |-Config Options	
 	/call LoadCommonConfig
 	/call LoadIni Combat AllowMezBreak		 	int 0
@@ -101,14 +98,11 @@ Sub WizSetup
 	/call LoadIni Options HarvestManaPct		int 75
 	/call LoadIni Options StickHow				string NULL
 
-	
-
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) /varset spellmisc 13
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==4) /varset spellmisc 12
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==3) /varset spellmisc 11
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==2) /varset spellmisc 10
 	/if (${Me.AltAbility[Mnemonic Retention].Rank}==1) /varset spellmisc 9
-
 	/if (${Me.AltAbility[25].Name.Find[disabled]} && ${Me.AltAbilityReady[25]}) {
 		/alt act 25
 		/delay 5
@@ -163,6 +157,8 @@ Sub LoadSpellBar
 		/call LoadSpellGem "${CloudburstNuke}" 2
 		/call LoadSpellGem "${FireEtherealNuke}" 3
 		/call LoadSpellGem "${ColdEtherealNuke}" 4
+		
+		/if (${WizzyCount}>=3)
 		/call LoadSpellGem "${AllianceSpell}" 5
 
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) {
