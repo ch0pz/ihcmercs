@@ -85,7 +85,7 @@ Sub VarSetup
 	/declare targetcleartimer	timer outer 0
 	/declare numoftargets		int outer 0
 	/declare ChaseAssist		int outer 0		
-|- IHC macro's common variables
+ |- IHC macro's common variables
 	/declare GrPCond 			string outer .
 	/declare TnKCond 			string outer .
 	/declare PetTank 			int outer 0	
@@ -121,7 +121,7 @@ Sub VarSetup
 		/xtarget set 1 Autohater
 		/echo Set Extended Target 1 to Auto
 	}
-|-Check for loaded plugins
+ |-Check for loaded plugins
 	/call CheckPlugin MQ2Cast
     /call CheckPlugin MQ2Exchange
 	/call CheckPlugin MQ2Rez
@@ -132,18 +132,17 @@ Sub VarSetup
 	/squelch /rez accept on
     |  /squelch /rez loot off
 	/squelch /rez pct 90
-|-Disable mq2melee if its running
+ |-Disable mq2melee if its running
 	/if (${Plugin[MQ2Melee].Name.Length}) {
 		/if (${Melee.Enable}) {
 			/melee off
 		}
 	}
-|- Load DanNet to communicate with other box chars in the same group. 
+ |- Load DanNet to communicate with other box chars in the same group. 
 	/if (${Plugin[MQ2DanNet].Name.Length}) {
 		/if (${DanNet.CommandEcho}) /squelch /dnet commandecho off
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB IHC Common Config Options - Config options that will be the same across all mac's
 |----------------------------------------------------------------------------
@@ -180,7 +179,6 @@ Sub LoadCommonConfig
 	/if (${AutoCampHold}) /moveto dist 2
 	/stick set breakontarget on
 /return
-
 |----------------------------------------------------------------------------
 |- SUB IHC Common Config Options - Config options that will be the same across all mac's
 |----------------------------------------------------------------------------
@@ -209,7 +207,6 @@ Sub SaveCommonConfig
 	/call SetIni Options DoBuffs				int ${DoBuffs}
 	/call SetIni Options DoGroupBeg				int ${DoGroupBeg}
 /return
-
 |----------------------------------------------------------------------------
 |- DEPRECATED USE THE CHANGE VAR INT SUB
 |- SUB: Bind Change Var Int resets various interger settings from ini file
@@ -219,8 +216,7 @@ Sub SaveCommonConfig
 Sub Bind_ChangeVarInt(string ISection, string IName, int IVar)
     /echo \ar CHANGEVARINT BIND IS DEPRECATED REPLACE ALIAS WITH BIND AND USE ChangeVarInt SUBROUTINE \aw
 	/docommand /varset changetoini 1
-
-|--ChaseAssist Var Set
+ |--ChaseAssist Var Set
     /if (${IName.Equal[ChaseAssist]} && ${IVar}==1 && ${Target.Type.Equal[PC]}) {
 		/docommand /varset FollowToonName ${Target.Name}
 		/echo \aw Following ${If[${FollowToonName.Equal[NULL ]},\ar OFF,\ag ${FollowToonName}]}
@@ -228,24 +224,19 @@ Sub Bind_ChangeVarInt(string ISection, string IName, int IVar)
 		/varset FollowToonName NULL
 		/echo \aw Following \ar OFF
 		/if (${AdvPath.Following}) /docommand /afollow off
-
 	} else /if (${IName.Equal[CampRadius]} && ${IVar}>=20 && ${IVar}<=100) {
 		/varset AutoCampRadius ${IVar}
 		/echo \aw Camp Radius set to \ag ${IVar}
-
 	} else /if (${IName.Equal[CampRadius]} && ${IVar}<20 && ${IVar}>100) {
 		/echo \ar Invalid \aw Camp Radius - Set between 20-100 units
-
 	} else /if (${IName.Equal[BurnMobCount]}) {
 		/if (${IVar}>=2 && ${IVar}<=100) {
 			/varset BurnMobCount ${IVar}
 			/echo \aw ${IName} set to \ag ${IVar}
-
 		} else {
 			/beep
 			/echo \ar Invalid \aw ${IName} - Set between 2-100 mobs
 		}
-
 	} else /if (${IName.Equal[AutoAssistAt]}) {
 		/if (${IVar}>=10 && ${IVar}<=100) {
 			/varset AutoAssistAt ${IVar}
@@ -254,7 +245,6 @@ Sub Bind_ChangeVarInt(string ISection, string IName, int IVar)
 			/beep
 			/echo \ar Invalid \ag ${IName} \aw HP%- Set between 10-100
 		}
-
 	} else /if (${IName.Equal[AssistRange]}) {
 		/if (${IVar}>=20 && ${IVar}<=200) {
 			/varset AssistRange ${IVar}
@@ -263,7 +253,6 @@ Sub Bind_ChangeVarInt(string ISection, string IName, int IVar)
 			/beep
 			/echo \ar Invalid \ag ${IName} \aw - Set between 20-200 units
 		}
-
 	} else /if (${Select[${IName},MedPct,EndMedPct]}) {
 		/if (${IVar}>=0 && ${IVar}<100) {
 			/varset ${IName} ${IVar}
@@ -324,7 +313,6 @@ Sub ChangeVarInt(string ISection, string IName, int IVar)
 		}
 	}
 /return
-
 |-------------------------------------------------------------------------------------
 |- DEPRECATED USE THE TOGGLE VARIABLE SUB
 |- SUB: Bind_ToggleVariable  Check whenever the player is changing any variable via /echo
@@ -334,7 +322,7 @@ Sub Bind_ToggleVariable(string Command, string Command2, string Command3)
     | /echo \ar TOGGLE VARIABLE BIND IS DEPRECATED - REPLACE ALIAS WITH BIND AND USE ToggleVariable Subroutine \aw
     /declare i int local
 	/declare OnOff local
-    |- Toggle Variables & Set Variables
+ |- Toggle Variables & Set Variables
     /if (${Defined[${Command}]}) {
         /if (${Command2.Length} && ${Command2.NotEqual[null]}) {
             /if (${Select[${Command2},0,off]}) {
@@ -364,7 +352,7 @@ Sub Bind_ToggleVariable(string Command, string Command2, string Command3)
 		/docommand /varset changetoini 1
 		/if (${Command.Equal[GroupPauseFlag]}) /docommand /mgx /mqp
 		/if (${Command.Equal[GroupBackOffFlag]}) /docommand /mgx /backoff
-		|-Camp Toggle
+ |-Camp Toggle
         /if (${Command.Equal[ReturnToCamp]} && ${OnOff.Equal[on]} ) {
 			/echo \aw Camp turned \ag ON
 			/docommand /varset ReturnToCamp 1
@@ -378,7 +366,7 @@ Sub Bind_ToggleVariable(string Command, string Command2, string Command3)
 			/docommand /varset ReturnToCamp 0
 			/moveto dist 10
         }
-		|-Chase Toon Toggle
+ |-Chase Toon Toggle
 		/if (${Command.Equal[ChaseAssist]} && ${OnOff.Equal[on]} && ${Command3.NotEqual[null]} && ${Command3.Length}>0 && ${FollowToonName.NotEqual[${Command3}]}) {
 			/docommand /varset FollowToonName ${Command3}
 			/echo \aw Following ${If[${FollowToonName.Equal[NULL ]},\ar OFF,\ag ${FollowToonName}]}
@@ -390,19 +378,19 @@ Sub Bind_ToggleVariable(string Command, string Command2, string Command3)
 			/echo \aw Following \ar OFF
 			/if (${AdvPath.Following}) /docommand /afollow off
 		}
-		|-Melee Toggle
+ |-Melee Toggle
 		/if (${Command.Equal[MeleeOn]} && ${OnOff.Equal[on]} ) {
 			/varset UseMelee 1
 		} else /if (${Command.Equal[MeleeOn]} && ${OnOff.Equal[off]}) {
 			/varset UseMelee 0
 		}
-		|-InstantRelease on Death
+ |-InstantRelease on Death
 		/if (${Command.Equal[InstantRelease]} && ${OnOff.Equal[on]} ) {
 			/varset InstantRelease 1
 		} else /if (${Command.Equal[InstantRelease]} && ${OnOff.Equal[off]}) {
 			/varset InstantRelease 0
 		}
-        |-Use Fellowship to port back on death
+ |-Use Fellowship to port back on death
 		/if (${Command.Equal[UseFellowship]} && ${OnOff.Equal[on]} ) {
 			/varset UseFellowship 1
 		} else /if (${Command.Equal[UseFellowship]} && ${OnOff.Equal[off]}) {
@@ -410,14 +398,13 @@ Sub Bind_ToggleVariable(string Command, string Command2, string Command3)
 		}
     }
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: ToggleVariable  Check whenever the player is changing any variable via /echo
 |-------------------------------------------------------------------------------------
 Sub ToggleVariable(string Command, string Command2, string Command3)
     /declare i int local
 	/declare OnOff local
-    |- Toggle Variables & Set Variables
+ |- Toggle Variables & Set Variables
     /if (${Defined[${Command}]}) {
         /if (${Command2.Length} && ${Command2.NotEqual[null]}) {
             /if (${Select[${Command2},0,off]}) {
@@ -447,7 +434,7 @@ Sub ToggleVariable(string Command, string Command2, string Command3)
 		/docommand /varset changetoini 1
 		/if (${Command.Equal[GroupPauseFlag]}) /docommand /mgx /mqp
 		/if (${Command.Equal[GroupBackOffFlag]}) /docommand /mgx /backoff
-		|-Camp Toggle
+ |-Camp Toggle
         /if (${Command.Equal[ReturnToCamp]} && ${OnOff.Equal[on]} ) {
 			/echo \aw Camp turned \ag ON
 			/docommand /varset ReturnToCamp 1
@@ -461,7 +448,7 @@ Sub ToggleVariable(string Command, string Command2, string Command3)
 			/docommand /varset ReturnToCamp 0
 			/moveto dist 10
         }
-		|-Chase Toon Toggle
+ |-Chase Toon Toggle
 		/if (${Command.Equal[ChaseAssist]} && ${OnOff.Equal[on]} && ${Command3.NotEqual[null]} && ${Command3.Length}>0 && ${FollowToonName.NotEqual[${Command3}]}) {
 			/docommand /varset FollowToonName ${Command3}
 			/echo \aw Following ${If[${FollowToonName.Equal[NULL ]},\ar OFF,\ag ${FollowToonName}]}
@@ -473,19 +460,19 @@ Sub ToggleVariable(string Command, string Command2, string Command3)
 			/echo \aw Following \ar OFF
 			/if (${AdvPath.Following}) /docommand /afollow off
 		}
-		|-Melee Toggle
+ |-Melee Toggle
 		/if (${Command.Equal[MeleeOn]} && ${OnOff.Equal[on]} ) {
 			/varset UseMelee 1
 		} else /if (${Command.Equal[MeleeOn]} && ${OnOff.Equal[off]}) {
 			/varset UseMelee 0
 		}
-		|-InstantRelease on Death
+ |-InstantRelease on Death
 		/if (${Command.Equal[InstantRelease]} && ${OnOff.Equal[on]} ) {
 			/varset InstantRelease 1
 		} else /if (${Command.Equal[InstantRelease]} && ${OnOff.Equal[off]}) {
 			/varset InstantRelease 0
 		}
-        |-Use Fellowship to port back on death
+ |-Use Fellowship to port back on death
 		/if (${Command.Equal[UseFellowship]} && ${OnOff.Equal[on]} ) {
 			/varset UseFellowship 1
 		} else /if (${Command.Equal[UseFellowship]} && ${OnOff.Equal[off]}) {
@@ -493,12 +480,11 @@ Sub ToggleVariable(string Command, string Command2, string Command3)
 		}
     }
 /return
-
 |----------------------------------------------------------------------------  
 |- SUB: SetControlToon
 |----------------------------------------------------------------------------
 Sub SetControlToon
-|-Set Main Assist/Tank
+ |-Set Main Assist/Tank
 	/if (${Target.ID}) {
 		/if (${Target.Type.Equal[Pet]}) {
 			/varset TnKCond .Pet.
@@ -551,14 +537,15 @@ Sub SetControlToon
 	}
 	|- /if (${Group.Member[${assistname}].ID} && ${Group.Leader.ID}==${Me.ID} && ${Group.MainAssist.ID}!=${assistid}) /grouproles set ${Group.Member[${assistname}].ID} 2 
 /return 
-
 |----------------------------------------------------------------------------  
 |- SUB: Back Off and stop melee  New Version
 |----------------------------------------------------------------------------      
 Sub Bind_BackOff  
 	/call DoBackOff
 /return
-
+|----------------------------------------------------------------------------  
+|- SUB: Back Off and stop melee  New Version
+|----------------------------------------------------------------------------     
 Sub DoBackOff
 	/if (${BackOffFlag}) {
 		/echo \aw Resetting. No Longer Backing off. \ar OFF
@@ -574,14 +561,12 @@ Sub DoBackOff
 	}
 	/doevents flush Event_BackOff  
 /return
-
 | ----------------------------------------------------------------------------
 | SUB: Set Window Title Buffs
 | ----------------------------------------------------------------------------
     Sub WinTitle
         /SetWinTitle ${Me.Name} (Lvl:${Me.Level} ${Zone.ShortName})
  /return
-
 |----------------------------------------------------------------------------
 | Sub: Icesetup
 |----------------------------------------------------------------------------
@@ -596,7 +581,6 @@ Sub Icesetup
             /next i 
     }
 /return	
-
 |----------------------------------------------------------------------------
 | Sub: IceCheck Checks for restless Ice.
 |----------------------------------------------------------------------------
@@ -610,7 +594,6 @@ Sub IceCheck
     /next i 
     }
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Cureice	
 |----------------------------------------------------------------------------
@@ -619,22 +602,21 @@ Sub Cureice(int GM)
     /if ((${Me.Class.ShortName.Equal[CLR]}) && (${Me.AltAbilityReady[Group Purify Soul]})) {
         /alt act 1062
     } else /if ((${Me.Class.ShortName.Equal[CLR]}) && (${Me.AltAbilityReady[Purify Soul]})) {
-        /target id ${Group.Member[${GM}].ID}
-        /delay 2s ${Group.Member[${GM}].ID} == ${Target.ID}
-        /alt act 41
-    }
+        		/target id ${Group.Member[${GM}].ID}
+        		/delay 2s ${Group.Member[${GM}].ID} == ${Target.ID}
+        		/alt act 41
+    		}
     /if ( ${Me.Class.ShortName.Equal[SHM]}) {      
         /target id ${Group.Member[${GM}].ID}
         /delay 2s ${Group.Member[${GM}].ID} == ${Target.ID}
         /call SpellQueue "${CureSpell}" ${Group.Member[${GM}].ID}
         /delay 1s
-        /if (${Me.AltAbilityReady[Radiant Cure]}) {
-        /alt act 153
-     }
-     }
+	}
+    /if (${Me.AltAbilityReady[Radiant Cure]}) {
+        	/alt act 153
+    }
     /delay 5
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Event Camping - end macro
 |----------------------------------------------------------------------------
