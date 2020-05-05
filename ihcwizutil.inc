@@ -44,10 +44,8 @@ Sub WizSetup
 	/declare miscspellremem			string 	outer 	"NULL"
 	/declare spellrememtimer		timer 	outer 	0
 	/declare WizzyCount				int 	outer 	1
-
  |-DebuffS-----------------------------------------------------------------------------
 	/declare StripBuffSpell			string	outer	"NULL"
-
  |-DPS---------------------------------------------------------------------------------
 	/declare AANukeRecasttimer		timer 	outer 	0
 	/declare DPSRecastTimer			timer 	outer	0
@@ -66,11 +64,9 @@ Sub WizSetup
 	/declare WildNuke				string 	outer	"NULL"
 	/declare FastNuke1				string 	outer	"NULL"
 	/declare GeneralNuke1			string 	outer	"NULL"
-
  |-Pet---------------------------------------------------------------------------------
 	/declare PetSpell				string	outer	"NULL"
 	/declare PetAssistTimer			timer 	outer	0
-
  |-Utility
 	/declare RootSpell				string	outer	"NULL" 
 	/declare SnareSpell				string	outer	"NULL"
@@ -78,7 +74,6 @@ Sub WizSetup
 	/declare HarvestSpell			string 	outer	"NULL"
 	/declare StunSpell				string 	outer	"NULL"
 	/declare JoltSpell				string 	outer	"NULL"
-
  |-Config Options	
 	/call LoadCommonConfig
 	/call LoadIni Combat AllowMezBreak		 	int 0
@@ -97,13 +92,11 @@ Sub WizSetup
 	/call LoadIni Options EmergencyEvac			int 0
 	/call LoadIni Options HarvestManaPct		int 75
 	/call LoadIni Options StickHow				string NULL
-
 /return
 
 |----------------------------------------------------------------------------
 |- SUB: INIChanges
 |---------------------------------------------------------------------------- 
-
 Sub INIChanges
 
 	/varset changetoini 0
@@ -122,23 +115,19 @@ Sub INIChanges
 	| /call SetIni Options BringYourOwnSpells	int ${BringYourOwnSpells}
 	/call SetIni Options EmergencyEvac		int ${EmergencyEvac}
 	/call SetIni Options HarvestManaPct		int ${HarvestManaPct}
-
 /return
 
 |----------------------------------------------------------------------------
 |- SUB: CheckOptions - Used to sort conflicting options at startup and set basic values if needed
 |---------------------------------------------------------------------------- 
-
 Sub CheckOptions
 
 	/if (${AutoCampHold}) /moveto dist 2
-
 /return
 
 |* ------------------------------------------------------------------------------------------
 | SUB: LoadSpellBar
 |------------------------------------------------------------------------------------------ *|
-
 Sub LoadSpellBar
 
  	/if (${Me.Standing}) {
@@ -146,13 +135,11 @@ Sub LoadSpellBar
 		/delay 10 ${Me.Sitting}
 		/echo \aw Loading Spell Bar
 		/delay 5
-
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==5) /varset spellmisc 13
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==4) /varset spellmisc 12
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==3) /varset spellmisc 11
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==2) /varset spellmisc 10
 		/if (${Me.AltAbility[Mnemonic Retention].Rank}==1) /varset spellmisc 9
-
 		/if (${Me.AltAbility[25].Name.Find[disabled]} && ${Me.AltAbilityReady[25]}) {
 			/alt act 25
 			/delay 5
@@ -174,8 +161,7 @@ Sub LoadSpellBar
 		| /if (${DichoSpell.NotEqual[NULL]} && ${Me.Book[${Spell[${DichoSpell}].RankName}]}) {
 			| } else {
 				| /call LoadSpellGem "${StunSpell}" 9
-		}
-	 
+		} 
  | Spell Slot #10
 			/call LoadSpellGem "${TwincastSpell}" 10
  | Spell Slot #11 with Cond
@@ -248,7 +234,6 @@ Sub LoadSpellBar
 |* ------------------------------------------------------------------------------------------
 | SUB: SetWizSpells
 |------------------------------------------------------------------------------------------ *|
-
 Sub SetWizSpells
 
 	/if (!${SpellSet.Equal[auto]} && !${SpellSet.Equal[fire]} && !${SpellSet.Equal[cold]} && !${SpellSet.Equal[magic]}) /varset SpellSet auto
@@ -261,14 +246,12 @@ Sub SetWizSpells
 	} else /if (${SpellSet.Equal[magic]}) {
 		/varset ACPyromancy Arcomancy
 	}
-
  |-Familiar Buff
 	/if (${Me.AltAbility[Improved Familiar].Rank}>=1) {
 		/varset FamiliarBuff "Improved Familiar"
 	} else /if (${Me.Level}>=60 && ${Me.Book[${Spell[Greater Familiar].RankName}]}) {
 		/varset FamiliarBuff ${Spell[Greater Familiar].RankName}
 	}
-
  |-Self HP Buff * Var Name: SelfHPBuff string outer
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Shield of Scales].RankName}]}) {
 		/varset SelfHPBuff ${Spell[Shield of Scales].RankName}
@@ -283,7 +266,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=81 && ${Me.Book[${Spell[Shield of the Void].RankName}]}) {
 		/varset SelfHPBuff ${Spell[Shield of the Void].RankName}
 	}
-
  |-Self Rune 1 * Var Name: SelfRune1 string outer
 	/if (${Me.Level}>=108 && ${Me.Book[${Spell[Armor of Wirn].RankName}]}) {
 		/varset SelfRune1 ${Spell[Armor of Wirn].RankName}
@@ -298,40 +280,34 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=83 && ${Me.Book[${Spell[Squamae of the Crystalwing].RankName}]}) {
 		/varset SelfRune1 ${Spell[Squamae of the Crystalwing].RankName}
 	}
-
  |-StripBuffSpell
 	/if (${Me.Level}>=100 && ${Me.AltAbilityReady[Eradicate Magic]}) {
 		/varset StripBuffSpell Eradicate Magic
 	} else /if (${Me.Level}>=53 && ${Me.Book[${Spell[Annul Magic].RankName}]}) {
 		/varset StripBuffSpell ${Spell[Annul Magic].RankName}
 	}
-
  |-AllianceSpell
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Frostbound Covenant].RankName}]}) {
 		/varset AllianceSpell ${Spell[Frostbound Covenant].RankName}
 	} else /if (${Me.Level}>=102 && ${Me.Book[${Spell[Frostbound Alliance].RankName}]}) {
 		/varset AllianceSpell ${Spell[Frostbound Alliance].RankName}
 	}
-
  |-DichoSpell
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Dissident Fire].RankName}]}) {
 		/varset DichoSpell ${Spell[Dissident Fire].RankName}
 	} else /if (${Me.Level}>=101 && ${Me.Book[${Spell[Dichotomic Fire].RankName}]}) {
 		/varset DichoSpell ${Spell[Dichotomic Fire].RankName}
 	}
-
  |-Root Spell * Var Name: RootSpell string outer
 	/if (${Me.Level}>=61 && ${Me.Book[${Spell[Greater Fetter].RankName}]}) {
 		/varset RootSpell ${Spell[Greater Fetter].RankName}
 	} else /if (${Me.Level}>=58 && ${Me.Book[${Spell[Fetter].RankName}]}) {
 		/varset RootSpell ${Spell[Fetter].RankName}
 	}
-
  |-TwincastSpell
 	/if (${Me.Level}>=85 && ${Me.Book[${Spell[Twincast].RankName}]}) {
 		/varset TwincastSpell ${Spell[Twincast].RankName}
 	}
-
  |-SnareSpell
 	/if (${Me.Level}>=93 && ${Me.Book[${Spell[Atol's Concussive Shackles].RankName}]}) {
 		/varset SnareSpell ${Spell[Atol's Concussive Shackles].RankName}
@@ -340,7 +316,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=27 && ${Me.Book[${Spell[Bonds of Force].RankName}]}) {
 		/varset SnareSpell ${Spell[Bonds of Force].RankName}
 	}	
-
  |-JoltSpell
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Concussive Volley].RankName}]}) {
 		/varset JoltSpell ${Spell[Concussive Volley].RankName}
@@ -353,7 +328,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=86 && ${Me.Book[${Spell[Concussive Burst].RankName}]}) {
 		/varset JoltSpell ${Spell[Concussive Burst].RankName}
 	}
-
  |-HarvestSpell
 	/if (${Me.Level}>=107 && ${Me.Book[${Spell[Musing Harvest].RankName}]}) {
 		/varset HarvestSpell ${Spell[Musing Harvest].RankName}
@@ -366,7 +340,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=87 && ${Me.Book[${Spell[Soothing Harvest].RankName}]}) {
 		/varset HarvestSpell ${Spell[Soothing Harvest].RankName}
 	}
-
 |-GambitSpell
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Musing Gambit].RankName}]}) {
 		/varset GambitSpell ${Spell[Musing Gambit].RankName}
@@ -375,7 +348,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=99 && ${Me.Book[${Spell[Bucolic Gambit].RankName}]}) {
 		/varset GambitSpell ${Spell[Bucolic Gambit].RankName}
 	}
-
 |-PetSpell
 	/if (${Me.Level}>=109 && ${Me.Book[${Spell[Virnax's Pyroblade].RankName}]}) {
 		/varset PetSpell ${Spell[Virnax's Pyroblade].RankName}
@@ -390,7 +362,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=84 && ${Me.Book[${Spell[Daveron's Pyroblade].RankName}]}) {
 		/varset PetSpell ${Spell[Daveron's Pyroblade].RankName}
 	}
-
 |-ClawNuke
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Claw of Travenro].RankName}]} && ${SpellSet.Equal[cold]}) {
 		/varset ClawNuke ${Spell[Claw of Travenro].RankName}
@@ -415,7 +386,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=90 && ${Me.Book[${Spell[Glacial Claw].RankName}]}) {
 		/varset ClawNuke ${Spell[Glacial Claw].RankName}
 	}
-
 |-CloudburstNuke
 	/if (${Me.Level}>=107 && ${Me.Book[${Spell[Cloudburst Thunderbolt].RankName}]}) {
 		/varset CloudburstNuke ${Spell[Cloudburst Thunderbolt].RankName}
@@ -428,7 +398,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=87 && ${Me.Book[${Spell[Cloudburst Storm].RankName}]}) {
 		/varset CloudburstNuke ${Spell[Cloudburst Storm].RankName}
 	}
-
 |-FuseNuke
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Ethereal Braid].RankName}]}) {
 		/varset FuseNuke ${Spell[Ethereal Braid].RankName}
@@ -436,10 +405,10 @@ Sub SetWizSpells
 		/varset FuseNuke ${Spell[Ethereal Fuse].RankName}
 	} else /if (${Me.Level}>=100 && ${Me.Book[${Spell[Ethereal Weave].RankName}]}) {
 		/varset FuseNuke ${Spell[Ethereal Weave].RankName}
-	} else {
-|-		/varset FuseNuke ${CloudburstNuke}
 	}
-
+	|  else {
+|-		/varset FuseNuke ${CloudburstNuke}
+	| }
 |-WildNuke
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Wildflash Strike].RankName}]}) {
 		/varset WildNuke ${Spell[Wildflash Strike].RankName}
@@ -452,7 +421,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=86 && ${Me.Book[${Spell[Wildmana Barrage].RankName}]}) {
 		/varset WildNuke ${Spell[Wildmana Barrage].RankName}
 	}
-
 |-VortexNuke
 	/if (${Me.Level}>=108 && ${Me.Book[${Spell[Stormjolt Vortex].RankName}]}) {
 		/varset VortexNuke ${Spell[Stormjolt Vortex].RankName}
@@ -477,7 +445,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=86 && ${Me.Book[${Spell[Fire Vortex].RankName}]} && ${SpellSet.Equal[magic]}) {
 		/varset VortexNuke ${Spell[Fire Vortex].RankName}
 	}
-
 |-ChaosNuke
 	/if (${Me.Level}>=108 && ${Me.Book[${Spell[Chaos Burn].RankName}]}) {
 		/varset ChaosNuke ${Spell[Chaos Burn].RankName}
@@ -490,7 +457,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=89 && ${Me.Book[${Spell[Chaos Char].RankName}]}) {
 		/varset ChaosNuke ${Spell[Chaos Char].RankName}
 	}
-
 |-MagmaticAENuke
 	/if (${Me.Level}>=109 && ${Me.Book[${Spell[Magmatic Explosion].RankName}]}) {
 		/varset MagmaticAENuke ${Spell[Magmatic Explosion].RankName}
@@ -505,7 +471,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=84 && ${Me.Book[${Spell[Magmatic Eruption].RankName}]}) {
 		/varset MagmaticAENuke ${Spell[Magmatic Eruption].RankName}
 	}
-
 |-FireEtherealNuke
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Ethereal Skyfire].RankName}]}) {
 		/varset FireEtherealNuke ${Spell[Ethereal Skyfire].RankName}
@@ -520,7 +485,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=85 && ${Me.Book[${Spell[Ethereal Combustion].RankName}]}) {
 		/varset FireEtherealNuke ${Spell[Ethereal Combustion].RankName}
 	}
-
 |-ColdEtherealNuke
 	/if (${Me.Level}>=109 && ${Me.Book[${Spell[Ethereal Icefloe].RankName}]}) {
 		/varset ColdEtherealNuke ${Spell[Ethereal Icefloe].RankName}
@@ -535,14 +499,12 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=84 && ${Me.Book[${Spell[Ethereal Iceblight].RankName}]}) {
 		/varset ColdEtherealNuke ${Spell[Ethereal Iceblight].RankName}
 	}
-
 |-EvacSpell
 	/if (${Me.Level}>=57 && ${Me.Book[${Spell[Evacuate].RankName}]}) {
 		/varset EvacSpell ${Spell[Evacuate].RankName}
 	} else /if (${Me.Level}>=18 && ${Me.Book[${Spell[Lesser Evacuate].RankName}]}) {
 		/varset EvacSpell ${Spell[Lesser Evacuate].RankName}
 	}
-
 |-StunSpell
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Telanata].RankName}]}) {
 		/varset StunSpell ${Spell[Telanata].RankName}
@@ -557,7 +519,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=85 && ${Me.Book[${Spell[Telajara].RankName}]}) {
 		/varset StunSpell ${Spell[Telajara].RankName}
 	}
-
 |-FastNuke1 Fastest casting general nuke not already used 
 	/if (${Me.Level}>=107 && ${Me.Book[${Spell[Leap of Stormjolts].RankName}]}) {
 		/varset FastNuke1 ${Spell[Leap of Stormjolts].RankName}
@@ -572,7 +533,6 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=82 && ${Me.Book[${Spell[Leap of Static Jolts].RankName}]}) {
 		/varset FastNuke1 ${Spell[Leap of Static Jolts].RankName}
 	}
-
 |-GeneralNuke1 Slower casting biggest nuke not already used
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Dragoflux's Fire].RankName}]}) {
 		/varset GeneralNuke1 ${Spell[Dragoflux's Fire].RankName}
@@ -587,19 +547,17 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=85 && ${Me.Book[${Spell[Klixcxyk's Fire].RankName}]}) {
 		/varset GeneralNuke1 ${Spell[Klixcxyk's Fire].RankName}
 	}
-
 /return 
 
 |----------------------------------------------------------------------------
 |- SUB: Bind Set Var Int resets various interger settings from ini file
 |----------------------------------------------------------------------------
-
 Sub Bind_SetVarInt(string ISection, string IName, int IVar)
     /docommand /varset changetoini 1
-|-Toggles
+ |-Toggles
 	/if (${ISection.Equal[Toggle]}) {
 		/if (${IName.Equal[UseManaBurn]}) {
-|-ManaBurn
+ |-ManaBurn
 			/if (!${UseManaBurn}) {
 				/echo \aw Setting  UseManaBurn to \ag ON
 				/varset UseManaBurn 1
@@ -607,7 +565,7 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 				/echo \aw Resetting  UseManaBurn to \ar OFF
 				/varset UseManaBurn 0
 			}
-|-Dicho
+ |-Dicho
 		} else /if (${IName.Equal[UseDicho]}) {
 			/if (!${UseDicho}) {
 				/echo \aw Setting UseDicho to \ag ON
@@ -616,7 +574,7 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 				/echo \aw Resetting UseDicho to \ar OFF
 				/varset UseDicho 0
 			}
-|-EmergencyEvac
+ |-EmergencyEvac
 		} else /if (${IName.Equal[EmergencyEvac]}) {
 			/if (!${EmergencyEvac}) {
 				/echo \aw Setting EmergencyEvac to \ag ON
@@ -625,7 +583,7 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 				/echo \aw Resetting EmergencyEvac to \ar OFF
 				/varset EmergencyEvac 0
 			}
-|-ChestCombatCast
+ |-ChestCombatCast
 		} else /if (${IName.Equal[ChestCombatCast]}) {
 			/if (!${ChestCombatCast}) {
 				/echo \aw Setting ChestCombatCast to \ag ON
@@ -634,7 +592,7 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 				/echo \aw Resetting ChestCombatCast to \ar OFF
 				/varset ChestCombatCast 0
 			}
-|-StripBuffs
+ |-StripBuffs
 		} else /if (${IName.Equal[StripBuffs]}) {
 			/if (!${StripBuffs}) {
 				/echo \aw Setting StripBuffs to \ag ON
@@ -643,7 +601,7 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 				/echo \aw Resetting StripBuffs to \ar OFF
 				/varset StripBuffs 0
 			}
-|-WeaveAANukes
+ |-WeaveAANukes
 		} else /if (${IName.Equal[WeaveAANukes]}) {
 			/if (!${WeaveAANukes}) {
 				/echo \aw Setting WeaveAANukes to \ag ON
@@ -672,7 +630,7 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 				/echo \ar Invalid \ag ${IName} \aw - Set between 3-100 mobs
 			}
 		}
-|--Alliance	
+ |--Alliance	
 	} else /if (${IName.Equal[UseAlliance]}) {
 			/if (!${UseAlliance}) {
 				/echo \aw Setting UseAlliance to \ag ON
@@ -684,10 +642,12 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 			}
 		}	
 /return
+
 |----------------------------------------------------------------------------
 |- SUB: BIND CmdList - 
 |----------------------------------------------------------------------------
 Sub Bind_CmdList
+
 /call CommonHelp
 /echo \ag===${MacroName} Commands=== 
 /echo \ag/autodebuffat\aw - HP % to start debuffing at
@@ -703,4 +663,5 @@ Sub Bind_CmdList
 /echo \ag/tglpet\aw - Pet toggle...cause sometimes they arent allowed
 /echo \ag/tglstrip\aw - Turns Enemy Buff stripping On/Off
 /echo \ag/tglweave\aw - Toggles weaving of AA Nukes
+
 /return 
