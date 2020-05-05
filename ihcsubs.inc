@@ -624,7 +624,6 @@ Sub Event_Camping
 	/if (${Me.Casting.ID}) /stopcast
 	/end
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Event CAST_RESIST
 |----------------------------------------------------------------------------
@@ -632,7 +631,6 @@ Sub Event_CAST_RESIST
 	/varset CastResult CAST_RESIST
 	/doevents flush Event_CAST_RESIST
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Event CAST_IMMUNE
 |----------------------------------------------------------------------------
@@ -640,7 +638,6 @@ Sub Event_CAST_IMMUNE
 	/varset CastResult CAST_IMMUNE
 	/doevents flush Event_CAST_IMMUNE
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Campfire ${Window[FellowshipWnd].Child[FP_CampPage].Child[FP_CampsiteViewer].Text}
 |----------------------------------------------------------------------------
@@ -673,21 +670,21 @@ Sub Bind_Campfire
 		/if (${Me.Fellowship.Campfire}) /echo Campfire Dropped
     }
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Event Zoned
 |----------------------------------------------------------------------------
 Sub Event_Zoned(Message)
 	/call Zoning
 /return
-	
+|----------------------------------------------------------------------------
+|- SUB: Event Zoning
+|----------------------------------------------------------------------------
 Sub Zoning
 	/delay 1m !${Me.Zoning}
 	/if (${Bool[${FollowToonName}]}) /delay 1m ${Spawn[${FollowToonName}].ID}
 	/delay 50
 	/if (${ReturnToCamp}!=0) /varset ReturnToCamp 0
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Load Ini
 |----------------------------------------------------------------------------
@@ -704,7 +701,6 @@ Sub LoadIni(string sectionName, string varName, string varType, string varValue)
 		/echo \aw set \ag ${varName} \ay ${varValue}
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Set Ini
 |----------------------------------------------------------------------------
@@ -713,7 +709,6 @@ Sub SetIni(string sectionName, string varName, string varType, string varValue)
         /ini "${IniFileName}" "${sectionName}" "${varName}" "${varValue}"
     }
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: CLCheck - Check Command Line options.
 |----------------------------------------------------------------------------
@@ -734,7 +729,6 @@ Sub CLCheck
         }
     /next plc
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Gquery. Used for DanNet Queries on other connected members. Creates new variables for use in subs  
 |- Before calling this sub check for a connected member, ex:/if (${DanNet.Peers.Find[${EverQuest.Server.Lower}_${Group.Member[#].Name.Lower}]})
@@ -754,7 +748,6 @@ Sub Gquery(string DnetName, string tmpquery, string varName, string varType)
 	/dquery ${DnetName} -q "${tmpquery}" -o ${varName}
 	/delay 20 ${DanNet[${DnetName}].Query["${tmpquery}"].Received}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: FollowToon
 |---------------------------------------------------------------------------- 
@@ -768,7 +761,6 @@ Sub FollowToon
 		}
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: AutoCampCheck - Modified - AutoCampHold set to 1 will cause a return to camp /loc everytime and not just when we move out of AutoCampRadius
 |----------------------------------------------------------------------------
@@ -778,8 +770,8 @@ Sub AutoCampCheck
 		/varset ReturnToCamp 0
 		/echo \aw FollowToon Detected - \ar Disabling Camp
 	} else /if (${Stick.Status.Equal[ON]} && ${ReturnToCamp}==1) {
-|-		/varset ReturnToCamp 0
-|-		/echo \aw Stick Detected - \ar Disabling Camp
+ |-		/varset ReturnToCamp 0
+ |-		/echo \aw Stick Detected - \ar Disabling Camp
 	} else /if (${AdvPath.Following} && ${ReturnToCamp}==1) {
 		/varset ReturnToCamp 0
 		/echo \aw AdvPath Follow Detected - \ar Disabling Camp
@@ -797,7 +789,6 @@ Sub AutoCampCheck
 		/moveto off
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: BagModRods
 |----------------------------------------------------------------------------
@@ -819,7 +810,6 @@ Sub BagModRods
 		/varset ShitOnCursor NULL
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Event Gain Something - DanNet message 
 |----------------------------------------------------------------------------    
@@ -830,14 +820,12 @@ Sub Event_GainSomething(string Line,string text)
         /docommand /dgt \aw ${Me.Name} gained a level, now is Level ${Me.Level} \ax
 	}
 /return 
-
 |----------------------------------------------------------------------------
 |- SUB: Event Task Update - DanNet message 
 |----------------------------------------------------------------------------    
 Sub Event_TaskUpdate(string Line,string name) 
     /if (${acverbose}!=0) /docommand /dgt \at Task updated...(${name})\ax    
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: Check Plugin
 |----------------------------------------------------------------------------
@@ -847,7 +835,6 @@ Sub CheckPlugin(string pluginname)
         /echo \aw ${pluginname} \ar not detected! \aw This macro requires it! Loading ...
     }
 /return	
-
 |----------------------------------------------------------------------------
 |- SUB: Death Sub
 |----------------------------------------------------------------------------
@@ -873,15 +860,14 @@ Sub DeathSub
 		/echo \aw Waiting on someone that knows how to heal to \ar rez me
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: AutoMed - Modified SitCheck from auto subs, user configureable end/mana % to start medding at 
 |- Need: EndMedPct and MedPct variables to use.
 |---------------------------------------------------------------------------- 
 Sub AutoMed
-|---SIT Check
+ |---SIT Check
    /if ((${Me.Moving} || ${Me.XTarget[1].ID} || ${MoveTo.Moving} || ${Me.CombatState.Equal[COMBAT]} || ${Stick.Status.Equal[ON]} || ${AdvPath.Following}) && (${enablesit}==1)) /varset enablesit 0
-|--Out of Combat MedTime - Sitting
+ |--Out of Combat MedTime - Sitting
 	/if (${Me.Standing} && !${Me.Moving} && ${Stick.Status.Equal[OFF]} && !${Me.XTarget[1].ID} && !${MoveTo.Moving} && !${AdvPath.Following} && ${Me.CombatState.NotEqual[COMBAT]} && ${Me.CombatState.NotEqual[DEBUFFED]} && ${enablesit}==0 && ((${Me.PctMana}<=${MedPct} && ${Me.MaxMana}>1000) || (${Me.PctEndurance}<=${EndMedPct} && ${Me.MaxEndurance}>1000))) {
 		/varset enablesit 1
 	} else /if (${sittimer}==0 && ${enablesit}==0 && ${Me.Sitting} && (${Me.Moving} || ${Me.XTarget[1].ID} || ${MoveTo.Moving} || ${Me.CombatState.Equal[COMBAT]} || ${Stick.Status.Equal[ON]} || ${AdvPath.Following})) {
@@ -892,7 +878,6 @@ Sub AutoMed
 		/varset sittimer 10s
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: UnCheck Plugin
 |----------------------------------------------------------------------------
@@ -902,7 +887,6 @@ Sub UnCheckPlugin(string pluginname)
         /echo \ar ${pluginname} detected! \aw Unloading it before it fucks shit up! UnLoading ...
     }
 /return	
-
 |----------------------------------------------------------------------------
 |- SUB: DiscQueue
 |---------------------------------------------------------------------------- 
@@ -917,7 +901,6 @@ Sub DiscQueue(string nextdisc)
 	/delay 8 !${Me.CombatAbilityReady[${nextdisc}]}
 	/if (${acverbose}!=0) /echo \aw Casting \ag ${nextdisc}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: DiscNow
 |---------------------------------------------------------------------------- 
@@ -930,7 +913,6 @@ Sub DiscNow(string nextdisc)
 	/delay 8 !${Me.CombatAbilityReady[${nextdisc}]}
 	/if (${acverbose}!=0) /echo \aw Casting \ag ${nextdisc}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: AANow
 |---------------------------------------------------------------------------- 
@@ -949,7 +931,6 @@ Sub AANow(int nextaa,int aatargetid)
 	/delay 8 !${Me.AltAbilityReady[${nextaa}]}
 	/if (${acverbose}!=0) /docommand /dgt Casting \ao =>> \ag ${Me.AltAbility[${nextaa}].Name} \ao <<= \ax
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: AbilityNow
 |---------------------------------------------------------------------------- 
@@ -958,7 +939,6 @@ Sub AbilityNow(string nextability)
 	/delay 8 !${Me.AbilityReady[${nextability}]}
 	/if (${acverbose}!=0) /echo \aw Casting \ag ${nextability}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: ItemNow
 |---------------------------------------------------------------------------- 
@@ -978,7 +958,6 @@ Sub ItemNow(string nextitem)
 	}
 	/if (${acverbose}!=0) /echo \aw Using Item \ag ${nextitem}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: SpellQueue - Modified to use memspell replacement sub and return a cast result
 |---------------------------------------------------------------------------- 
@@ -1015,40 +994,39 @@ Sub SpellQueue(string nextspell,int nextid)
 		/varset CastResult CAST_CANCELLED
 	}
 /return ${CastResult}
-
 |----------------------------------------------------------------------------
 |- SUB: FindTarget - melee attack portion removed. Melee attack moved into engage sub to reduce too far away and can not see messages
 |---------------------------------------------------------------------------- 
 Sub FindTarget
-/declare xt int local 1
-/declare xtlow int local ${AutoAssistAt}
-/declare xtid int local 0
+	/declare xt int local 1
+	/declare xtlow int local ${AutoAssistAt}
+	/declare xtid int local 0
 	/if (${Target.Type.Equal[Corpse]}) /target clear
 	/if (!${Spawn[${SpawnSearchType} id ${autotargetid}].ID} && ${autotargetid}!=0) {
 		/varset autotargetid 0
 		/if (${Stick.Status.Equal[ON]}) /stick off
 		/if (${burnnow}) /varset burnnow 0
 	}
-|--Query XTarget to find hp percents
+ |--Query XTarget to find hp percents
 	/for xt 1 to ${Me.XTarget}
 		/if (${Me.XTarget[${xt}].PctHPs}<=${xtlow} && ${Spawn[id ${Me.XTarget[${xt}].ID} ${SpawnSearchType}].ID}) {
 			/varset xtlow ${Me.XTarget[${xt}].PctHPs}
 			/varset xtid ${Me.XTarget[${xt}].ID}
 		}
 	/next xt
-|- Spawn search code to replace above Xtarget search
-|- /declare MobIDList string local
-|-	:targetsearch
-|-	/if (${NearestSpawn[${xt},npc radius ${AssistRange} zradius 15 targetable playerstate 4].ID}) {
-|-		/if (!${MobIDList.Find[|${NearestSpawn[${xt},npc radius ${AssistRange} zradius 15 targetable playerstate 4].ID}]} && ${NearestSpawn[${xt},npc radius ${AssistRange} zradius 15 targetable playerstate 4].PctHPs}<=${xtlow}) {
-|-			/varset xtid ${NearestSpawn[${xt},npc radius ${AssistRange} zradius 15 targetable playerstate 4].ID}
-|-			/varset xtlow ${Spawn[npc id ${xtid}].PctHPs}
-|-			/varset MobIDList ${MobIDList}|${xtid}
-|-		}		
-|-		/varcalc xt ${xt}+1
-|-		/goto :targetsearch
-|-	}
-|--Check target matches MA if not based off lowest hp in XTarget
+ |- Spawn search code to replace above Xtarget search
+ |- /declare MobIDList string local
+ |-	:targetsearch
+ |-	/if (${NearestSpawn[${xt},npc radius ${AssistRange} zradius 15 targetable playerstate 4].ID}) {
+ |-		/if (!${MobIDList.Find[|${NearestSpawn[${xt},npc radius ${AssistRange} zradius 15 targetable playerstate 4].ID}]} && ${NearestSpawn[${xt},npc radius ${AssistRange} zradius 15 targetable playerstate 4].PctHPs}<=${xtlow}) {
+ |-			/varset xtid ${NearestSpawn[${xt},npc radius ${AssistRange} zradius 15 targetable playerstate 4].ID}
+ |-			/varset xtlow ${Spawn[npc id ${xtid}].PctHPs}
+ |-			/varset MobIDList ${MobIDList}|${xtid}
+ |-		}		
+ |-		/varcalc xt ${xt}+1
+ |-		/goto :targetsearch
+ |-	}
+ |--Check target matches MA if not based off lowest hp in XTarget
 	/if (${FollowMarkTarget}) {
 		/if (${Me.GroupMarkNPC[${FollowMarkTarget}].ID} && ${autotargetid}!=${Me.GroupMarkNPC[${FollowMarkTarget}].ID}) {
 			/varset autotargetid ${Me.GroupMarkNPC[${FollowMarkTarget}].ID}
@@ -1058,13 +1036,12 @@ Sub FindTarget
 	} else /if ((!${Group.MainAssist.ID} || ${Group.MainAssist.ID}==${Me.ID}) && ${Spawn[${SpawnSearchType} id ${xtid}].ID}) {
 		/varset autotargetid ${xtid}
 	}
-|--Target the new target
+ |--Target the new target
 	/if (${Target.ID}!=${autotargetid} && ${Spawn[${SpawnSearchType} id ${autotargetid}].ID}) {
 		/squelch /target id ${autotargetid}
 		/delay 10 ${Target.ID}==${autotargetid}
 	}
 /return 
-
 |----------------------------------------------------------------------------
 |- SUB: Melee Engage Target - Need a StickHow variable in the mac. Ini option for melee just a declared variable set to null for classes that wont enageg in melee
 |- Basic use will check the that the target is in assist range, stick and when in melee range start attacking ( reduces too far away and can not see messages )
@@ -1074,7 +1051,7 @@ Sub FindTarget
 Sub EngageTarget
 	/declare OKRadCal int local 0
 	/if (${Me.State.Equal[FEIGN]}) /stand
-	|- If not the MA check that the mob is in range of the MA and not just  in assist range before engaging 
+ |- If not the MA check that the mob is in range of the MA and not just  in assist range before engaging 
 	/if (${UseSmartAssist}) {
 		/varset OKRadCal ${Spawn[${SpawnSearchType} id ${autotargetid}].MaxRangeTo}
 		/if (${Target.ID}==${autotargetid} && ${assistid}!=${Me.ID} && ${Spawn[${assistid}].ID} && ${Spawn[${SpawnSearchType} id ${autotargetid} loc ${Spawn[id ${assistid}].X} ${Spawn[id ${assistid}].Y} radius ${OKRadCal}].ID}) {
@@ -1098,7 +1075,6 @@ Sub EngageTarget
 	}
 	/call EngageAttack
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: EngageAttack	
 |-------------------------------------------------------------------------------------
@@ -1111,7 +1087,6 @@ Sub EngageAttack
 		}
 	}
 /return 
-
 |-------------------------------------------------------------------------------------
 |- SUB: CastSpell - Taken from kissassist and modified. Better spell casting control for longer casting spells plus return messages for monitoring resists, interruptions, immune
 |-------------------------------------------------------------------------------------
@@ -1139,7 +1114,6 @@ Sub CastSpell(string WhatSpell,int WhatID,string sentFrom)
         /varset CastResult CAST_CANCELLED
     }
 /return ${CastResult}  
-
 |-------------------------------------------------------------------------------------
 |- SUB: CastWait - Cast Spell sub routine from kissassist
 |-------------------------------------------------------------------------------------
@@ -1151,7 +1125,6 @@ Sub CastWait(string WaitSpell)
         }
     }
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: CastTarget - Cast Spell sub routine from kissassist
 |-------------------------------------------------------------------------------------
@@ -1161,7 +1134,6 @@ Sub CastTarget(int WhatID)
     /target id ${WhatID}
     /delay 10 ${Target.ID}==${WhatID}
 /return
-
 |------------------------------------------------------------------------------------------
 |- SUB: LoadSpellGem - Replaces memspell sub
 |------------------------------------------------------------------------------------------
@@ -1186,7 +1158,6 @@ Sub LoadSpellGem(string SpellToMem,int memgem)
 		/echo \ar Invalid \aw SpellToMem ${SpellToMem} 
 	}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: FindNumTargets
 |---------------------------------------------------------------------------- 
@@ -1199,7 +1170,6 @@ Sub FindNumTargets
 		/if (${Me.XTarget[${xt}].Type.Equal[NPC]}) /varcalc numoftargets ${numoftargets}+1
 	/next xt
 /return 
-
 |----------------------------------------------------------------------------
 |- SUB: IDUpdateCheck - keeps MA ID updated if it changes ( Death, Zoning )
 |---------------------------------------------------------------------------- 
@@ -1209,7 +1179,6 @@ Sub IDUpdateCheck
 		/varset assistid ${Spawn[pc =${assistname}].ID}
 	}
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: ClickModRoD - 
 |-------------------------------------------------------------------------------------
@@ -1217,7 +1186,6 @@ Sub ClickModRoD
 	/if (${FindItem[Transvergence].ID} && ${FindItem[Transvergence].Timer}==0 && ${Me.PctMana}<=${ModRodManaPct} && ${Me.PctHPs}>=60 ) /useitem "${FindItem[Transvergence]}"
 	/if (${FindItem[Modulation].ID} && ${FindItem[Modulation].Timer}==0 && ${Me.PctMana}<=${ModRodManaPct} && ${Me.PctHPs}>=60 ) /useitem "${FindItem[Modulation]}"
 /return 
-
 |-------------------------------------------------------------------------------------
 |- SUB: PlayersInGroup - Checking for PC vs Merc
 |-------------------------------------------------------------------------------------
@@ -1230,7 +1198,6 @@ Sub PlayersInGroup
 		}
 	/next i
 /return ${gcnt}
-
 |----------------------------------------------------------------------------
 |- BIND: GroupFrontFace - Credit EQMules mod of kissassist
 |----------------------------------------------------------------------------
@@ -1270,7 +1237,6 @@ Sub Bind_GroupFrontFace(string radius)
 		}
 	/next i
 /return
-
 |----------------------------------------------------------------------------
 |- BIND: GroupBehindMe - Credit EQMules mod of kissassist
 |----------------------------------------------------------------------------
@@ -1310,7 +1276,6 @@ Sub Bind_GroupBehindMe(string radius)
 		}
 	/next i
 /return
-
 |----------------------------------------------------------------------------
 |- BIND: SheepMove - Credit EQMules mod of kissassist
 |----------------------------------------------------------------------------
@@ -1350,7 +1315,6 @@ Sub Bind_SheepMove(int shepherdID, int l_YLoc, int l_XLoc)
 		/echo \aw SheepMove failed because you don't have \ag mq2moveutils \aw loaded.
 	}
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: Welcome Message
 |-------------------------------------------------------------------------------------
@@ -1361,7 +1325,6 @@ Sub WelcomeMsg
 	/echo \aw****************************
 	/echo \aw use \ag /ihchelp \aw for a list of commands
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: NavgationDelay
 |-------------------------------------------------------------------------------------
@@ -1372,7 +1335,6 @@ Sub NavgationDelay
 	/if (${Navigation.Active}) /goto :naving
 	|-/echo Navigation Finished!
 /return 
-
 |-------------------------------------------------------------------------------------
 |- SUB: KillTarget
 |-------------------------------------------------------------------------------------
@@ -1385,7 +1347,6 @@ Sub KillTarget
 	}
 	/call EngageAttack
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: BegForCure
 |-------------------------------------------------------------------------------------
@@ -1422,21 +1383,18 @@ Sub BegForCure
 	/if (${Defined[tmpCureSpellReady]}) /deletevar tmpCureSpellReady
 	/delay 5
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: BIND KillMATarget
 |-------------------------------------------------------------------------------------
 Sub Bind_KillMATarget
 	/call KillTarget
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: BIND SetAutoTargetID
 |-------------------------------------------------------------------------------------
 Sub Bind_SetAutoTargetID
 	/varset autotargetid ${Target.ID}
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: BIND QuestSay
 |-------------------------------------------------------------------------------------
@@ -1446,139 +1404,106 @@ Sub Bind_QuestSay(string QSayText)
 	/squelch /mgax /say ${QSayText}
 	/delay 5
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: BIND's Various
 |-------------------------------------------------------------------------------------
 Sub Bind_ChaseMe
     /squelch /mgx /chase on ${Me.CleanName}
 /return
-
 Sub Bind_CampHere
     /call ToggleVariable ReturnToCamp 1
 /return
-
 Sub Bind_CampOff
     /call ToggleVariable ReturnToCamp 0
 /return
-
 Sub Bind_CampRadius
     /call ChangeVarInt General CampRadius
 /return
-
 Sub Bind_ChaseAssist
     /call ToggleVariable ChaseAssist
 /return
-
 Sub Bind_ChaseOff
     /call ChangeVarInt General ChaseAssist 0  
 /return
-
 Sub Bind_ChaseOn
     /call ChangeVarInt General ChaseAssist 1 
 /return
-
 Sub Bind_InstantRelease
     /call ToggleVariable InstantRelease
 /return
-
 Sub Bind_MeleeOn
     /call ToggleVariable MeleeOn 1
 /return
-
 Sub Bind_MeleeOff
     /call ToggleVariable MeleeOn 0
 /return
-
 Sub Bind_ReturnToCamp
     /call ToggleVariable ReturnToCamp
 /return
-
 Sub Bind_UseFellowship
     /call ToggleVariable UseFellowship
 /return
-
 Sub Bind_IHCStart
     /macro IHCMercs\IHC${Me.Class.ShortName}.mac
 /return
-
 Sub Bind_IHCGroup
     /docommand /dgaex group_${EverQuest.Server}_${Group.Leader} /target ${Me.CleanName}
     /docommand /timed 10 /dgaex group_${EverQuest.Server}_${Group.Leader} /ihcstart
 /return
-
 Sub Bind_AssistRange
     /call ChangeVarInt Set AssistRange
 /return
-
 Sub Bind_AutoAssistAt
     /call ChangeVarInt Set AutoAssistAt
 /return
-
 Sub Bind_BurnIt
     /call ToggleVariable BurnNow
 /return
-
 Sub Bind_BurnCount
     /call ChangeVarInt Set BurnMobCount
 /return
-
 Sub Bind_CampExact
     /call ToggleVariable AutoCampHold
 /return
-
 Sub Bind_EndMedPct
     /call ChangeVarInt Set EndMedPct
 /return
-
 Sub Bind_GPause
     /call ToggleVariable GroupPause        
 /return
-
 Sub Bind_GBackoff
     /call ToggleVariable GroupBackOff
 /return
-
 Sub Bind_MedPct
     /call ChangeVarInt Set MedPct
 /return
-
 Sub Bind_SmartAssist
     /call ToggleVariable UseSmartAssist
 /return
-
 Sub Bind_TglBurn
     /call ToggleVariable BurnAlways
 /return
-
 Sub Bind_TglBeg
     /call ToggleVariable DoGroupBeg
 /return
-
 Sub Bind_TglZLogic
     /call ToggleVariable EventLogic
 /return
-
 Sub Bind_TglMed
     /call ToggleVariable DoMed
 /return
-
 Sub Bind_TglMelee
     /call ToggleVariable UseMelee
 /return
-
 Sub Bind_DanNetMGX
     /dggexecute
 /return
-
 Sub Bind_DanNetMGAX
     /dggaexecute
 /return
-
 Sub Bind_DanNetMGT
     /dgtell group_${EverQuest.Server}_${Group.Leader}
 /return
-
 |-------------------------------------------------------------------------------------
 |- SUB: Help Common - 
 |-------------------------------------------------------------------------------------
