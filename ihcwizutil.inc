@@ -326,7 +326,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=87 && ${Me.Book[${Spell[Soothing Harvest].RankName}]}) {
 		/varset HarvestSpell ${Spell[Soothing Harvest].RankName}
 	}
-|-GambitSpell
+ |-GambitSpell
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Musing Gambit].RankName}]}) {
 		/varset GambitSpell ${Spell[Musing Gambit].RankName}
 	} else /if (${Me.Level}>=104 && ${Me.Book[${Spell[Quiescent Gambit].RankName}]}) {
@@ -334,7 +334,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=99 && ${Me.Book[${Spell[Bucolic Gambit].RankName}]}) {
 		/varset GambitSpell ${Spell[Bucolic Gambit].RankName}
 	}
-|-PetSpell
+ |-PetSpell
 	/if (${Me.Level}>=109 && ${Me.Book[${Spell[Virnax's Pyroblade].RankName}]}) {
 		/varset PetSpell ${Spell[Virnax's Pyroblade].RankName}
 	} else /if (${Me.Level}>=104 && ${Me.Book[${Spell[Yulin's Pyroblade].RankName}]}) {
@@ -348,7 +348,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=84 && ${Me.Book[${Spell[Daveron's Pyroblade].RankName}]}) {
 		/varset PetSpell ${Spell[Daveron's Pyroblade].RankName}
 	}
-|-ClawNuke
+ |-ClawNuke
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Claw of Travenro].RankName}]} && ${SpellSet.Equal[cold]}) {
 		/varset ClawNuke ${Spell[Claw of Travenro].RankName}
 	} else /if (${Me.Level}>=108 && ${Me.Book[${Spell[Claw of Qunard].RankName}]} && (${SpellSet.Equal[auto]} || ${SpellSet.Equal[fire]})) {
@@ -372,7 +372,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=90 && ${Me.Book[${Spell[Glacial Claw].RankName}]}) {
 		/varset ClawNuke ${Spell[Glacial Claw].RankName}
 	}
-|-CloudburstNuke
+ |-CloudburstNuke
 	/if (${Me.Level}>=107 && ${Me.Book[${Spell[Cloudburst Thunderbolt].RankName}]}) {
 		/varset CloudburstNuke ${Spell[Cloudburst Thunderbolt].RankName}
 	} else /if (${Me.Level}>=102 && ${Me.Book[${Spell[Cloudburst Stormstrike].RankName}]}) {
@@ -384,7 +384,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=87 && ${Me.Book[${Spell[Cloudburst Storm].RankName}]}) {
 		/varset CloudburstNuke ${Spell[Cloudburst Storm].RankName}
 	}
-|-FuseNuke
+ |-FuseNuke
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Ethereal Braid].RankName}]}) {
 		/varset FuseNuke ${Spell[Ethereal Braid].RankName}
 	} else /if (${Me.Level}>=105 && ${Me.Book[${Spell[Ethereal Fuse].RankName}]}) {
@@ -393,9 +393,9 @@ Sub SetWizSpells
 		/varset FuseNuke ${Spell[Ethereal Weave].RankName}
 	}
 	|  else {
-|-		/varset FuseNuke ${CloudburstNuke}
+ |-		/varset FuseNuke ${CloudburstNuke}
 	| }
-|-WildNuke
+ |-WildNuke
 	/if (${Me.Level}>=106 && ${Me.Book[${Spell[Wildflash Strike].RankName}]}) {
 		/varset WildNuke ${Spell[Wildflash Strike].RankName}
 	} else /if (${Me.Level}>=101 && ${Me.Book[${Spell[Wildflash Barrage].RankName}]}) {
@@ -407,7 +407,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=86 && ${Me.Book[${Spell[Wildmana Barrage].RankName}]}) {
 		/varset WildNuke ${Spell[Wildmana Barrage].RankName}
 	}
-|-VortexNuke
+ |-VortexNuke
 	/if (${Me.Level}>=108 && ${Me.Book[${Spell[Stormjolt Vortex].RankName}]}) {
 		/varset VortexNuke ${Spell[Stormjolt Vortex].RankName}
 	} else /if (${Me.Level}>=103 && ${Me.Book[${Spell[Shocking Vortex].RankName}]}) {
@@ -431,7 +431,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=86 && ${Me.Book[${Spell[Fire Vortex].RankName}]} && ${SpellSet.Equal[magic]}) {
 		/varset VortexNuke ${Spell[Fire Vortex].RankName}
 	}
-|-ChaosNuke
+ |-ChaosNuke
 	/if (${Me.Level}>=108 && ${Me.Book[${Spell[Chaos Burn].RankName}]}) {
 		/varset ChaosNuke ${Spell[Chaos Burn].RankName}
 	} else /if (${Me.Level}>=103 && ${Me.Book[${Spell[Chaos Scintillation].RankName}]}) {
@@ -443,7 +443,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=89 && ${Me.Book[${Spell[Chaos Char].RankName}]}) {
 		/varset ChaosNuke ${Spell[Chaos Char].RankName}
 	}
-|-MagmaticAENuke
+ |-MagmaticAENuke
 	/if (${Me.Level}>=109 && ${Me.Book[${Spell[Magmatic Explosion].RankName}]}) {
 		/varset MagmaticAENuke ${Spell[Magmatic Explosion].RankName}
 	} else /if (${Me.Level}>=104 && ${Me.Book[${Spell[Magmatic Burst].RankName}]}) {
@@ -457,7 +457,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=84 && ${Me.Book[${Spell[Magmatic Eruption].RankName}]}) {
 		/varset MagmaticAENuke ${Spell[Magmatic Eruption].RankName}
 	}
-|-FireEtherealNuke
+ |-FireEtherealNuke
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Ethereal Skyfire].RankName}]}) {
 		/varset FireEtherealNuke ${Spell[Ethereal Skyfire].RankName}
 	} else /if (${Me.Level}>=105 && ${Me.Book[${Spell[Ethereal Skyblaze].RankName}]}) {
@@ -471,7 +471,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=85 && ${Me.Book[${Spell[Ethereal Combustion].RankName}]}) {
 		/varset FireEtherealNuke ${Spell[Ethereal Combustion].RankName}
 	}
-|-ColdEtherealNuke
+ |-ColdEtherealNuke
 	/if (${Me.Level}>=109 && ${Me.Book[${Spell[Ethereal Icefloe].RankName}]}) {
 		/varset ColdEtherealNuke ${Spell[Ethereal Icefloe].RankName}
 	} else /if (${Me.Level}>=104 && ${Me.Book[${Spell[Ethereal Rimeblast].RankName}]}) {
@@ -485,13 +485,13 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=84 && ${Me.Book[${Spell[Ethereal Iceblight].RankName}]}) {
 		/varset ColdEtherealNuke ${Spell[Ethereal Iceblight].RankName}
 	}
-|-EvacSpell
+ |-EvacSpell
 	/if (${Me.Level}>=57 && ${Me.Book[${Spell[Evacuate].RankName}]}) {
 		/varset EvacSpell ${Spell[Evacuate].RankName}
 	} else /if (${Me.Level}>=18 && ${Me.Book[${Spell[Lesser Evacuate].RankName}]}) {
 		/varset EvacSpell ${Spell[Lesser Evacuate].RankName}
 	}
-|-StunSpell
+ |-StunSpell
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Telanata].RankName}]}) {
 		/varset StunSpell ${Spell[Telanata].RankName}
 	} else /if (${Me.Level}>=105 && ${Me.Book[${Spell[Telanara].RankName}]}) {
@@ -505,7 +505,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=85 && ${Me.Book[${Spell[Telajara].RankName}]}) {
 		/varset StunSpell ${Spell[Telajara].RankName}
 	}
-|-FastNuke1 Fastest casting general nuke not already used 
+ |-FastNuke1 Fastest casting general nuke not already used 
 	/if (${Me.Level}>=107 && ${Me.Book[${Spell[Leap of Stormjolts].RankName}]}) {
 		/varset FastNuke1 ${Spell[Leap of Stormjolts].RankName}
 	} else /if (${Me.Level}>=102 && ${Me.Book[${Spell[Leap of Stormbolts].RankName}]}) {
@@ -519,7 +519,7 @@ Sub SetWizSpells
 	} else /if (${Me.Level}>=82 && ${Me.Book[${Spell[Leap of Static Jolts].RankName}]}) {
 		/varset FastNuke1 ${Spell[Leap of Static Jolts].RankName}
 	}
-|-GeneralNuke1 Slower casting biggest nuke not already used
+ |-GeneralNuke1 Slower casting biggest nuke not already used
 	/if (${Me.Level}>=110 && ${Me.Book[${Spell[Dragoflux's Fire].RankName}]}) {
 		/varset GeneralNuke1 ${Spell[Dragoflux's Fire].RankName}
 	} else /if (${Me.Level}>=105 && ${Me.Book[${Spell[Narendi's Fire].RankName}]}) {
