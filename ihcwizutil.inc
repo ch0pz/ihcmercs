@@ -5,9 +5,7 @@
 |--------------------------------------------------------------------------------------
 |-Setup Variable Environment & Declares, Aliases
 |--------------------------------------------------------------------------------------
-
 Sub WizSetup
-
  |--------------------------------------------------------------------------------------
  |-Toggle switches toggling on/off modes from INI files
  |--------------------------------------------------------------------------------------
@@ -23,13 +21,11 @@ Sub WizSetup
 	/squelch /alias /tglstrip		/setvarint Toggle StripBuffs
 	/squelch /alias /tglweave		/setvarint Toggle WeaveAANukes
 	| /squelch /alias /byos			/setvarint Toggle BringYourOwnSpells
-
  |--------------------------------------------------------------------------------------
  |-SET - values from INI for ability / spell requirements
  |--------------------------------------------------------------------------------------
 	/squelch /alias /autodebuffat	/setvarint Set AutoDebuffAt
 	/squelch /alias /harvestat 		/setvarint Set HarvestManaPct
-
  |--------------------------------------------------------------------------------------
  |-DECLARES AA and Spell variables
  |--------------------------------------------------------------------------------------
@@ -93,12 +89,10 @@ Sub WizSetup
 	/call LoadIni Options HarvestManaPct		int 75
 	/call LoadIni Options StickHow				string NULL
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: INIChanges
 |---------------------------------------------------------------------------- 
 Sub INIChanges
-
 	/varset changetoini 0
 	/call SaveCommonConfig
 	/call SetIni Combat AllowMezBreak		int ${AllowMezBreak}
@@ -116,20 +110,16 @@ Sub INIChanges
 	/call SetIni Options EmergencyEvac		int ${EmergencyEvac}
 	/call SetIni Options HarvestManaPct		int ${HarvestManaPct}
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: CheckOptions - Used to sort conflicting options at startup and set basic values if needed
 |---------------------------------------------------------------------------- 
 Sub CheckOptions
-
 	/if (${AutoCampHold}) /moveto dist 2
 /return
-
 |* ------------------------------------------------------------------------------------------
 | SUB: LoadSpellBar
 |------------------------------------------------------------------------------------------ *|
 Sub LoadSpellBar
-
  	/if (${Me.Standing}) {
 		/sit
 		/delay 10 ${Me.Sitting}
@@ -226,18 +216,14 @@ Sub LoadSpellBar
 			/call LoadSpellGem "${HarvestSpell}" 7
 		}
 	 }
-	
 	/if (${Me.Sitting}) /stand
 	/delay 10 ${Me.Standing}
 /return 
-
 |* ------------------------------------------------------------------------------------------
 | SUB: SetWizSpells
 |------------------------------------------------------------------------------------------ *|
 Sub SetWizSpells
-
 	/if (!${SpellSet.Equal[auto]} && !${SpellSet.Equal[fire]} && !${SpellSet.Equal[cold]} && !${SpellSet.Equal[magic]}) /varset SpellSet auto
-
  |-Arco/Cryo/Pyromancy
 	/if (${SpellSet.Equal[auto]} || ${SpellSet.Equal[fire]}) {
 		/varset ACPyromancy Pyromancy
@@ -548,7 +534,6 @@ Sub SetWizSpells
 		/varset GeneralNuke1 ${Spell[Klixcxyk's Fire].RankName}
 	}
 /return 
-
 |----------------------------------------------------------------------------
 |- SUB: Bind Set Var Int resets various interger settings from ini file
 |----------------------------------------------------------------------------
@@ -642,26 +627,23 @@ Sub Bind_SetVarInt(string ISection, string IName, int IVar)
 			}
 		}	
 /return
-
 |----------------------------------------------------------------------------
 |- SUB: BIND CmdList - 
 |----------------------------------------------------------------------------
 Sub Bind_CmdList
-
-/call CommonHelp
-/echo \ag===${MacroName} Commands=== 
-/echo \ag/autodebuffat\aw - HP % to start debuffing at
-| /echo \ag/byos\aw - 
-/echo \ag/harvestat\aw - Harvest Mana %
-/echo \ag/tglalliance\aw - Toggles use of Alliance
-/echo \ag/tglaoe\aw - Toggle use of AOE Spells 
-/echo \ag/tglbp\aw - Toggle use of chest item
-/echo \ag/tgldicho\aw - Toggle use of Dicho spell
-/echo \ag/tgldps\aw - Turns ALL DPS On/Off
-/echo \ag/tglevac\aw - Toggles Evac if tank dies
-/echo \ag/tglmezbreak\aw - Toggles Allowing mez break
-/echo \ag/tglpet\aw - Pet toggle...cause sometimes they arent allowed
-/echo \ag/tglstrip\aw - Turns Enemy Buff stripping On/Off
-/echo \ag/tglweave\aw - Toggles weaving of AA Nukes
-
+	/call CommonHelp
+	/echo \ag===${MacroName} Commands=== 
+	/echo \ag/autodebuffat\aw - HP % to start debuffing at
+	| /echo \ag/byos\aw - 
+	/echo \ag/harvestat\aw - Harvest Mana %
+	/echo \ag/tglalliance\aw - Toggles use of Alliance
+	/echo \ag/tglaoe\aw - Toggle use of AOE Spells 
+	/echo \ag/tglbp\aw - Toggle use of chest item
+	/echo \ag/tgldicho\aw - Toggle use of Dicho spell
+	/echo \ag/tgldps\aw - Turns ALL DPS On/Off
+	/echo \ag/tglevac\aw - Toggles Evac if tank dies
+	/echo \ag/tglmezbreak\aw - Toggles Allowing mez break
+	/echo \ag/tglpet\aw - Pet toggle...cause sometimes they arent allowed
+	/echo \ag/tglstrip\aw - Turns Enemy Buff stripping On/Off
+	/echo \ag/tglweave\aw - Toggles weaving of AA Nukes
 /return 
