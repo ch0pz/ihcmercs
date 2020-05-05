@@ -28,7 +28,7 @@ Sub Main
 	/declare MacroPath       		string outer IHCMercs\IHCWIZ
 	/declare IHCVersion       		string outer 2.11b
 	/declare IniFileName     		string outer ${MacroPath}_${EverQuest.Server}_${Me.CleanName}.ini	
-|-Debug Switches
+ |-Debug Switches
 	/declare DEBUGLogging 			int outer 0
 	/if (${DEBUGLogging}) {
      /mlog on
@@ -65,7 +65,7 @@ Sub Main
 	/call IDUpdateCheck
 	/if ((${Me.XTarget[1].ID} || (${Group.MainAssist.ID} && ${Group.MainAssist.ID}!=${Me.ID} && ${Target.ID}!=${Me.GroupAssistTarget.ID}) || ${SpawnCount[npc radius ${AssistRange} zradius 15 targetable playerstate 4]} || ${FollowMarkTarget}) && !${BackOffFlag} && ${DoAutoTarget}) /call FindTarget
 	/if ((${Me.XTarget[1].ID} || ${KillTargetID}) && ${Target.PctHPs}<=${AutoAssistAt} && ${Target.ID}==${autotargetid} && ${Target.Distance}<${AssistRange} && (!${Target.Mezzed.ID} || ${AllowMezBreak}) && !${BackOffFlag} && ${DoAutoEngage}) /call EngageTarget
-|-	/if ((${Me.PctAggro}>80 || ${Me.XTarget[2].PctAggro}>80 || ${Me.XTarget[3].PctAggro}>80)) /call ManageAggro
+ |-	/if ((${Me.PctAggro}>80 || ${Me.XTarget[2].PctAggro}>80 || ${Me.XTarget[3].PctAggro}>80)) /call ManageAggro
 	/if (${Me.XTarget[1].ID} && ${StripBuffs} && !${BackOffFlag} && ${Target.ID}==${autotargetid} && ${Target.Distance}<${AssistRange} && !${Target.Type.Equal[Corpse]} && ${Target.LineOfSight} && ${Target.Type.Equal[NPC]} && ${Target.PctHPs}<=${AutoDebuffAt} && ${Ok2Assist}) /call DebuffMobs
 	/if ((${Me.XTarget[1].ID} || ${KillTargetID}) && ${Target.ID}==${autotargetid} && ${Target.PctHPs}<=${AutoAssistAt} && ${Target.Distance}<${AssistRange} && ${DoDPS} && (${DPSRecastTimer}==0) && !${BackOffFlag} && ${Ok2Assist}) /call Combatdps
 	/if (${Me.PctMana}<=${HarvestManaPct} && (!${AdvPath.Following})) /call CheckMana
