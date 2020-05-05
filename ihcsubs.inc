@@ -15,7 +15,6 @@
 #Event CAST_IMMUNE		"#*# is immune to #*#"
 #Event CAST_IMMUNE      "Your target cannot be mesmerized#*#"
 #Event CAST_RESIST      "#*# resisted your #1#!"
-
 |----------------------------------------------------------------------------
 |---BINDS
 |----------------------------------------------------------------------------
@@ -64,13 +63,11 @@
  #bind DanNetMGX        /mgx
  #bind DanNetMGAX       /mgax
  #bind DanNetMGT        /mgt
-
 |----------------------------------------------------------------------------
 |- DEPRECATED SUBROUTINE - ALIASES MOVED TO BINDS
 |----------------------------------------------------------------------------
 Sub AliasSetup
 /return
-
 |----------------------------------------------------------------------------
 |- Variables Sub Routine
 |----------------------------------------------------------------------------
@@ -263,7 +260,9 @@ Sub Bind_ChangeVarInt(string ISection, string IName, int IVar)
 		}
 	}
 /return
-
+|-------------------------------------------------------------------------------------
+|- SUB: Change VarInt - change settings & values
+|-------------------------------------------------------------------------------------
 Sub ChangeVarInt(string ISection, string IName, int IVar)
 	    /docommand /varset changetoini 1
 	|-ChaseAssist Var Set
